@@ -32,7 +32,7 @@ public class CreateUnfinishedPotionTask extends Task {
 	private int amount;
 
 	public CreateUnfinishedPotionTask(Player player, Optional<UnfinishedPotionData> potion, int amount) {
-		super(4, player, true);
+		super(3, player, true);
 		this.player = player;
 		this.potion = potion;
 		this.amount = amount;
