@@ -1,7 +1,7 @@
 package com.elvarg.world.entity.combat.formula;
 
 import com.elvarg.util.Misc;
-import com.elvarg.world.content.PrayerHandler;
+import com.elvarg.world.content.skills.prayer.PrayerHandler;
 import com.elvarg.world.entity.combat.CombatConstants;
 import com.elvarg.world.entity.combat.CombatEquipment;
 import com.elvarg.world.entity.combat.CombatFactory;

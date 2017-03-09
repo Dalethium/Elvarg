@@ -100,19 +100,10 @@ public class Locations {
 				}
 				if (target.getLocation() != Location.WILDERNESS) {
 					player.getPacketSender()
-							.sendMessage("That player cannot be attacked, because they are not in the Wilderness.");
+							.sendMessage("That player can't be attacked because they are not in the Wilderness.");
 					player.getMovementQueue().reset();
 					return false;
 				}
-				/*
-				 * if(Misc.getMinutesPlayed(player) < 20) {
-				 * player.getPacketSender().
-				 * sendMessage("You must have played for at least 20 minutes in order to attack someone."
-				 * ); return false; } if(Misc.getMinutesPlayed(target) < 20) {
-				 * player.getPacketSender().
-				 * sendMessage("This player is a new player and can therefore not be attacked yet."
-				 * ); return false; }
-				 */
 				return true;
 			}
 		},

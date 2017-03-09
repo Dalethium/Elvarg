@@ -11,7 +11,7 @@ import com.elvarg.engine.task.impl.CombatPoisonEffect.PoisonType;
 import com.elvarg.net.SessionState;
 import com.elvarg.util.Misc;
 import com.elvarg.world.collision.region.RegionClipping;
-import com.elvarg.world.content.PrayerHandler;
+import com.elvarg.world.content.skills.prayer.PrayerHandler;
 import com.elvarg.world.entity.combat.formula.DamageFormulas;
 import com.elvarg.world.entity.combat.hit.HitDamage;
 import com.elvarg.world.entity.combat.hit.HitMask;

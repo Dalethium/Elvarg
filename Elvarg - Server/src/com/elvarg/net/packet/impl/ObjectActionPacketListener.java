@@ -14,21 +14,67 @@ import com.elvarg.world.entity.impl.object.GameObject;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Animation;
 import com.elvarg.world.model.ForceMovement;
+import com.elvarg.world.model.Item;
 import com.elvarg.world.model.MagicSpellbook;
 import com.elvarg.world.model.PlayerRights;
 import com.elvarg.world.model.Position;
 import com.elvarg.world.model.Skill;
+import com.elvarg.world.model.container.impl.Inventory;
 import com.elvarg.world.regions.AreaHandler;
-
-/**
- * This packet listener is called when a player clicked on a game object.
- * 
- * @author relex lawl
- */
 
 public class ObjectActionPacketListener implements PacketListener {
 
-	private static void firstClick(final Player player, Packet packet) {
+	private void itemOnObject(final Player player, Packet packet) {
+		int interfaceId = packet.readShort();
+		int id = packet.readUnsignedShort();
+		int y = packet.readLEShortA();
+		int slot = packet.readUnsignedShort();
+		int x = packet.readLEShortA();
+		int z = player.getPosition().getZ();
+		int itemId = packet.readShort();
+		if (interfaceId != Inventory.INTERFACE_ID) {
+			return;
+		}
+		final Item interacted = player.getInventory().forSlot(slot);
+		if (interacted == null || itemId != interacted.getId() || interacted.getSlot() != slot
+				|| !player.getInventory().contains(interacted.getId())) {
+			return;
+		}
+		final Position pos = new Position(x, y, z);
+		final GameObject object = new GameObject(id, pos);
+		if (!RegionClipping.objectExists(object) || object == null) {
+			return;
+		}
+		int distanceX = (player.getPosition().getX() - pos.getX());
+		int distanceY = (player.getPosition().getY() - pos.getY());
+		if (distanceX < 0) {
+			distanceX = -(distanceX);
+		}
+		if (distanceY < 0) {
+			distanceY = -(distanceY);
+		}
+		int size = distanceX > distanceY ? ObjectDefinition.forId(id).getSizeX()
+				: ObjectDefinition.forId(id).getSizeY();
+		if (size <= 0) {
+			size = 1;
+		}
+		object.setSize(size);
+		player.setWalkToTask(new WalkToTask(player, pos, object.getSize(), new FinalizedMovementTask() {
+			@Override
+			public void execute() {
+				// execute code here for action
+				if (interacted.getId() == 995 && object.getId() == 409) {
+					player.getPacketSender().sendMessage("Hello world.");
+					return;
+				}
+				// example ^
+				player.getPacketSender().sendMessage("Nothing interesting happens...");
+			}
+		}));
+		System.out.println("Interacted with objectId: " + object.getId() + " with the itemId: " + itemId);
+	}
+
+	private void firstClick(final Player player, Packet packet) {
 		final int x = packet.readLEShortA();
 		final int id = packet.readUnsignedShort();
 		final int y = packet.readUnsignedShortA();
@@ -41,24 +87,27 @@ public class ObjectActionPacketListener implements PacketListener {
 		}
 		int distanceX = (player.getPosition().getX() - position.getX());
 		int distanceY = (player.getPosition().getY() - position.getY());
-		if (distanceX < 0)
+		if (distanceX < 0) {
 			distanceX = -(distanceX);
-		if (distanceY < 0)
+		}
+		if (distanceY < 0) {
 			distanceY = -(distanceY);
+		}
 		int size = distanceX > distanceY ? ObjectDefinition.forId(id).getSizeX()
 				: ObjectDefinition.forId(id).getSizeY();
-		if (size <= 0)
+		if (size <= 0) {
 			size = 1;
+		}
 		gameObject.setSize(size);
-		if (player.getRights() == PlayerRights.DEVELOPER)
+		if (player.getRights() == PlayerRights.DEVELOPER) {
 			player.getPacketSender()
 					.sendMessage("First click object id; [id, position] : [" + id + ", " + position.toString() + "]");
+		}
 		player.setWalkToTask(new WalkToTask(player, position, gameObject.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
 				AreaHandler.firstClickObject(player, id);
 				switch (id) {
-
 				case WILDERNESS_DITCH:
 					player.getMovementQueue().reset();
 					if (player.getForceMovement() == null) {
@@ -71,18 +120,15 @@ public class ObjectActionPacketListener implements PacketListener {
 
 				case LUNAR_ALTAR:
 				case ANCIENT_ALTAR:
-
 					MagicSpellbook toChange = MagicSpellbook.ANCIENT;
 					if (id == LUNAR_ALTAR) {
 						toChange = MagicSpellbook.LUNAR;
 					}
-
 					if (player.getSpellbook() == toChange) {
 						player.setSpellbook(MagicSpellbook.NORMAL);
 					} else {
 						player.setSpellbook(toChange);
 					}
-
 					Autocasting.setAutocast(player, null);
 					player.getPacketSender().sendMessage("You have changed your magic spellbook.").sendTabInterface(6,
 							player.getSpellbook().getInterfaceId());
@@ -97,7 +143,7 @@ public class ObjectActionPacketListener implements PacketListener {
 								player.getSkillManager().getMaxLevel(Skill.PRAYER), true);
 					} else {
 						player.getPacketSender()
-								.sendMessage("You don't need to recharge your Prayer points right now.");
+								.sendMessage("You don't need to recharge your prayer points right now.");
 					}
 					break;
 
@@ -106,16 +152,13 @@ public class ObjectActionPacketListener implements PacketListener {
 		}));
 	}
 
-	private static void secondClick(final Player player, Packet packet) {
+	private void secondClick(final Player player, Packet packet) {
 		final int id = packet.readLEShortA();
 		final int y = packet.readLEShort();
 		final int x = packet.readUnsignedShortA();
 		final Position position = new Position(x, y, player.getPosition().getZ());
 		final GameObject gameObject = new GameObject(id, position);
 		if (id > 0 && id != 6 && !RegionClipping.objectExists(gameObject)) {
-			// player.getPacketSender().sendMessage("An error occured. Error
-			// code: "+id).sendMessage("Please report the error to a staff
-			// member.");
 			return;
 		}
 		player.setPositionToFace(gameObject.getPosition());
@@ -142,15 +185,15 @@ public class ObjectActionPacketListener implements PacketListener {
 		}));
 	}
 
-	private static void thirdClick(Player player, Packet packet) {
+	private void thirdClick(Player player, Packet packet) {
 
 	}
 
-	private static void fourthClick(Player player, Packet packet) {
+	private void fourthClick(Player player, Packet packet) {
 
 	}
 
-	private static void fifthClick(final Player player, Packet packet) {
+	private void fifthClick(final Player player, Packet packet) {
 
 	}
 
@@ -174,6 +217,9 @@ public class ObjectActionPacketListener implements PacketListener {
 			break;
 		case PacketConstants.OBJECT_FIFTH_CLICK_OPCODE:
 			fifthClick(player, packet);
+			break;
+		case PacketConstants.ITEM_ON_OBJECT:
+			itemOnObject(player, packet);
 			break;
 		}
 	}

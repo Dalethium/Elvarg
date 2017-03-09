@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import com.elvarg.engine.task.impl.CombatPoisonEffect.PoisonType;
-import com.elvarg.world.content.PrayerHandler;
+import com.elvarg.world.content.skills.prayer.PrayerHandler;
 import com.elvarg.world.entity.combat.CombatFactory;
 import com.elvarg.world.entity.impl.Character;
 import com.elvarg.world.entity.impl.player.Player;

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import com.elvarg.util.Misc;
+import com.elvarg.world.content.skills.prayer.PrayerHandler;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Item;
 

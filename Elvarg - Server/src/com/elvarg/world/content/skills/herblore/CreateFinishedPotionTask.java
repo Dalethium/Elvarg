@@ -38,13 +38,16 @@ public class CreateFinishedPotionTask extends Task {
 
 	public void start(Player player) {
 		if (potion.isPresent()) {
-			if (player.getSkillManager().getCurrentLevel(Skill.HERBLORE) >= potion.get().getRequirement()) {
-				TaskManager.submit(new CreateFinishedPotionTask(player, potion, amount));
-			} else {
-				DialogueManager.sendStatement(player, "You need a Herblore level of atleast "
-						+ potion.get().getRequirement() + " to make this potion.");
-				player.getPacketSender().sendMessage("You need a Herblore level of atleast "
-						+ potion.get().getRequirement() + " to make this potion.");
+			if (player.getInventory()
+					.contains(new Item[] { potion.get().getIngredient(), potion.get().getUnfinishedPotion() })) {
+				if (player.getSkillManager().getCurrentLevel(Skill.HERBLORE) >= potion.get().getRequirement()) {
+					TaskManager.submit(new CreateFinishedPotionTask(player, potion, amount));
+				} else {
+					DialogueManager.sendStatement(player, "You need a Herblore level of atleast "
+							+ potion.get().getRequirement() + " to make this potion.");
+					player.getPacketSender().sendMessage("You need a Herblore level of atleast "
+							+ potion.get().getRequirement() + " to make this potion.");
+				}
 			}
 		}
 	}
@@ -74,7 +77,6 @@ public class CreateFinishedPotionTask extends Task {
 					this.stop();
 				}
 			} else {
-				DialogueManager.sendStatement(player, "You have ran out of the ingredients required.");
 				player.getPacketSender().sendMessage("You have ran out of the ingredients required.");
 				this.stop();
 			}

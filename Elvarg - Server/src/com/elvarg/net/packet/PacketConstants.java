@@ -91,6 +91,7 @@ public class PacketConstants {
 	public static final int SECOND_ITEM_ACTION_OPCODE = 75;
 	public static final int THIRD_ITEM_ACTION_OPCODE = 16;
 	public static final int ITEM_ON_ITEM = 53;
+	public static final int ITEM_ON_OBJECT = 192;
 
 	static {
 		for (int i = 0; i < PACKETS.length; i++) {
@@ -137,6 +138,7 @@ public class PacketConstants {
 		PACKETS[OBJECT_THIRD_CLICK_OPCODE] = new ObjectActionPacketListener();
 		PACKETS[OBJECT_FOURTH_CLICK_OPCODE] = new ObjectActionPacketListener();
 		PACKETS[OBJECT_FIFTH_CLICK_OPCODE] = new ObjectActionPacketListener();
+		PACKETS[ITEM_ON_OBJECT] = new ObjectActionPacketListener();
 
 		PACKETS[ATTACK_NPC_OPCODE] = new NPCOptionPacketListener();
 		PACKETS[FIRST_CLICK_OPCODE] = new NPCOptionPacketListener();
