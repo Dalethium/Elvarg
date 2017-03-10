@@ -98,32 +98,22 @@ public final class ObjectDefinition {
 				|| id == 25891 || id == 26082 || id == 26081 || id == 1530 || id == 16776 || id == 16778 || id == 28589
 				|| id == 1533 || id == 17089 || id == 1600 || id == 1601 || id == 11707 || id == 24376 || id == 24378
 				|| id == 40108 || id == 59 || id == 2069 || id == 36846;
-		if (objectDef.name != null) {
-			if (objectDef.name.toLowerCase().contains(("door")) || objectDef.name.toLowerCase().contains(("gate"))
-					|| objectDef.name.toLowerCase().contains(("ditch"))) {
-				removeObject = true;
-			}
-		}
-
 		if (removeObject) {
 			objectDef.modelIds = null;
 			objectDef.isInteractive = false;
 			objectDef.solid = false;
 			return objectDef;
 		}
-
 		if (id == 6552) {
 			objectDef.interactions = new String[5];
 			objectDef.interactions[0] = "Toggle-spells";
 			objectDef.name = "Ancient altar";
 		}
-
 		if (id == 14911) {
 			objectDef.interactions = new String[5];
 			objectDef.interactions[0] = "Toggle-spells";
 			objectDef.name = "Lunar altar";
 		}
-
 		if (id == 7149 || id == 7147) {
 			objectDef.isInteractive = true;
 			objectDef.interactions = new String[5];

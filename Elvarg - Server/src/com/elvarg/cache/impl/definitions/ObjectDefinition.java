@@ -236,6 +236,28 @@ public final class ObjectDefinition {
 		childrenIDs = null;
 	}
 
+	/**
+	 * Returns true if the door object is open.
+	 * 
+	 * @param id
+	 *            the id of the door object.
+	 * @return is the door open.
+	 */
+	public static final boolean isDoorOpen(int id) {
+		ObjectDefinition def = ObjectDefinition.forId(id);
+		if (def.interactions != null) {
+			for (String i : def.interactions) {
+				if (i == null) {
+					continue;
+				}
+				if (i.equals("Close")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public static void init() {
 		CacheArchive objectDefs = Elvarg.getCache().getArchive(CacheConstants.CONFIG_ARCHIVE);
 		stream = new ByteStreamExt(objectDefs.getData("loc.dat").array());
