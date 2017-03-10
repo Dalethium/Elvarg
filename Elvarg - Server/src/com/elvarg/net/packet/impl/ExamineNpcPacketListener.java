@@ -13,7 +13,6 @@ public class ExamineNpcPacketListener implements PacketListener {
 		if (npc <= 0) {
 			return;
 		}
-		System.out.println("NPC: " + npc);
 		NpcDefinition npcDef = NpcDefinition.forId(npc);
 		if (npcDef != null) {
 			player.getPacketSender().sendMessage(npcDef.getExamine());

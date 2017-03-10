@@ -101,7 +101,7 @@ public class ObjectActionPacketListener implements PacketListener {
 		player.setWalkToTask(new WalkToTask(player, position, gameObject.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
-				//player.setPositionToFace(gameObject.getPosition());
+				player.setPositionToFace(gameObject.getPosition());
 				switch (id) {
 				case WILDERNESS_DITCH:
 					player.getMovementQueue().reset();

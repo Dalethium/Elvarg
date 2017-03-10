@@ -10,12 +10,10 @@ public class ExamineItemPacketListener implements PacketListener {
 	@Override
 	public void handleMessage(Player player, Packet packet) {
 		int item = packet.readShort();
-
 		if (item == 995) {
 			player.getPacketSender().sendMessage(player.getInventory().getAmount(995) + "x coins.");
 			return;
 		}
-
 		ItemDefinition itemDef = ItemDefinition.forId(item);
 		if (itemDef != null) {
 			player.getPacketSender().sendMessage(itemDef.getExamine());

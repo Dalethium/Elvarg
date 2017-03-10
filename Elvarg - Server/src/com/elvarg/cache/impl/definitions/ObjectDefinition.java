@@ -23,23 +23,18 @@ public final class ObjectDefinition {
 				int x = reader.get("x").getAsInt();
 				int y = reader.get("y").getAsInt();
 				int z = 0;
-
 				if (reader.has("z")) {
 					z = reader.get("z").getAsInt();
 				}
-
 				int face = reader.get("face").getAsInt();
-
 				int type = 10;
 				if (reader.has("type")) {
 					type = reader.get("type").getAsInt();
 				}
-
 				int seconds = -1;
 				if (reader.has("seconds")) {
 					seconds = reader.get("seconds").getAsInt();
 				}
-
 				GameObject object = new GameObject(id, new Position(x, y, z), type, face, seconds);
 				ObjectHandler.spawnGlobalObject(object);
 			}
@@ -111,7 +106,6 @@ public final class ObjectDefinition {
 		objectDef.type = id;
 		objectDef.reset();
 		objectDef.readValues(stream);
-		// System.out.println("Object name: "+objectDef.name+", id: "+id);
 		boolean removeObject = id == 5244 || id == 2623 || id == 2956 || id == 463 || id == 462 || id == 10527
 				|| id == 10529 || id == 40257 || id == 296 || id == 300 || id == 1747 || id == 7332 || id == 7326
 				|| id == 7325 || id == 7385 || id == 7331 || id == 7385 || id == 7320 || id == 7317 || id == 7323
@@ -124,30 +118,22 @@ public final class ObjectDefinition {
 				|| id == 25891 || id == 26082 || id == 26081 || id == 1530 || id == 16776 || id == 16778 || id == 28589
 				|| id == 1533 || id == 17089 || id == 1600 || id == 1601 || id == 11707 || id == 24376 || id == 24378
 				|| id == 40108 || id == 59 || id == 2069 || id == 36846;
-		if (objectDef.name != null) {
-			if (objectDef.name.toLowerCase().contains(("door")) || objectDef.name.toLowerCase().contains(("gate"))) {
-				removeObject = true;
-			}
-		}
 		if (removeObject) {
 			objectDef.modelIds = null;
 			objectDef.isInteractive = false;
 			objectDef.solid = false;
 			return objectDef;
 		}
-
 		if (id == 6552) {
 			objectDef.interactions = new String[5];
 			objectDef.interactions[0] = "Toggle-spells";
 			objectDef.name = "Ancient altar";
 		}
-
 		if (id == 14911) {
 			objectDef.interactions = new String[5];
 			objectDef.interactions[0] = "Toggle-spells";
 			objectDef.name = "Lunar altar";
 		}
-
 		if (id == 7149 || id == 7147) {
 			objectDef.isInteractive = true;
 			objectDef.interactions = new String[5];
@@ -208,7 +194,6 @@ public final class ObjectDefinition {
 			objectDef.isInteractive = true;
 			return objectDef;
 		}
-
 		return objectDef;
 	}
 
@@ -252,13 +237,9 @@ public final class ObjectDefinition {
 	}
 
 	public static void init() {
-		// long startup = System.currentTimeMillis();
-		// System.out.println("Loading cache game object definitions...");
-
 		CacheArchive objectDefs = Elvarg.getCache().getArchive(CacheConstants.CONFIG_ARCHIVE);
 		stream = new ByteStreamExt(objectDefs.getData("loc.dat").array());
 		ByteStreamExt idxBuffer525 = new ByteStreamExt(objectDefs.getData("loc.idx").array());
-
 		int totalObjects525 = idxBuffer525.readUnsignedWord();
 		streamIndices = new int[totalObjects525];
 		int i = 2;
@@ -266,16 +247,10 @@ public final class ObjectDefinition {
 			streamIndices[j] = i;
 			i += idxBuffer525.readUnsignedWord();
 		}
-
 		cache = new ObjectDefinition[20];
 		for (int k = 0; k < 20; k++) {
 			cache[k] = new ObjectDefinition();
 		}
-
-		// System.out.println("Loaded " + totalObjects525 + " cache object
-		// definitions #525 ");
-		// + totalObjects667 + " cache object definitions #667 in " +
-		// (System.currentTimeMillis() - startup) + "ms");
 	}
 
 	public void readValues(ByteStreamExt buffer) {

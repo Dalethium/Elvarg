@@ -15,19 +15,18 @@ public class FollowPlayerPacketListener implements PacketListener {
 
 	@Override
 	public void handleMessage(Player player, Packet packet) {
-		if (player.getHitpoints() <= 0)
+		if (player.getHitpoints() <= 0) {
 			return;
+		}
 		int otherPlayersIndex = packet.readLEShort();
-		if (otherPlayersIndex < 0 || otherPlayersIndex > World.getPlayers().capacity())
+		if (otherPlayersIndex < 0 || otherPlayersIndex > World.getPlayers().capacity()) {
 			return;
+		}
 		Player leader = World.getPlayers().get(otherPlayersIndex);
-		if (leader == null)
+		if (leader == null) {
 			return;
-		if (leader.getHitpoints() <= 0
-				|| player.getHitpoints() <= 0/*
-												 * || !player.getLocation().
-												 * isFollowingAllowed()
-												 */) {
+		}
+		if (leader.getHitpoints() <= 0 || player.getHitpoints() <= 0) {
 			player.getPacketSender().sendMessage("You cannot follow other players right now.");
 			return;
 		}
