@@ -19,7 +19,7 @@ public final class GameFrame extends Frame {
 
 	public GameFrame(GameApplet applet, int width, int height, boolean resizable, boolean fullscreen) {
 		this.applet = applet;
-		setTitle(Configuration.CLIENT_NAME);
+		setTitle(Configuration.CLIENT_NAME + " - Game Launcher");
 		setResizable(resizable);
 		setUndecorated(fullscreen);
 		setVisible(true);

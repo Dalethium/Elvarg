@@ -44,12 +44,12 @@ public final class Configuration {
 	/**
 	 * The url that the users will get redirected to after clicking "New User"
 	 */
-	public static final String REGISTER_ACCOUNT = "www.google.com";
+	public static final String REGISTER_ACCOUNT = "http://www.exigence.org/";
 
 	/**
 	 * A string which indicates the Client's name.
 	 */
-	public static final String CLIENT_NAME = "Elvarg";
+	public static final String CLIENT_NAME = "Exigence";
 
 	/**
 	 * Dumps map region images when new regions are loaded.

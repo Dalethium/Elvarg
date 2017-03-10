@@ -29,7 +29,6 @@ public abstract class Spell {
 	 *         <code>false</code> otherwise.
 	 */
 	public boolean canCast(Player player, boolean delete) {
-
 		// We first check the level required.
 		if (player.getSkillManager().getCurrentLevel(Skill.MAGIC) < levelRequired()) {
 			player.getPacketSender()
@@ -37,7 +36,6 @@ public abstract class Spell {
 			player.getCombat().reset();
 			return false;
 		}
-
 		// Secondly we check if they have proper magic spellbook
 		// If not, reset all magic attributes such as current spell
 		// Aswell as autocast spell
@@ -47,24 +45,19 @@ public abstract class Spell {
 			player.getCombat().reset();
 			return false;
 		}
-
 		// Then we check the items required.
 		if (itemsRequired(player).isPresent()) {
-
 			// Suppress the runes based on the staff, we then use the new array
 			// of items that don't include suppressed runes.
 			Item[] items = PlayerMagicStaff.suppressRunes(player, itemsRequired(player).get());
-
 			// Now check if we have all of the runes.
 			if (!player.getInventory().containsAll(items)) {
-
 				// We don't, so we can't cast.
 				player.getPacketSender().sendMessage("You do not have the required items to cast this spell.");
 				player.getCombat().setCastSpell(null);
 				player.getCombat().reset();
 				return false;
 			}
-
 			// Finally, we check the equipment required.
 			if (equipmentRequired(player).isPresent()) {
 				if (!player.getEquipment().containsAll(equipmentRequired(player).get())) {
@@ -74,7 +67,6 @@ public abstract class Spell {
 					return false;
 				}
 			}
-
 			// We've made it through the checks, so we have the items and can
 			// remove them now.
 			if (delete) {

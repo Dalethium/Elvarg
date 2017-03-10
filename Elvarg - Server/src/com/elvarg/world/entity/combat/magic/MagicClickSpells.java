@@ -5,11 +5,11 @@ import java.util.Optional;
 import com.elvarg.world.entity.impl.Character;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Animation;
-import com.elvarg.world.model.EffectTimer;
 import com.elvarg.world.model.Graphic;
 import com.elvarg.world.model.GraphicHeight;
 import com.elvarg.world.model.Item;
 import com.elvarg.world.model.MagicSpellbook;
+import com.elvarg.world.model.Priority;
 
 public class MagicClickSpells {
 
@@ -332,35 +332,19 @@ public class MagicClickSpells {
 	public static boolean handleSpell(Player player, int button) {
 		switch (button) {
 		case VENGEANCE_SPELL_BUTTON:
-			/*
-			 * if(!player.getLocation().isAidingAllowed() ||
-			 * player.getLocation() == Location.DUEL_ARENA) {
-			 * player.getPacketSender().
-			 * sendMessage("This spell cannot be cast here."); return true; }
-			 */
 			if (!MagicSpells.VENGEANCE.getSpell().canCast(player, false)) {
 				return true;
 			}
-			/*
-			 * if(player.hasVengeance()) { player.getPacketSender().
-			 * sendMessage("You already have Vengeance's effect."); return true;
-			 * }
-			 */
-
 			if (!player.getVengeanceTimer().finished()) {
-				player.getPacketSender().sendMessage("This spell can only be cast once every 30 seconds.");
+				player.getPacketSender().sendMessage("You must wait another "
+						+ player.getVengeanceTimer().secondsRemaining() + " seconds before casting this.");
 				return true;
 			}
-
 			// Send message and effect timer to client
-
 			player.setHasVengeance(true);
 			player.getVengeanceTimer().start(30);
-			player.getPacketSender().sendEffectTimer(30, EffectTimer.VENGEANCE)
-					.sendMessage("<shad=330099>You now have Vengeance's effect.");
-
 			player.getInventory().deleteItemSet(MagicSpells.VENGEANCE.getSpell().itemsRequired(player));
-			player.performAnimation(new Animation(4410));
+			player.performAnimation(new Animation(4410, Priority.HIGH));
 			player.performGraphic(new Graphic(726, GraphicHeight.HIGH));
 			return true;
 		}

@@ -26,7 +26,6 @@ import com.elvarg.world.entity.impl.npc.NPC;
 import com.elvarg.world.entity.impl.npc.NPCMovementCoordinator.CoordinateState;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Animation;
-import com.elvarg.world.model.EffectTimer;
 import com.elvarg.world.model.Flag;
 import com.elvarg.world.model.Graphic;
 import com.elvarg.world.model.Item;
@@ -654,9 +653,8 @@ public class CombatFactory {
 		character.getCombat().getFreezeTimer().start(seconds);
 		character.getMovementQueue().reset();
 		if (character.isPlayer()) {
-			// Send message and effect timer to client
-			character.getAsPlayer().getPacketSender().sendMessage("You have been frozen!").sendEffectTimer(seconds,
-					EffectTimer.FREEZE);
+			// Send message to the character
+			character.getAsPlayer().getPacketSender().sendMessage("You have been frozen!");
 			// Actually reset combat too
 			// I think it's that way on osrs
 			character.getCombat().reset();

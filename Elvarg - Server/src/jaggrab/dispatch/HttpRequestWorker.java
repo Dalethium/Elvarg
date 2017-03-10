@@ -34,26 +34,19 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest> {
 	 */
 	private static final File WWW_DIRECTORY = new File("./data/www/");
 
-	/**
-	 * The default character set.
-	 */
-	private static final Charset CHARACTER_SET = Charset.forName("ISO-8859-1");
-
 	@Override
 	protected ChannelRequest<HttpRequest> nextRequest() throws InterruptedException {
 		return RequestDispatcher.nextHttpRequest();
 	}
 
 	@Override
+	@SuppressWarnings("unused")
 	protected void service(Channel channel, HttpRequest request) throws IOException {
 		String path = request.uri();
 		ByteBuf buf = ResourceRequester.request(path);
-
 		ByteBuf wrappedBuf;
 		HttpResponseStatus status = HttpResponseStatus.OK;
-
 		String mimeType = "application/octet-stream";
-
 		if (buf == null) {
 			File f = new File(WWW_DIRECTORY, path);
 			URI target = f.toURI().normalize();

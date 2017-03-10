@@ -9,7 +9,6 @@ import com.elvarg.world.entity.combat.CombatFactory;
 import com.elvarg.world.entity.impl.Character;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Animation;
-import com.elvarg.world.model.EffectTimer;
 import com.elvarg.world.model.Graphic;
 import com.elvarg.world.model.GraphicHeight;
 import com.elvarg.world.model.Item;
@@ -18,6 +17,7 @@ import com.elvarg.world.model.Projectile;
 import com.elvarg.world.model.Skill;
 
 public enum CombatSpells {
+
 	WIND_STRIKE(new CombatNormalSpell() {
 		@Override
 		public Optional<Animation> castAnimation() {
@@ -98,17 +98,7 @@ public enum CombatSpells {
 				player.getSkillManager().updateSkill(Skill.ATTACK);
 
 				player.getPacketSender().sendMessage("You feel slightly weakened.");
-			} /*
-				 * else if (castOn.isNpc()) { NPC npc = (NPC) castOn;
-				 * 
-				 * if (npc.getDefenceWeakened()[0] ||
-				 * npc.getStrengthWeakened()[0]) { if (cast.isPlayer()) {
-				 * ((Player) cast).getPacketSender().sendMessage(
-				 * "The spell has no effect because the NPC has already been weakened."
-				 * ); } return; }
-				 * 
-				 * npc.getDefenceWeakened()[0] = true; }
-				 */
+			}
 		}
 
 		@Override
@@ -1731,7 +1721,6 @@ public enum CombatSpells {
 		public void spellEffect(Character cast, Character castOn) {
 			if (castOn.isPlayer()) {
 				Player player = (Player) castOn;
-
 				if (!player.getCombat().getTeleBlockTimer().finished()) {
 					if (cast.isPlayer()) {
 						((Player) cast).getPacketSender()
@@ -1739,13 +1728,9 @@ public enum CombatSpells {
 					}
 					return;
 				}
-
 				final int seconds = player.getPrayerActive()[PrayerHandler.PROTECT_FROM_MAGIC] ? 300 : 600;
-
 				player.getCombat().getTeleBlockTimer().start(seconds);
-				player.getPacketSender().sendEffectTimer(seconds, EffectTimer.TELE_BLOCK)
-						.sendMessage("You have just been teleblocked!");
-
+				player.getPacketSender().sendMessage("You have just been teleblocked!");
 			} else if (castOn.isNpc()) {
 				if (cast.isPlayer()) {
 					((Player) cast).getPacketSender().sendMessage("Your spell has no effect on this target.");

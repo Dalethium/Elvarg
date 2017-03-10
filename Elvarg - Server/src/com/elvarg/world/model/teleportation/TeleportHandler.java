@@ -3,7 +3,6 @@ package com.elvarg.world.model.teleportation;
 import com.elvarg.engine.task.Task;
 import com.elvarg.engine.task.TaskManager;
 import com.elvarg.world.entity.impl.player.Player;
-import com.elvarg.world.model.EffectTimer;
 import com.elvarg.world.model.Locations.Location;
 import com.elvarg.world.model.Position;
 import com.elvarg.world.model.movement.MovementStatus;
@@ -66,10 +65,8 @@ public class TeleportHandler {
 				return false;
 			} else {
 				player.getCombat().getTeleBlockTimer().stop();
-				player.getPacketSender().sendEffectTimer(0, EffectTimer.TELE_BLOCK);
 			}
 		}
-
 		if (player.getMovementQueue().getMovementStatus() == MovementStatus.DISABLED
 				|| !player.getClickDelay().elapsed(4500)) {
 			return false;

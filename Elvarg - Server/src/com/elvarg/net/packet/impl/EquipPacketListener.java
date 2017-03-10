@@ -27,34 +27,27 @@ public class EquipPacketListener implements PacketListener {
 
 	@Override
 	public void handleMessage(Player player, Packet packet) {
-		if (player.getHitpoints() <= 0)
+		if (player.getHitpoints() <= 0) {
 			return;
-
+		}
 		int id = packet.readShort();
 		int slot = packet.readShortA();
 		int interfaceId = packet.readShortA();
-
 		if (player.getInterfaceId() != Equipment.EQUIPMENT_SCREEN_INTERFACE_ID) {
 			player.getPacketSender().sendInterfaceRemoval();
 		}
-
 		switch (interfaceId) {
 		case Inventory.INTERFACE_ID:
-			/*
-			 * Making sure slot is valid.
-			 */
 			if (slot >= 0 && slot <= 28) {
 				Item item = player.getInventory().getItems()[slot].copy();
 				if (item.getId() != id) {
 					return;
 				}
-				/*
-				 * Making sure item exists and that id is consistent.
-				 */
 				if (item != null && id == item.getId()) {
 					for (Skill skill : Skill.values()) {
-						if (skill == Skill.CONSTRUCTION)
+						if (skill == Skill.CONSTRUCTION) {
 							continue;
+						}
 						if (item.getDefinition().getRequirement()[skill.ordinal()] > player.getSkillManager()
 								.getMaxLevel(skill)) {
 							StringBuilder vowel = new StringBuilder();
@@ -153,13 +146,7 @@ public class EquipPacketListener implements PacketListener {
 					}
 					if (equipmentSlot == Equipment.WEAPON_SLOT) {
 						resetWeapon(player);
-					} else if (equipmentSlot == Equipment.RING_SLOT && item.getId() == 2570) {
-						player.getPacketSender()
-								.sendMessage(
-										"<img=10> <col=996633>Warning! The Ring of Life special effect does not work in the Wilderness or")
-								.sendMessage("<col=996633> Duel Arena.");
-					}
-
+					} 
 					// Check if ranged update is needed!
 					if (equipmentSlot == Equipment.AMMUNITION_SLOT || equipmentSlot == Equipment.WEAPON_SLOT) {
 						RangedData.updateDataFor(player);
@@ -169,7 +156,6 @@ public class EquipPacketListener implements PacketListener {
 						player.getCombat().reset();
 					}
 
-					// player.setCastSpell(null);
 					BonusManager.update(player);
 
 					player.getEquipment().refreshItems();
@@ -181,15 +167,13 @@ public class EquipPacketListener implements PacketListener {
 					}
 
 					player.getUpdateFlag().flag(Flag.APPEARANCE);
-					// Sounds.sendSound(player, Sound.EQUIP_ITEM);
-
 				}
 			}
 			break;
 		}
 	}
 
-	public static void resetWeapon(Player player) {
+	public void resetWeapon(Player player) {
 		WeaponInterfaces.assign(player);
 		player.setSpecialActivated(false);
 		CombatSpecial.updateBar(player);

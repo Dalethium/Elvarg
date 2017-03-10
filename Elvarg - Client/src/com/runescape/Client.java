@@ -178,26 +178,6 @@ public class Client extends GameApplet {
 		effects_list.add(et);
 	}
 
-	public void drawEffectTimers() {
-		int yDraw = frameHeight - 195;
-		int xDraw = frameWidth - 330;
-		for (EffectTimer timer : effects_list) {
-			if (timer.decrementAndGetTimer() <= 0) {
-				effects_list.remove(timer);
-				continue;
-			}
-
-			Sprite sprite = cacheSprite[timer.getSprite()];
-
-			if (sprite != null) {
-				sprite.drawAdvancedSprite(xDraw + 12, yDraw);
-				newSmallFont.drawBasicString(calculateInMinutes(timer.getTimer()) + "", xDraw + 40, yDraw + 13,
-						0xFF8C00);
-				yDraw -= 25;
-			}
-		}
-	}
-
 	private String calculateInMinutes(int paramInt) {
 		int i = (int) Math.floor(paramInt / 60);
 		int j = paramInt - i * 60;
@@ -265,22 +245,22 @@ public class Client extends GameApplet {
 	}
 
 	private void addToXPCounter(int skill, int xp) {
-		int font_height = 24;
-		if (xp <= 0)
+		if (xp <= 0) {
 			return;
-
+		}
+		int font_height = 24;
 		xpCounter += xp;
-
 		int lowest_y_off = Integer.MAX_VALUE;
-		for (int i = 0; i < xp_added.length; i++)
-			if (xp_added[i][0] > -1)
+		for (int i = 0; i < xp_added.length; i++) {
+			if (xp_added[i][0] > -1) {
 				lowest_y_off = Math.min(lowest_y_off, xp_added[i][2]);
-
+			}
+		}
 		if (Configuration.xp_merge && lowest_y_off != Integer.MAX_VALUE && lowest_y_off <= 0) {
 			for (int i = 0; i < xp_added.length; i++) {
-				if (xp_added[i][2] != lowest_y_off)
+				if (xp_added[i][2] != lowest_y_off) {
 					continue;
-
+				}
 				xp_added[i][0] |= (1 << skill);
 				xp_added[i][1] += xp;
 				return;
@@ -288,15 +268,12 @@ public class Client extends GameApplet {
 		} else {
 			ArrayList<Integer> list = new ArrayList<Integer>();
 			int y = font_height;
-
 			boolean go_on = true;
 			while (go_on) {
 				go_on = false;
-
 				for (int i = 0; i < xp_added.length; i++) {
 					if (xp_added[i][0] == -1 || list.contains(new Integer(i)))
 						continue;
-
 					if (xp_added[i][2] < y) {
 						xp_added[i][2] = y;
 						y += font_height;
@@ -305,19 +282,19 @@ public class Client extends GameApplet {
 					}
 				}
 			}
-
-			if (lowest_y_off == Integer.MAX_VALUE || lowest_y_off >= font_height)
+			if (lowest_y_off == Integer.MAX_VALUE || lowest_y_off >= font_height) {
 				lowest_y_off = 0;
-			else
+			} else {
 				lowest_y_off = 0;
-
-			for (int i = 0; i < xp_added.length; i++)
+			}
+			for (int i = 0; i < xp_added.length; i++) {
 				if (xp_added[i][0] == -1) {
 					xp_added[i][0] = (1 << skill);
 					xp_added[i][1] = xp;
 					xp_added[i][2] = lowest_y_off;
 					return;
 				}
+			}
 		}
 	}
 
@@ -3923,21 +3900,21 @@ public class Client extends GameApplet {
 		} else if (anInt1501 > 0) {
 			anInt1501--;
 		}
-		if (loadingStage == 2)
+		if (loadingStage == 2) {
 			checkForGameUsages();
-		if (loadingStage == 2 && oriented)
+		}
+		if (loadingStage == 2 && oriented) {
 			calculateCameraPosition();
-		for (int i1 = 0; i1 < 5; i1++)
+		}
+		for (int i1 = 0; i1 < 5; i1++) {
 			quakeTimes[i1]++;
-
+		}
 		manageTextInputs();
-
 		if (super.idleTime++ > 9000) {
 			anInt1011 = 250;
 			super.idleTime = 0;
 			sendPacket(new PlayerInactive());
 		}
-
 		if (ping_packet_counter++ > 50) {
 			sendPacket(new BasicPing());
 		}
@@ -9990,22 +9967,6 @@ public class Client extends GameApplet {
 			anInt1005++;
 			if (anInt1005 > 1512) {
 				anInt1005 = 0;
-				// unknown (anti-cheat) or maybe cutscene-related
-				/*
-				 * outgoing.writeOpcode(77); outgoing.writeByte(0); int bufPos =
-				 * outgoing.currentPosition; outgoing.writeByte((int)
-				 * (Math.random() * 256D)); outgoing.writeByte(101);
-				 * outgoing.writeByte(233); outgoing.writeShort(45092);
-				 * 
-				 * if ((int) (Math.random() * 2D) == 0) {
-				 * outgoing.writeShort(35784); }
-				 * 
-				 * outgoing.writeByte((int) (Math.random() * 256D));
-				 * outgoing.writeByte(64); outgoing.writeByte(38);
-				 * outgoing.writeShort((int) (Math.random() * 65536D));
-				 * outgoing.writeShort((int) (Math.random() * 65536D));
-				 * outgoing.writeBytes(outgoing.currentPosition - bufPos);
-				 */
 			}
 			int j2 = k1 * 192;
 			if (j2 > 0x17f00)
@@ -10040,11 +10001,14 @@ public class Client extends GameApplet {
 	}
 
 	private boolean isFriendOrSelf(String s) {
-		if (s == null)
+		if (s == null) {
 			return false;
-		for (int i = 0; i < friendsCount; i++)
-			if (s.equalsIgnoreCase(friendsList[i]))
+		}
+		for (int i = 0; i < friendsCount; i++) {
+			if (s.equalsIgnoreCase(friendsList[i])) {
 				return true;
+			}
+		}
 		return s.equalsIgnoreCase(localPlayer.name);
 	}
 
@@ -10147,7 +10111,6 @@ public class Client extends GameApplet {
 			multiOverlay.drawSprite(frameMode == ScreenMode.FIXED ? 10 : frameWidth - frameWidth + 10,
 					frameHeight - 200);
 		}
-		drawEffectTimers();
 		int x = regionBaseX + (localPlayer.x - 6 >> 7);
 		int y = regionBaseY + (localPlayer.y - 6 >> 7);
 		final String screenMode = frameMode == ScreenMode.FIXED ? "Fixed" : "Resizable";
@@ -10157,10 +10120,6 @@ public class Client extends GameApplet {
 			if (super.fps < 15) {
 				fpsColour = 0xff0000;
 			}
-			// regularText.render(textColour,
-			// "frameWidth: " + (mouseX - frameWidth) + ", frameHeight: " +
-			// (mouseY - frameHeight),
-			// frameHeight - 271, 5);
 			regularText.render(textColour, "Client Zoom: " + cameraZoom, 90,
 					frameMode == ScreenMode.FIXED ? 5 : frameWidth - 5);
 			regularText.render(fpsColour, "Fps: " + super.fps, 12,
@@ -11410,10 +11369,10 @@ public class Client extends GameApplet {
 			int l = c / 2 - 80;
 			int k1 = c1 / 2 + 20;
 			titleButtonIndexedImage.draw(l - 73, k1 - 20);
-			boldText.method382(0xffffff, l, "New User", k1 + 5, true);
+			boldText.method382(0xffffff, l, "Forums", k1 + 5, true);
 			l = c / 2 + 80;
 			titleButtonIndexedImage.draw(l - 73, k1 - 20);
-			boldText.method382(0xffffff, l, "Existing User", k1 + 5, true);
+			boldText.method382(0xffffff, l, "Play", k1 + 5, true);
 		}
 		if (loginScreenState == 2) {
 			int j = c1 / 2 - 40;
@@ -12290,7 +12249,9 @@ public class Client extends GameApplet {
 			if (opcode == 124) {
 				int skillId = incoming.readUShort();
 				int gainedXP = incoming.readUShort();
-				addToXPCounter(skillId, gainedXP);
+				if (gainedXP > 0) {
+					addToXPCounter(skillId, gainedXP);
+				}
 				opcode = -1;
 				return true;
 			}
@@ -12440,11 +12401,6 @@ public class Client extends GameApplet {
 						localPlayer.currentHealth = level;
 						localPlayer.maxHealth = maxLevel;
 					}
-					/*
-					 * for (int index = 0; index < 98; index++) if (experience
-					 * >= SKILL_EXPERIENCE[index]) maximumLevels[skill] = index
-					 * + 2;
-					 */
 				}
 				opcode = -1;
 				return true;
@@ -13683,18 +13639,16 @@ public class Client extends GameApplet {
 	}
 
 	private void drawCounterOnScreen() {
-		RSFont xp_font = newBoldFont;
+		RSFont xp_font = newSmallFont;
 		int font_height = 24;
-		int x = 510;
+		int x = 500;
 		int y = -100;
 		digits = xpCounter == 0 ? 1 : 1 + (int) Math.floor(Math.log10(xpCounter));
 		int lengthToRemove = Integer.toString(xpCounter).length();
 		int i = regularText.getTextWidth(Integer.toString(xpCounter))
 				- regularText.getTextWidth(Integer.toString(xpCounter)) / 2;
 		int a = lengthToRemove == 1 ? 5 : ((lengthToRemove - 1) * 5);
-
 		final boolean wilderness = openWalkableInterface == 23300;
-
 		for (i = 0; i < xp_added.length; i++) {
 			if (xp_added[i][0] > -1) {
 				if (xp_added[i][2] >= 0) {
@@ -13702,14 +13656,14 @@ public class Client extends GameApplet {
 					if (xp_added[i][2] > 120)
 						transparency = (10 - (xp_added[i][2] - 120)) * 256 / 20;
 					if (transparency > 0) {
-						String s = "<col=FF9900><trans=" + transparency + ">+"
-								+ NumberFormat.getIntegerInstance().format(xp_added[i][1]) + " xp";
+						String s = "<col=0xFFFFFF><trans=" + transparency + ">"
+								+ NumberFormat.getIntegerInstance().format(xp_added[i][1]);
 						int icons_x_off = 0;
 						Sprite sprite = null;
 						for (int i2 = 0; i2 < skill_sprites.length; i2++) {
-							if ((xp_added[i][0] & (1 << i2)) == 0)
+							if ((xp_added[i][0] & (1 << i2)) == 0) {
 								continue;
-
+							}
 							sprite = skill_sprites[i2];
 							icons_x_off += sprite.myWidth + 3;
 							sprite.drawSprite(x - a + 12 - xp_font.getTextWidth(s) - icons_x_off,
@@ -13717,15 +13671,14 @@ public class Client extends GameApplet {
 									transparency);
 						}
 						xp_font.drawBasicString(s, x - a + 12 - xp_font.getTextWidth(s),
-								y + 150 + (140 - xp_added[i][2]), 0xFF9900, -1);
+								y + 150 + (140 - xp_added[i][2]), 0xFFFFFF, -1);
 					}
 
 				}
-
 				xp_added[i][2]++;
-
-				if (xp_added[i][2] >= (wilderness ? 75 : 240))
+				if (xp_added[i][2] >= (wilderness ? 75 : 240)) {
 					xp_added[i][0] = -1;
+				}
 			}
 		}
 	}

@@ -80,6 +80,9 @@ public class ItemActionPacketListener implements PacketListener {
 			return;
 		}
 		switch (interacted.getId()) {
+		case 13226:
+			player.herbSack().fillSack();
+			break;
 		default:
 			player.getPacketSender().sendMessage("Nothing interesting happens...");
 			break;
@@ -96,7 +99,9 @@ public class ItemActionPacketListener implements PacketListener {
 			return;
 		}
 		switch (interacted.getId()) {
-
+		case 13226:
+			player.herbSack().checkSack();
+			break;
 		}
 	}
 
@@ -110,7 +115,9 @@ public class ItemActionPacketListener implements PacketListener {
 			return;
 		}
 		switch (interacted.getId()) {
-
+		case 13226:
+			player.herbSack().emptySack();
+			break;
 		}
 	}
 

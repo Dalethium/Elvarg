@@ -23,6 +23,7 @@ import com.elvarg.world.content.Trading;
 import com.elvarg.world.content.clan.ClanChat;
 import com.elvarg.world.content.clan.ClanChatManager;
 import com.elvarg.world.content.skills.SkillManager;
+import com.elvarg.world.content.skills.herblore.HerbSack;
 import com.elvarg.world.content.skills.prayer.PrayerHandler;
 import com.elvarg.world.entity.combat.CombatFactory;
 import com.elvarg.world.entity.combat.CombatSpecial;
@@ -36,7 +37,6 @@ import com.elvarg.world.entity.impl.npc.NpcAggression;
 import com.elvarg.world.model.Animation;
 import com.elvarg.world.model.Appearance;
 import com.elvarg.world.model.ChatMessage;
-import com.elvarg.world.model.EffectTimer;
 import com.elvarg.world.model.Flag;
 import com.elvarg.world.model.ForceMovement;
 import com.elvarg.world.model.Item;
@@ -344,38 +344,14 @@ public class Player extends Character {
 		if (getSpecialPercentage() < 100) {
 			TaskManager.submit(new PlayerSpecialAmountTask(this));
 		}
-
-		if (!getCombat().getFreezeTimer().finished()) {
-			getPacketSender().sendEffectTimer(getCombat().getFreezeTimer().secondsRemaining(), EffectTimer.FREEZE);
-		}
-		if (!getVengeanceTimer().finished()) {
-			getPacketSender().sendEffectTimer(getVengeanceTimer().secondsRemaining(), EffectTimer.VENGEANCE);
-		}
 		if (!getOverloadTimer().finished()) {
 			TaskManager.submit(new OverloadPotionTask(this));
-			getPacketSender().sendEffectTimer(getOverloadTimer().secondsRemaining(), EffectTimer.OVERLOAD);
 		}
-		if (!getCombat().getFireImmunityTimer().finished()) {
-			getPacketSender().sendEffectTimer(getCombat().getFireImmunityTimer().secondsRemaining(),
-					EffectTimer.ANTIFIRE);
-		}
-		if (!getCombat().getTeleBlockTimer().finished()) {
-			getPacketSender().sendEffectTimer(getCombat().getTeleBlockTimer().secondsRemaining(),
-					EffectTimer.TELE_BLOCK);
-		}
-
 		getUpdateFlag().flag(Flag.APPEARANCE);
-
 		// Add items if new plr
 		if (isNewPlayer()) {
-			for (int[] item : GameConstants.startKit) {
-				getInventory().add((item[0]), item[1]);
-			}
-			getPacketSender().sendMessage("Available commands:  ").sendMessage("").sendMessage("::item id amount")
-					.sendMessage("::setlevel skillId level").sendMessage("::master").sendMessage("::runes");
-
+			GameConstants.STATER_KIT.forEach(this.getInventory()::add);
 		}
-
 		// Add the player to register queue
 		World.getPlayerAddQueue().add(this);
 	}
@@ -437,6 +413,7 @@ public class Player extends Character {
 	private final ChatMessage chatMessages = new ChatMessage();
 	private final FrameUpdater frameUpdater = new FrameUpdater();
 	private final BonusManager bonusManager = new BonusManager();
+	private final HerbSack herbSack = new HerbSack(this);
 	private PlayerSession session;
 	private PlayerInteractingOption playerInteractingOption = PlayerInteractingOption.NONE;
 	private PlayerRights rights = PlayerRights.PLAYER;
@@ -668,6 +645,10 @@ public class Player extends Character {
 
 	public BonusManager getBonusManager() {
 		return bonusManager;
+	}
+
+	public HerbSack herbSack() {
+		return herbSack;
 	}
 
 	public int getMultiIcon() {

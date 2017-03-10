@@ -7,7 +7,6 @@ import com.elvarg.world.entity.Entity;
 import com.elvarg.world.entity.impl.object.GameObject;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Animation;
-import com.elvarg.world.model.EffectTimer;
 import com.elvarg.world.model.Graphic;
 import com.elvarg.world.model.Item;
 import com.elvarg.world.model.PlayerInteractingOption;
@@ -508,17 +507,6 @@ public class PacketSender {
 	public PacketSender sendCurrentBankTab(int current_tab) {
 		PacketBuilder out = new PacketBuilder(55);
 		out.put(current_tab);
-		player.getSession().write(out);
-		return this;
-	}
-
-	public PacketSender sendEffectTimer(int delay, EffectTimer e) {
-
-		PacketBuilder out = new PacketBuilder(54);
-
-		out.putShort(delay);
-		out.putShort(e.getClientSprite());
-
 		player.getSession().write(out);
 		return this;
 	}
