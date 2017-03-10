@@ -8,13 +8,13 @@ public class ItemContainerOption5 implements OutgoingPacket {
 	int slot;
 	int interfaceId;
 	int nodeId;
-	
+
 	public ItemContainerOption5(int slot, int interfaceId, int nodeId) {
 		this.nodeId = nodeId;
 		this.slot = slot;
 		this.interfaceId = interfaceId;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(135);

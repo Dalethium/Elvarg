@@ -6,5 +6,5 @@ public final class VertexNormal {
 	public int normalY;
 	public int normalZ;
 	public int magnitude;
-	
+
 }

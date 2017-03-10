@@ -99,7 +99,7 @@ public final class Projectile {
 	public Projectile(Entity source, Entity victim, int projectileId, int delay, int speed, int startHeight,
 			int endHeight, int curve) {
 		this(source.getPosition(), victim.getPosition(),
-				(victim.isPlayer() ? -victim.getIndex() - 1 : victim.getIndex() + 1), projectileId, delay, speed,
+				(victim.isPlayer() ? -victim.getIndex() - 1 : victim.getIndex() + 1), projectileId, speed, delay,
 				startHeight, endHeight, curve);
 	}
 

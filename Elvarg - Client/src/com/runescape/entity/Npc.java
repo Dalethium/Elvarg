@@ -16,8 +16,7 @@ public final class Npc extends Mob {
 			int movement = -1;
 			if (super.movementAnimation >= 0 && super.movementAnimation != super.idleAnimation)
 				movement = Animation.animations[super.movementAnimation].primaryFrames[super.displayedMovementFrames];
-			return desc.getAnimatedModel(movement, emote,
-					Animation.animations[super.emoteAnimation].interleaveOrder);
+			return desc.getAnimatedModel(movement, emote, Animation.animations[super.emoteAnimation].interleaveOrder);
 		}
 		int movement = -1;
 		if (super.movementAnimation >= 0)
@@ -25,6 +24,7 @@ public final class Npc extends Mob {
 		return desc.getAnimatedModel(-1, movement, null);
 	}
 
+	@Override
 	public Model getRotatedModel() {
 		if (desc == null)
 			return null;
@@ -37,18 +37,15 @@ public final class Npc extends Mob {
 			Model graphicModel = spotAnim.getModel();
 			if (graphicModel != null) {
 				int frame = spotAnim.animationSequence.primaryFrames[super.currentAnimation];
-				Model model = new Model(true, Frame.noAnimationInProgress(frame),
-						false, graphicModel);
+				Model model = new Model(true, Frame.noAnimationInProgress(frame), false, graphicModel);
 				model.translate(0, -super.graphicHeight, 0);
 				model.skin();
 				model.applyTransform(frame);
 				model.faceGroups = null;
 				model.vertexGroups = null;
 				if (spotAnim.resizeXY != 128 || spotAnim.resizeZ != 128)
-					model.scale(spotAnim.resizeXY, spotAnim.resizeXY,
-							spotAnim.resizeZ);
-				model.light(64 + spotAnim.modelBrightness,
-						850 + spotAnim.modelShadow, -30, -50, -30, true);
+					model.scale(spotAnim.resizeXY, spotAnim.resizeXY, spotAnim.resizeZ);
+				model.light(64 + spotAnim.modelBrightness, 850 + spotAnim.modelShadow, -30, -50, -30, true);
 				Model models[] = { animatedModel, model };
 				animatedModel = new Model(models);
 			}
@@ -58,6 +55,7 @@ public final class Npc extends Mob {
 		return animatedModel;
 	}
 
+	@Override
 	public boolean isVisible() {
 		return desc != null;
 	}

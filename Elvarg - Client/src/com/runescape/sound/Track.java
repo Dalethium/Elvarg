@@ -11,7 +11,7 @@ public final class Track {
 	private Track() {
 		synthesizers = new Synthesizer[10];
 	}
-	
+
 	public static void unpack(Buffer stream) {
 		output = new byte[0x6baa8];
 		riff = new Buffer(output);
@@ -22,7 +22,7 @@ public final class Track {
 				return;
 			tracks[id] = new Track();
 			tracks[id].decode(stream);
-			delays[id] = tracks[id].calculateDelay();		
+			delays[id] = tracks[id].calculateDelay();
 		} while (true);
 	}
 
@@ -51,8 +51,7 @@ public final class Track {
 	private int calculateDelay() {
 		int offset = 0x98967f;
 		for (int syntheziser = 0; syntheziser < 10; syntheziser++)
-			if (synthesizers[syntheziser] != null
-					&& synthesizers[syntheziser].offset / 20 < offset)
+			if (synthesizers[syntheziser] != null && synthesizers[syntheziser].offset / 20 < offset)
 				offset = synthesizers[syntheziser].offset / 20;
 
 		if (loopStart < loopEnd && loopStart / 20 < offset)
@@ -112,8 +111,7 @@ public final class Track {
 			if (synthesizers[synthesizer] != null) {
 				int synthDuration = (synthesizers[synthesizer].duration * 22050) / 1000;
 				int synthOffset = (synthesizers[synthesizer].offset * 22050) / 1000;
-				int samples[] = synthesizers[synthesizer].synthesize(synthDuration,
-						synthesizers[synthesizer].duration);
+				int samples[] = synthesizers[synthesizer].synthesize(synthDuration, synthesizers[synthesizer].duration);
 				for (int sample = 0; sample < synthDuration; sample++)
 					output[sample + synthOffset + 44] += (byte) (samples[sample] >> 8);
 

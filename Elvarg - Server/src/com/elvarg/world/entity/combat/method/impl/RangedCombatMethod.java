@@ -6,6 +6,7 @@ import com.elvarg.world.entity.combat.method.CombatMethod;
 import com.elvarg.world.entity.combat.ranged.RangedData;
 import com.elvarg.world.entity.combat.ranged.RangedData.AmmunitionData;
 import com.elvarg.world.entity.combat.ranged.RangedData.RangedWeaponData;
+import com.elvarg.world.entity.combat.ranged.RangedData.RangedWeaponType;
 import com.elvarg.world.entity.impl.Character;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Animation;
@@ -56,16 +57,39 @@ public class RangedCombatMethod implements CombatMethod {
 	public void onQueueAdd(Character character, Character target) {
 		if (character.isPlayer()) {
 			AmmunitionData ammo = character.getAsPlayer().getCombat().getAmmunition();
-			new Projectile(character, target, ammo.getProjectileId(), ammo.getProjectileDelay() + 16,
-					ammo.getProjectileSpeed() + 28, ammo.getStartHeight(), ammo.getEndHeight(), 0).sendProjectile();
+			RangedWeaponData rangedWeapon = character.getCombat().getRangedWeaponData();
+
+			int projectileId = ammo.getProjectileId();
+			int delay = 40;
+			int speed = 60;
+			int heightEnd = 31;
+			int heightStart = 43;
+			int curve = 0;
+
+			if (rangedWeapon.getType() == RangedWeaponType.CROSSBOW) {
+				delay = 46;
+				speed = 62;
+				heightStart = 44;
+				heightEnd = 35;
+				curve = 3;
+			} else if (ammo == AmmunitionData.TOKTZ_XIL_UL) {
+				delay = 30;
+				speed = 55;
+			}
+
+			new Projectile(character, target, projectileId, delay, speed, heightStart, heightEnd, curve)
+					.sendProjectile();
 
 			RangedData.decrementAmmo(character.getAsPlayer(), target.getPosition());
 
 			// Dark bow sends two arrows, so send another projectile and delete
 			// another arrow.
 			if (character.getCombat().getRangedWeaponData() == RangedWeaponData.DARK_BOW) {
-				new Projectile(character, target, ammo.getProjectileId(), ammo.getProjectileDelay() + 35,
-						ammo.getProjectileSpeed() + 28, ammo.getStartHeight(), ammo.getEndHeight(), 0).sendProjectile();
+				// new Projectile(character, target, ammo.getProjectileId(),
+				// ammo.getProjectileDelay() + 35, ammo.getProjectileSpeed() +
+				// 28, ammo.getStartHeight(), ammo.getEndHeight(),
+				// 0).sendProjectile();
+				new Projectile(character, target, ammo.getProjectileId(), 60, 80, 43, 31, 0).sendProjectile();
 				RangedData.decrementAmmo(character.getAsPlayer(), target.getPosition());
 			}
 		}
@@ -78,6 +102,9 @@ public class RangedCombatMethod implements CombatMethod {
 
 	@Override
 	public int getAttackDistance(Character character) {
+		if (character.isPlayer()) {
+			return character.getAsPlayer().getCombat().getRangedWeaponData().getType().getDistanceRequired();
+		}
 		return 6;
 	}
 
@@ -91,10 +118,9 @@ public class RangedCombatMethod implements CombatMethod {
 
 		if (character.isPlayer()) {
 			AmmunitionData ammo = character.getAsPlayer().getCombat().getAmmunition();
-			// character.getAsPlayer().performGraphic(new
-			// Graphic(ammo.getStartGfxId(), ammo.getStartGfxId() == 2138 ?
-			// GraphicHeight.LOW : ammo.getStartHeight() >= 43 ?
-			// GraphicHeight.HIGH : GraphicHeight.MIDDLE));
+			if (ammo.getStartGraphic() != null) {
+				character.getAsPlayer().performGraphic(ammo.getStartGraphic());
+			}
 		}
 	}
 

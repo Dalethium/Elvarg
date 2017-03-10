@@ -1,4 +1,5 @@
 package com.runescape.scene;
+
 import com.runescape.Client;
 import com.runescape.cache.anim.Animation;
 import com.runescape.cache.config.VariableBits;
@@ -7,7 +8,7 @@ import com.runescape.entity.Renderable;
 import com.runescape.entity.model.Model;
 
 public final class SceneObject extends Renderable {
-	
+
 	private int anInt1599;
 	private final int[] anIntArray1600;
 	private final int anInt1601;
@@ -45,6 +46,7 @@ public final class SceneObject extends Renderable {
 		}
 	}
 
+	@Override
 	public Model getRotatedModel() {
 		int j = -1;
 		if (aAnimation_1607 != null) {
@@ -93,8 +95,8 @@ public final class SceneObject extends Renderable {
 			anInt1599 = 0;
 			anInt1608 = Client.tick;
 			if (flag && aAnimation_1607.loopOffset != -1) {
-				anInt1599 = (int) (Math.random() * (double) aAnimation_1607.frameCount);
-				anInt1608 -= (int) (Math.random() * (double) aAnimation_1607.duration(anInt1599));
+				anInt1599 = (int) (Math.random() * aAnimation_1607.frameCount);
+				anInt1608 -= (int) (Math.random() * aAnimation_1607.duration(anInt1599));
 			}
 		}
 		ObjectDefinition objectDef = ObjectDefinition.lookup(anInt1610);

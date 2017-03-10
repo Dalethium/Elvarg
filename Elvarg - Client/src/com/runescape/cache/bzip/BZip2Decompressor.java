@@ -158,7 +158,7 @@ public final class BZip2Decompressor {
 			uc = getUnsignedChar(state);
 			uc = getUnsignedChar(state);
 			uc = getBit(state);
-			state.aBoolean575 = uc != 0; 
+			state.aBoolean575 = uc != 0;
 			state.randomised = 0;
 			uc = getUnsignedChar(state);
 			state.randomised = state.randomised << 8 | uc & 0xff;
@@ -191,7 +191,8 @@ public final class BZip2Decompressor {
 			 */
 			int huffmanTableCount = getBits(3, state);
 			/*
-			 * number of times that the Huffman tables are swapped (each 50 bytes)
+			 * number of times that the Huffman tables are swapped (each 50
+			 * bytes)
 			 */
 			int swapCount = getBits(15, state);
 			for (int i1 = 0; i1 < swapCount; i1++) {
@@ -247,7 +248,8 @@ public final class BZip2Decompressor {
 						byte8 = state.len[l3][l1];
 				}
 
-				createDecodeTables(state.limit[l3], state.base[l3], state.perm[l3], state.len[l3], byte8, i, alphabetSize);
+				createDecodeTables(state.limit[l3], state.base[l3], state.perm[l3], state.len[l3], byte8, i,
+						alphabetSize);
 				state.minLens[l3] = byte8;
 			}
 
@@ -460,7 +462,8 @@ public final class BZip2Decompressor {
 
 	}
 
-	private static void createDecodeTables(int limit[], int base[], int perm[], byte length[], int i, int maxLength, int alphabetSize) {
+	private static void createDecodeTables(int limit[], int base[], int perm[], byte length[], int i, int maxLength,
+			int alphabetSize) {
 		int pp = 0;
 		for (int i1 = i; i1 <= maxLength; i1++) {
 			for (int l2 = 0; l2 < alphabetSize; l2++) {

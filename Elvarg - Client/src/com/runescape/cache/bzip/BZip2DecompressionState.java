@@ -1,7 +1,7 @@
 package com.runescape.cache.bzip;
 
 final class BZip2DecompressionState {
-	
+
 	byte compressed[];
 	int nextIn;
 	int decompressedLength;

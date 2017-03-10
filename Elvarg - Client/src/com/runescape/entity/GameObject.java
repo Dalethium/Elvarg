@@ -18,8 +18,8 @@ public final class GameObject {
 	public int anInt527;
 	public int anInt528;
 	public int uid;
-    /**
-     * mask = (byte)((objectRotation << 6) + objectType);
-     */
+	/**
+	 * mask = (byte)((objectRotation << 6) + objectType);
+	 */
 	public byte mask;
 }

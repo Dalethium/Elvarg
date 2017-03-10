@@ -245,6 +245,7 @@ public final class PacketBuilder {
 	 * @throws IllegalArgumentExcpetion
 	 *             if middle or inverse-middle value types are selected.
 	 */
+	@SuppressWarnings("incomplete-switch")
 	public PacketBuilder putShort(int value, ValueType type, ByteOrder order) {
 		switch (order) {
 		case BIG:

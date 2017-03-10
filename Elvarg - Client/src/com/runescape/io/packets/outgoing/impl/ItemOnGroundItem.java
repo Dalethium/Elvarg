@@ -11,7 +11,7 @@ public class ItemOnGroundItem implements OutgoingPacket {
 	int nodeId;
 	int val1;
 	int val2;
-	
+
 	public ItemOnGroundItem(int anInt1284, int anInt1285, int nodeId, int val1, int anInt1283, int val2) {
 		this.nodeId = nodeId;
 		this.val1 = val1;
@@ -20,7 +20,7 @@ public class ItemOnGroundItem implements OutgoingPacket {
 		this.anInt1284 = anInt1284;
 		this.anInt1285 = anInt1285;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(109);

@@ -19,7 +19,6 @@ import com.elvarg.net.packet.PacketSender;
 import com.elvarg.util.FrameUpdater;
 import com.elvarg.util.Stopwatch;
 import com.elvarg.world.World;
-import com.elvarg.world.content.ServerFeed;
 import com.elvarg.world.content.Trading;
 import com.elvarg.world.content.clan.ClanChat;
 import com.elvarg.world.content.clan.ClanChatManager;
@@ -97,11 +96,11 @@ public class Player extends Character {
 		if (isDying) {
 			return this;
 		}
-
 		skillManager.setCurrentLevel(Skill.HITPOINTS, hitpoints);
 		packetSender.sendSkill(Skill.HITPOINTS);
-		if (getHitpoints() <= 0 && !isDying)
+		if (getHitpoints() <= 0 && !isDying) {
 			appendDeath();
+		}
 		return this;
 	}
 
@@ -140,7 +139,6 @@ public class Player extends Character {
 		if (getCombat().getFightType().toString().toLowerCase().contains("rapid")) {
 			speed--;
 		}
-
 		return speed;
 	}
 
@@ -184,11 +182,6 @@ public class Player extends Character {
 
 		// Process locations
 		Locations.process(this);
-
-		// Kill feed
-		if (getWalkableInterfaceId() == -1) {
-			getPacketSender().sendWalkableInterface(ServerFeed.INTERFACE_ID);
-		}
 
 		// More timers...
 		if (getAndDecrementSkullTimer() == 0) {
@@ -328,7 +321,7 @@ public class Player extends Character {
 
 		// Update weapon interface configs
 		getPacketSender().sendConfig(getCombat().getFightType().getParentId(), getCombat().getFightType().getChildId())
-				.sendConfig(172, getCombat().autoRetaliate() ? 1 : 0).updateSpecialAttackOrb();
+				.sendConfig(172, getCombat().autoRetaliate() ? 1 : 0);
 
 		// Reset autocasting
 		Autocasting.setAutocast(this, null);
@@ -338,9 +331,6 @@ public class Player extends Character {
 
 		// Update locations..
 		Locations.login(this);
-
-		// Update killfeed
-		ServerFeed.updateInterface(this);
 
 		// Join clanchat
 		ClanChatManager.onLogin(this);

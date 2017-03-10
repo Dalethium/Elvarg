@@ -6,7 +6,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import com.elvarg.net.SessionState;
 import com.elvarg.util.Misc;
 import com.elvarg.util.Stopwatch;
-import com.elvarg.world.content.ServerFeed;
 import com.elvarg.world.entity.combat.CombatFactory;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.grounditems.GroundItemManager;
@@ -280,10 +279,6 @@ public class BountyHunter {
 				player.getBountyHunter().incrementKills();
 		} else
 			player.getBountyHunter().incrementKills();
-
-		ServerFeed.submit("<img=" + ServerFeed.SKULL_SPRITE + ">@whi@[@gre@" + Misc.getCurrentServerTime()
-				+ "@whi@] @or1@" + player.getUsername() + " @whi@has defeated @yel@" + killed.getUsername() + "@whi@!",
-				15);
 
 		killed.getBountyHunter().incrementDeaths();
 		killed.getBountyHunter().updateInterface();

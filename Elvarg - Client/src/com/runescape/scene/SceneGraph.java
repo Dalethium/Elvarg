@@ -1,15 +1,16 @@
 package com.runescape.scene;
+
 import com.runescape.collection.Deque;
 import com.runescape.draw.Rasterizer2D;
 import com.runescape.draw.Rasterizer3D;
+import com.runescape.entity.GameObject;
 import com.runescape.entity.GroundItemTile;
 import com.runescape.entity.Renderable;
-import com.runescape.entity.GameObject;
 import com.runescape.entity.model.Model;
 import com.runescape.entity.model.VertexNormal;
 import com.runescape.scene.object.GroundDecoration;
-import com.runescape.scene.object.WallObject;
 import com.runescape.scene.object.WallDecoration;
+import com.runescape.scene.object.WallObject;
 import com.runescape.scene.object.tile.ShapedTile;
 import com.runescape.scene.object.tile.SimpleTile;
 import com.runescape.scene.object.tile.Tile;
@@ -20,7 +21,7 @@ public final class SceneGraph {
 		int yLocSize = 104;// was parameter
 		int xLocSize = 104;// was parameter
 		int zLocSize = 4;// was parameter
-        gameObjectsCache = new GameObject[5000];
+		gameObjectsCache = new GameObject[5000];
 		anIntArray486 = new int[10000];
 		anIntArray487 = new int[10000];
 		numberOfZ = zLocSize;
@@ -32,9 +33,9 @@ public final class SceneGraph {
 		initToNull();
 	}
 
-    /**
-     * The class destructor.
-     */
+	/**
+	 * The class destructor.
+	 */
 	public static void destructor() {
 		interactableObjects = null;
 		sceneClusterCounts = null;
@@ -51,15 +52,15 @@ public final class SceneGraph {
 					tileArray[zLoc][xLoc][yLoc] = null;
 		for (int plane = 0; plane < cullingClusterPlaneCount; plane++) {
 			for (int j1 = 0; j1 < sceneClusterCounts[plane]; j1++)
-                sceneClusters[plane][j1] = null;
-            sceneClusterCounts[plane] = 0;
+				sceneClusters[plane][j1] = null;
+			sceneClusterCounts[plane] = 0;
 		}
 
 		for (int i = 0; i < interactableObjectCacheCurrPos; i++)
 			gameObjectsCache[i] = null;
 		interactableObjectCacheCurrPos = 0;
 		for (int i = 0; i < interactableObjects.length; i++)
-            interactableObjects[i] = null;
+			interactableObjects[i] = null;
 
 	}
 
@@ -91,7 +92,8 @@ public final class SceneGraph {
 		tileArray[3][xLoc][yLoc] = null;
 	}
 
-	public static void createNewSceneCluster(int z, int lowestX, int lowestZ, int highestX, int highestY, int highestZ, int lowestY, int searchMask) {
+	public static void createNewSceneCluster(int z, int lowestX, int lowestZ, int highestX, int highestY, int highestZ,
+			int lowestY, int searchMask) {
 		SceneCluster sceneCluster = new SceneCluster();
 		sceneCluster.startXLoc = lowestX / 128;
 		sceneCluster.endXLoc = highestX / 128;
@@ -113,7 +115,8 @@ public final class SceneGraph {
 			tileArray[zLoc][xLoc][yLoc].logicHeight = logicHeight;
 	}
 
-	public void addTile(int zLoc, int xLoc, int yLoc, int shape, int i1, int j1, int k1, int l1, int i2, int j2, int k2, int l2, int i3, int j3, int k3, int l3, int i4, int j4, int k4, int l4) {
+	public void addTile(int zLoc, int xLoc, int yLoc, int shape, int i1, int j1, int k1, int l1, int i2, int j2, int k2,
+			int l2, int i3, int j3, int k3, int l3, int i4, int j4, int k4, int l4) {
 		if (shape == 0) {
 			SimpleTile simpleTile = new SimpleTile(k2, l2, i3, j3, -1, k4, false);
 			for (int lowerZLoc = zLoc; lowerZLoc >= 0; lowerZLoc--)
@@ -129,16 +132,18 @@ public final class SceneGraph {
 
 			tileArray[zLoc][xLoc][yLoc].mySimpleTile = simpleTile;
 		} else {
-            ShapedTile shapedTile = new ShapedTile(yLoc, k3, j3, i2, j1, i4, i1, k2, k4, i3, j2, l1, k1, shape, j4, l3, l2, xLoc, l4);
-            for (int k5 = zLoc; k5 >= 0; k5--)
-                if (tileArray[k5][xLoc][yLoc] == null)
-                    tileArray[k5][xLoc][yLoc] = new Tile(k5, xLoc, yLoc);
+			ShapedTile shapedTile = new ShapedTile(yLoc, k3, j3, i2, j1, i4, i1, k2, k4, i3, j2, l1, k1, shape, j4, l3,
+					l2, xLoc, l4);
+			for (int k5 = zLoc; k5 >= 0; k5--)
+				if (tileArray[k5][xLoc][yLoc] == null)
+					tileArray[k5][xLoc][yLoc] = new Tile(k5, xLoc, yLoc);
 
-            tileArray[zLoc][xLoc][yLoc].myShapedTile = shapedTile;
-        }
+			tileArray[zLoc][xLoc][yLoc].myShapedTile = shapedTile;
+		}
 	}
 
-	public void addGroundDecoration(int zLoc, int zPos, int yLoc, Renderable renderable, byte objectRotationType, int uid, int xLoc) {
+	public void addGroundDecoration(int zLoc, int zPos, int yLoc, Renderable renderable, byte objectRotationType,
+			int uid, int xLoc) {
 		if (renderable == null)
 			return;
 		GroundDecoration groundDecoration = new GroundDecoration();
@@ -153,7 +158,8 @@ public final class SceneGraph {
 		tileArray[zLoc][xLoc][yLoc].groundDecoration = groundDecoration;
 	}
 
-	public void addGroundItemTile(int xLoc, int uid, Renderable firstNode, int zPos, Renderable secondNode, Renderable thirdNode, int zLoc, int yLoc) {
+	public void addGroundItemTile(int xLoc, int uid, Renderable firstNode, int zPos, Renderable secondNode,
+			Renderable thirdNode, int zLoc, int yLoc) {
 		GroundItemTile groundItemTile = new GroundItemTile();
 		groundItemTile.topNode = thirdNode;
 		groundItemTile.xPos = xLoc * 128 + 64;
@@ -179,7 +185,8 @@ public final class SceneGraph {
 		tileArray[zLoc][xLoc][yLoc].groundItemTile = groundItemTile;
 	}
 
-	public void addWallObject(int orientation1, Renderable renderable1, int uid, int yLoc, byte objectFaceType, int xLoc, Renderable renderable2, int zPos, int orientation2, int zLoc) {
+	public void addWallObject(int orientation1, Renderable renderable1, int uid, int yLoc, byte objectFaceType,
+			int xLoc, Renderable renderable2, int zPos, int orientation2, int zLoc) {
 		if (renderable1 == null && renderable2 == null)
 			return;
 		WallObject wallObject = new WallObject();
@@ -199,7 +206,8 @@ public final class SceneGraph {
 		tileArray[zLoc][xLoc][yLoc].wallObject = wallObject;
 	}
 
-	public void addWallDecoration(int uid, int yLoc, int orientation2, int zLoc, int xOffset, int zPos, Renderable renderable, int xLoc, byte objectRotationType, int yOffset, int orientation) {
+	public void addWallDecoration(int uid, int yLoc, int orientation2, int zLoc, int xOffset, int zPos,
+			Renderable renderable, int xLoc, byte objectRotationType, int yOffset, int orientation) {
 		if (renderable == null)
 			return;
 		WallDecoration wallDecoration = new WallDecoration();
@@ -218,17 +226,20 @@ public final class SceneGraph {
 		tileArray[zLoc][xLoc][yLoc].wallDecoration = wallDecoration;
 	}
 
-	public boolean addTiledObject(int uid, byte objectRotationType, int tileHeight, int sizeY, Renderable renderable, int sizeX, int zLoc, int turnValue, int yLoc, int xLoc) {
+	public boolean addTiledObject(int uid, byte objectRotationType, int tileHeight, int sizeY, Renderable renderable,
+			int sizeX, int zLoc, int turnValue, int yLoc, int xLoc) {
 		if (renderable == null) {
 			return true;
 		} else {
 			int xPos = xLoc * 128 + 64 * sizeX;
 			int yPos = yLoc * 128 + 64 * sizeY;
-			return addAnimableC(zLoc, xLoc, yLoc, sizeX, sizeY, xPos, yPos, tileHeight, renderable, turnValue, false, uid, objectRotationType);
+			return addAnimableC(zLoc, xLoc, yLoc, sizeX, sizeY, xPos, yPos, tileHeight, renderable, turnValue, false,
+					uid, objectRotationType);
 		}
 	}
 
-	public boolean addAnimableA(int zLoc, int turnValue, int k, int uid, int yPos, int halfSizePos, int xPos, Renderable animable, boolean flag) {
+	public boolean addAnimableA(int zLoc, int turnValue, int k, int uid, int yPos, int halfSizePos, int xPos,
+			Renderable animable, boolean flag) {
 		if (animable == null)
 			return true;
 		int startXLoc = xPos - halfSizePos;
@@ -245,18 +256,24 @@ public final class SceneGraph {
 			if (turnValue > 128 && turnValue < 896)
 				startXLoc -= 128;
 		}
-        startXLoc /= 128;
-        startYLoc /= 128;
+		startXLoc /= 128;
+		startYLoc /= 128;
 		endXLoc /= 128;
-        endYLoc /= 128;
-		return addAnimableC(zLoc, startXLoc, startYLoc, (endXLoc - startXLoc) + 1, (endYLoc - startYLoc) + 1, xPos, yPos, k, animable, turnValue, true, uid, (byte) 0);
+		endYLoc /= 128;
+		return addAnimableC(zLoc, startXLoc, startYLoc, (endXLoc - startXLoc) + 1, (endYLoc - startYLoc) + 1, xPos,
+				yPos, k, animable, turnValue, true, uid, (byte) 0);
 	}
 
-	public boolean addToScenePlayerAsObject(int zLoc, int playerYPos, Renderable playerAsObject, int playerTurnValue, int objectEndYLoc, int playerXPos, int playerHeight, int objectStartXLoc, int objectEndXLoc, int uid, int objectStartYLoc) {
-		return playerAsObject == null || addAnimableC(zLoc, objectStartXLoc, objectStartYLoc, (objectEndXLoc - objectStartXLoc) + 1, (objectEndYLoc - objectStartYLoc) + 1, playerXPos, playerYPos, playerHeight, playerAsObject, playerTurnValue, true, uid, (byte) 0);
+	public boolean addToScenePlayerAsObject(int zLoc, int playerYPos, Renderable playerAsObject, int playerTurnValue,
+			int objectEndYLoc, int playerXPos, int playerHeight, int objectStartXLoc, int objectEndXLoc, int uid,
+			int objectStartYLoc) {
+		return playerAsObject == null || addAnimableC(zLoc, objectStartXLoc, objectStartYLoc,
+				(objectEndXLoc - objectStartXLoc) + 1, (objectEndYLoc - objectStartYLoc) + 1, playerXPos, playerYPos,
+				playerHeight, playerAsObject, playerTurnValue, true, uid, (byte) 0);
 	}
 
-	private boolean addAnimableC(int zLoc, int xLoc, int yLoc, int sizeX, int sizeY, int xPos, int yPos, int tileHeight, Renderable renderable, int turnValue, boolean isDynamic, int uid, byte objectRotationType) {
+	private boolean addAnimableC(int zLoc, int xLoc, int yLoc, int sizeX, int sizeY, int xPos, int yPos, int tileHeight,
+			Renderable renderable, int turnValue, boolean isDynamic, int uid, byte objectRotationType) {
 		for (int x = xLoc; x < xLoc + sizeX; x++) {
 			for (int y = yLoc; y < yLoc + sizeY; y++) {
 				if (x < 0 || y < 0 || x >= xRegionSize || y >= yRegionSize)
@@ -308,7 +325,7 @@ public final class SceneGraph {
 		if (isDynamic) {
 			gameObjectsCache[interactableObjectCacheCurrPos++] = gameObject;
 		}
-		
+
 		return true;
 	}
 
@@ -348,7 +365,8 @@ public final class SceneGraph {
 		}
 	}
 
-	public void method290(int yLoc, int k, int xLoc, int zLoc) { //TODO scale position?
+	public void method290(int yLoc, int k, int xLoc, int zLoc) { // TODO scale
+																	// position?
 		Tile tile = tileArray[zLoc][xLoc][yLoc];
 		if (tile == null)
 			return;
@@ -472,15 +490,21 @@ public final class SceneGraph {
 			return tile.groundDecoration.uid;
 	}
 
-    /**
-     * Retrieves the mask of the object with the given uid at the given location.
-     * -1 if there's no object.
-     * @param zLoc The zLoc.
-     * @param xLoc The xLoc.
-     * @param yLoc The yLoc.
-     * @param uid The object's Uid.
-     * @return The mask, which is comprised out of the rotation (shifted 6 to the left) and the type (which has a maximum value of 22).
-     */
+	/**
+	 * Retrieves the mask of the object with the given uid at the given
+	 * location. -1 if there's no object.
+	 * 
+	 * @param zLoc
+	 *            The zLoc.
+	 * @param xLoc
+	 *            The xLoc.
+	 * @param yLoc
+	 *            The yLoc.
+	 * @param uid
+	 *            The object's Uid.
+	 * @return The mask, which is comprised out of the rotation (shifted 6 to
+	 *         the left) and the type (which has a maximum value of 22).
+	 */
 	public int getMask(int zLoc, int xLoc, int yLoc, int uid) {
 		Tile tile = tileArray[zLoc][xLoc][yLoc];
 		if (tile == null)
@@ -508,27 +532,36 @@ public final class SceneGraph {
 					Tile tile = tileArray[zLoc][xLoc][yLoc];
 					if (tile != null) {
 						WallObject wallObject = tile.wallObject;
-						if (wallObject != null && wallObject.renderable1 != null && wallObject.renderable1.vertexNormals != null) {
+						if (wallObject != null && wallObject.renderable1 != null
+								&& wallObject.renderable1.vertexNormals != null) {
 							method307(zLoc, 1, 1, xLoc, yLoc, (Model) wallObject.renderable1);
 							if (wallObject.renderable2 != null && wallObject.renderable2.vertexNormals != null) {
 								method307(zLoc, 1, 1, xLoc, yLoc, (Model) wallObject.renderable2);
-								mergeNormals((Model) wallObject.renderable1, (Model) wallObject.renderable2, 0, 0, 0, false);
-								((Model) wallObject.renderable2).doShading(intensity, someLightQualityVariable, lightX, lightY, lightZ);
+								mergeNormals((Model) wallObject.renderable1, (Model) wallObject.renderable2, 0, 0, 0,
+										false);
+								((Model) wallObject.renderable2).doShading(intensity, someLightQualityVariable, lightX,
+										lightY, lightZ);
 							}
-							((Model) wallObject.renderable1).doShading(intensity, someLightQualityVariable, lightX, lightY, lightZ);
+							((Model) wallObject.renderable1).doShading(intensity, someLightQualityVariable, lightX,
+									lightY, lightZ);
 						}
 						for (int k2 = 0; k2 < tile.gameObjectIndex; k2++) {
 							GameObject interactableObject = tile.gameObjects[k2];
-							if (interactableObject != null && interactableObject.renderable != null && interactableObject.renderable.vertexNormals != null) {
-								method307(zLoc, (interactableObject.xLocHigh - interactableObject.xLocLow) + 1, (interactableObject.yLocLow - interactableObject.yLocHigh) + 1, xLoc, yLoc, (Model) interactableObject.renderable);
-								((Model) interactableObject.renderable).doShading(intensity, someLightQualityVariable, lightX, lightY, lightZ);
+							if (interactableObject != null && interactableObject.renderable != null
+									&& interactableObject.renderable.vertexNormals != null) {
+								method307(zLoc, (interactableObject.xLocHigh - interactableObject.xLocLow) + 1,
+										(interactableObject.yLocLow - interactableObject.yLocHigh) + 1, xLoc, yLoc,
+										(Model) interactableObject.renderable);
+								((Model) interactableObject.renderable).doShading(intensity, someLightQualityVariable,
+										lightX, lightY, lightZ);
 							}
 						}
 
 						GroundDecoration groundDecoration = tile.groundDecoration;
 						if (groundDecoration != null && groundDecoration.renderable.vertexNormals != null) {
 							method306GroundDecorationOnly(xLoc, zLoc, (Model) groundDecoration.renderable, yLoc);
-							((Model) groundDecoration.renderable).doShading(intensity, someLightQualityVariable, lightX, lightY, lightZ);
+							((Model) groundDecoration.renderable).doShading(intensity, someLightQualityVariable, lightX,
+									lightY, lightZ);
 						}
 					}
 				}
@@ -536,7 +569,10 @@ public final class SceneGraph {
 		}
 	}
 
-	private void method306GroundDecorationOnly(int modelXLoc, int modelZLoc, Model model, int modelYLoc) { //TODO figure it out
+	private void method306GroundDecorationOnly(int modelXLoc, int modelZLoc, Model model, int modelYLoc) { // TODO
+																											// figure
+																											// it
+																											// out
 		if (modelXLoc < xRegionSize) {
 			Tile tile = tileArray[modelZLoc][modelXLoc + 1][modelYLoc];
 			if (tile != null && tile.groundDecoration != null && tile.groundDecoration.renderable.vertexNormals != null)
@@ -566,31 +602,52 @@ public final class SceneGraph {
 		int startY = modelYLoc - 1;
 		int stopY = modelYLoc + modelYSize;
 		for (int zLoc = modelZLoc; zLoc <= modelZLoc + 1; zLoc++)
-			if (zLoc != numberOfZ) {//TODO Always?
+			if (zLoc != numberOfZ) {// TODO Always?
 				for (int xLoc = startX; xLoc <= stopX; xLoc++)
 					if (xLoc >= 0 && xLoc < xRegionSize) {
 						for (int yLoc = startY; yLoc <= stopY; yLoc++)
-							if (yLoc >= 0 && yLoc < yRegionSize && (!flag || xLoc >= stopX || yLoc >= stopY || yLoc < modelYLoc && xLoc != modelXLoc)) {
+							if (yLoc >= 0 && yLoc < yRegionSize && (!flag || xLoc >= stopX || yLoc >= stopY
+									|| yLoc < modelYLoc && xLoc != modelXLoc)) {
 								Tile tile = tileArray[zLoc][xLoc][yLoc];
 								if (tile != null) {
-									int relativeHeightToModelTile = (heightMap[zLoc][xLoc][yLoc] + heightMap[zLoc][xLoc + 1][yLoc] + heightMap[zLoc][xLoc][yLoc + 1] + heightMap[zLoc][xLoc + 1][yLoc + 1]) / 4 - (heightMap[modelZLoc][modelXLoc][modelYLoc] + heightMap[modelZLoc][modelXLoc + 1][modelYLoc] + heightMap[modelZLoc][modelXLoc][modelYLoc + 1] + heightMap[modelZLoc][modelXLoc + 1][modelYLoc + 1]) / 4;
+									int relativeHeightToModelTile = (heightMap[zLoc][xLoc][yLoc]
+											+ heightMap[zLoc][xLoc + 1][yLoc] + heightMap[zLoc][xLoc][yLoc + 1]
+											+ heightMap[zLoc][xLoc + 1][yLoc + 1]) / 4
+											- (heightMap[modelZLoc][modelXLoc][modelYLoc]
+													+ heightMap[modelZLoc][modelXLoc + 1][modelYLoc]
+													+ heightMap[modelZLoc][modelXLoc][modelYLoc + 1]
+													+ heightMap[modelZLoc][modelXLoc + 1][modelYLoc + 1]) / 4;
 									WallObject wallObject = tile.wallObject;
-									if (wallObject != null && wallObject.renderable1 != null && wallObject.renderable1.vertexNormals != null)
-										mergeNormals(model, (Model) wallObject.renderable1, (xLoc - modelXLoc) * 128 + (1 - modelXSize) * 64, relativeHeightToModelTile, (yLoc - modelYLoc) * 128 + (1 - modelYSize) * 64, flag);
-									if (wallObject != null && wallObject.renderable2 != null && wallObject.renderable2.vertexNormals != null)
-										mergeNormals(model, (Model) wallObject.renderable2, (xLoc - modelXLoc) * 128 + (1 - modelXSize) * 64, relativeHeightToModelTile, (yLoc - modelYLoc) * 128 + (1 - modelYSize) * 64, flag);
+									if (wallObject != null && wallObject.renderable1 != null
+											&& wallObject.renderable1.vertexNormals != null)
+										mergeNormals(model, (Model) wallObject.renderable1,
+												(xLoc - modelXLoc) * 128 + (1 - modelXSize) * 64,
+												relativeHeightToModelTile,
+												(yLoc - modelYLoc) * 128 + (1 - modelYSize) * 64, flag);
+									if (wallObject != null && wallObject.renderable2 != null
+											&& wallObject.renderable2.vertexNormals != null)
+										mergeNormals(model, (Model) wallObject.renderable2,
+												(xLoc - modelXLoc) * 128 + (1 - modelXSize) * 64,
+												relativeHeightToModelTile,
+												(yLoc - modelYLoc) * 128 + (1 - modelYSize) * 64, flag);
 									for (int i = 0; i < tile.gameObjectIndex; i++) {
 										GameObject gameObject = tile.gameObjects[i];
-										if (gameObject != null && gameObject.renderable != null && gameObject.renderable.vertexNormals != null) {
+										if (gameObject != null && gameObject.renderable != null
+												&& gameObject.renderable.vertexNormals != null) {
 											int tiledObjectXSize = (gameObject.xLocHigh - gameObject.xLocLow) + 1;
 											int tiledObjectYSize = (gameObject.yLocLow - gameObject.yLocHigh) + 1;
-											mergeNormals(model, (Model) gameObject.renderable, (gameObject.xLocLow - modelXLoc) * 128 + (tiledObjectXSize - modelXSize) * 64, relativeHeightToModelTile, (gameObject.yLocHigh - modelYLoc) * 128 + (tiledObjectYSize - modelYSize) * 64, flag);
+											mergeNormals(model, (Model) gameObject.renderable,
+													(gameObject.xLocLow - modelXLoc) * 128
+															+ (tiledObjectXSize - modelXSize) * 64,
+													relativeHeightToModelTile, (gameObject.yLocHigh - modelYLoc) * 128
+															+ (tiledObjectYSize - modelYSize) * 64,
+													flag);
 										}
 									}
 								}
 							}
 					}
-				startX--; //TODO why?
+				startX--; // TODO why?
 				flag = false;
 			}
 
@@ -602,7 +659,7 @@ public final class SceneGraph {
 		int second[] = model2.vertexX;
 		int secondVertices = model2.numVertices;
 		for (int model1Vertex = 0; model1Vertex < model1.numVertices; model1Vertex++) {
-            VertexNormal vertexNormal1 = model1.vertexNormals[model1Vertex];
+			VertexNormal vertexNormal1 = model1.vertexNormals[model1Vertex];
 			VertexNormal alsoVertexNormal1 = model1.alsoVertexNormals[model1Vertex];
 			if (alsoVertexNormal1.magnitude != 0) {
 				int dY = model1.vertexY[model1Vertex] - offsetY;
@@ -614,7 +671,8 @@ public final class SceneGraph {
 							for (int l2 = 0; l2 < secondVertices; l2++) {
 								VertexNormal vertexNormal2 = model2.vertexNormals[l2];
 								VertexNormal alsoVertexNormal2 = model2.alsoVertexNormals[l2];
-								if (dX == second[l2] && k2 == model2.vertexZ[l2] && dY == model2.vertexY[l2] && alsoVertexNormal2.magnitude != 0) {
+								if (dX == second[l2] && k2 == model2.vertexZ[l2] && dY == model2.vertexY[l2]
+										&& alsoVertexNormal2.magnitude != 0) {
 									vertexNormal1.normalX += alsoVertexNormal2.normalX;
 									vertexNormal1.normalY += alsoVertexNormal2.normalY;
 									vertexNormal1.normalZ += alsoVertexNormal2.normalZ;
@@ -638,11 +696,13 @@ public final class SceneGraph {
 		if (count < 3 || !flag)
 			return;
 		for (int k1 = 0; k1 < model1.numTriangles; k1++)
-			if (anIntArray486[model1.facePointA[k1]] == anInt488 && anIntArray486[model1.facePointB[k1]] == anInt488 && anIntArray486[model1.facePointC[k1]] == anInt488)
+			if (anIntArray486[model1.facePointA[k1]] == anInt488 && anIntArray486[model1.facePointB[k1]] == anInt488
+					&& anIntArray486[model1.facePointC[k1]] == anInt488)
 				model1.faceDrawType[k1] = -1;
 
 		for (int l1 = 0; l1 < model2.numTriangles; l1++)
-			if (anIntArray487[model2.facePointA[l1]] == anInt488 && anIntArray487[model2.facePointB[l1]] == anInt488 && anIntArray487[model2.facePointC[l1]] == anInt488)
+			if (anIntArray487[model2.facePointA[l1]] == anInt488 && anIntArray487[model2.facePointB[l1]] == anInt488
+					&& anIntArray487[model2.facePointC[l1]] == anInt488)
 				model2.faceDrawType[l1] = -1;
 
 	}
@@ -667,11 +727,11 @@ public final class SceneGraph {
 			return;
 		}
 		ShapedTile shapedTile = tile.myShapedTile;
-		
+
 		if (shapedTile == null) {
 			return;
 		}
-		
+
 		int shape = shapedTile.shape;
 		int rotation = shapedTile.rotation;
 		int underlayRGB = shapedTile.colourRGB;
@@ -706,16 +766,16 @@ public final class SceneGraph {
 		anInt495 = 0;
 		anInt496 = 0;
 		SceneGraph.viewportWidth = viewportWidth;
-        SceneGraph.viewportHeight = viewportHeight;
+		SceneGraph.viewportHeight = viewportHeight;
 		viewportHalfWidth = viewportWidth / 2;
 		viewportHalfHeight = viewportHeight / 2;
 		boolean aflag[][][][] = new boolean[9][32][53][53];
 		for (int zAngle = 128; zAngle <= 384; zAngle += 32) {
 			for (int xyAngle = 0; xyAngle < 2048; xyAngle += 64) {
-                camUpDownY = Model.SINE[zAngle];
-                camUpDownX = Model.COSINE[zAngle];
-                camLeftRightY = Model.SINE[xyAngle];
-                camLeftRightX = Model.COSINE[xyAngle];
+				camUpDownY = Model.SINE[zAngle];
+				camUpDownX = Model.COSINE[zAngle];
+				camLeftRightY = Model.SINE[xyAngle];
+				camLeftRightX = Model.COSINE[xyAngle];
 				int angularZSegment = (zAngle - 128) / 32;
 				int angularXYSegment = xyAngle / 64;
 				for (int xRelativeToCamera = -26; xRelativeToCamera <= 26; xRelativeToCamera++) {
@@ -729,7 +789,8 @@ public final class SceneGraph {
 							flag2 = true;
 							break;
 						}
-						aflag[angularZSegment][angularXYSegment][xRelativeToCamera + 25 + 1][yRelativeToCamera + 25 + 1] = flag2;
+						aflag[angularZSegment][angularXYSegment][xRelativeToCamera + 25 + 1][yRelativeToCamera + 25
+								+ 1] = flag2;
 					}
 				}
 			}
@@ -742,21 +803,26 @@ public final class SceneGraph {
 						boolean flag1 = false;
 						label0: for (int l3 = -1; l3 <= 1; l3++) {
 							for (int j4 = -1; j4 <= 1; j4++) {
-								if (aflag[angularZSegment][angularXYSegment][xRelativeToCamera + l3 + 25 + 1][yRelativeToCamera + j4 + 25 + 1])
+								if (aflag[angularZSegment][angularXYSegment][xRelativeToCamera + l3 + 25
+										+ 1][yRelativeToCamera + j4 + 25 + 1])
 									flag1 = true;
-								else if (aflag[angularZSegment][(angularXYSegment + 1) % 31][xRelativeToCamera + l3 + 25 + 1][yRelativeToCamera + j4 + 25 + 1])
+								else if (aflag[angularZSegment][(angularXYSegment + 1) % 31][xRelativeToCamera + l3 + 25
+										+ 1][yRelativeToCamera + j4 + 25 + 1])
 									flag1 = true;
-								else if (aflag[angularZSegment + 1][angularXYSegment][xRelativeToCamera + l3 + 25 + 1][yRelativeToCamera + j4 + 25 + 1]) {
+								else if (aflag[angularZSegment + 1][angularXYSegment][xRelativeToCamera + l3 + 25
+										+ 1][yRelativeToCamera + j4 + 25 + 1]) {
 									flag1 = true;
 								} else {
-									if (!aflag[angularZSegment + 1][(angularXYSegment + 1) % 31][xRelativeToCamera + l3 + 25 + 1][yRelativeToCamera + j4 + 25 + 1])
+									if (!aflag[angularZSegment + 1][(angularXYSegment + 1) % 31][xRelativeToCamera + l3
+											+ 25 + 1][yRelativeToCamera + j4 + 25 + 1])
 										continue;
 									flag1 = true;
 								}
 								break label0;
 							}
 						}
-						aBooleanArrayArrayArrayArray491[angularZSegment][angularXYSegment][xRelativeToCamera + 25][yRelativeToCamera + 25] = flag1;
+						aBooleanArrayArrayArrayArray491[angularZSegment][angularXYSegment][xRelativeToCamera
+								+ 25][yRelativeToCamera + 25] = flag1;
 					}
 				}
 			}
@@ -775,11 +841,14 @@ public final class SceneGraph {
 		return l1 >= anInt495 && l1 <= viewportWidth && i2 >= anInt496 && i2 <= viewportHeight;
 	}
 
-    /**
-     * Clicks on the screen and requests recomputation of the clicked tile.
-     * @param clickY The click's Y-coordinate on the applet.
-     * @param clickX The click's X-coordinate on the applet.
-     */
+	/**
+	 * Clicks on the screen and requests recomputation of the clicked tile.
+	 * 
+	 * @param clickY
+	 *            The click's Y-coordinate on the applet.
+	 * @param clickX
+	 *            The click's X-coordinate on the applet.
+	 */
 	public void clickTile(int clickY, int clickX) {
 		clicked = true;
 		clickScreenX = clickX;
@@ -788,19 +857,26 @@ public final class SceneGraph {
 		clickedTileY = -1;
 	}
 
-    /**
-     * Renders the terrain.
-     * The coordinates use the WorldCoordinate Axes but the modelWorld coordinates.
-     * @param cameraXPos The cameraViewpoint's X-coordinate.
-     * @param cameraYPos The cameraViewpoint's Y-coordinate.
-     * @param camAngleXY The cameraAngle in the XY-plain.
-     * @param cameraZPos The cameraViewpoint's X-coordinate.
-     * @param planeZ The plain the camera's looking at.
-     * @param camAngleZ  The cameraAngle on the Z-axis.
-     */
+	/**
+	 * Renders the terrain. The coordinates use the WorldCoordinate Axes but the
+	 * modelWorld coordinates.
+	 * 
+	 * @param cameraXPos
+	 *            The cameraViewpoint's X-coordinate.
+	 * @param cameraYPos
+	 *            The cameraViewpoint's Y-coordinate.
+	 * @param camAngleXY
+	 *            The cameraAngle in the XY-plain.
+	 * @param cameraZPos
+	 *            The cameraViewpoint's X-coordinate.
+	 * @param planeZ
+	 *            The plain the camera's looking at.
+	 * @param camAngleZ
+	 *            The cameraAngle on the Z-axis.
+	 */
 	public void render(int cameraXPos, int cameraYPos, int camAngleXY, int cameraZPos, int planeZ, int camAngleZ) {
 		if (cameraXPos < 0)
-            cameraXPos = 0;
+			cameraXPos = 0;
 		else if (cameraXPos >= xRegionSize * 128)
 			cameraXPos = xRegionSize * 128 - 1;
 		if (cameraYPos < 0)
@@ -821,14 +897,14 @@ public final class SceneGraph {
 		currentRenderPlane = planeZ;
 		cameraLowTileX = xCameraTile - 25;
 		if (cameraLowTileX < 0)
-            cameraLowTileX = 0;
-        cameraLowTileY = yCameraTile - 25;
+			cameraLowTileX = 0;
+		cameraLowTileY = yCameraTile - 25;
 		if (cameraLowTileY < 0)
 			cameraLowTileY = 0;
-        cameraHighTileX = xCameraTile + 25;
+		cameraHighTileX = xCameraTile + 25;
 		if (cameraHighTileX > xRegionSize)
 			cameraHighTileX = xRegionSize;
-        cameraHighTileY = yCameraTile + 25;
+		cameraHighTileY = yCameraTile + 25;
 		if (cameraHighTileY > yRegionSize)
 			cameraHighTileY = yRegionSize;
 		method319();
@@ -839,7 +915,9 @@ public final class SceneGraph {
 				for (int yLoc = cameraLowTileY; yLoc < cameraHighTileY; yLoc++) {
 					Tile tile = planeTiles[xLoc][yLoc];
 					if (tile != null)
-						if (tile.logicHeight > planeZ || !aBooleanArrayArray492[(xLoc - xCameraTile) + 25][(yLoc - yCameraTile) + 25] && heightMap[zLoc][xLoc][yLoc] - cameraZPos < 2000) {
+						if (tile.logicHeight > planeZ
+								|| !aBooleanArrayArray492[(xLoc - xCameraTile) + 25][(yLoc - yCameraTile) + 25]
+										&& heightMap[zLoc][xLoc][yLoc] - cameraZPos < 2000) {
 							tile.aBoolean1322 = false;
 							tile.aBoolean1323 = false;
 							tile.someTileMask = 0;
@@ -995,11 +1073,11 @@ public final class SceneGraph {
 					Tile class30_sub3_7 = currentTile.firstFloorTile;
 					if (class30_sub3_7.mySimpleTile != null) {
 						if (!method320(0, i, j))
-							method315(class30_sub3_7.mySimpleTile, 0, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX, i, j);
+							method315(class30_sub3_7.mySimpleTile, 0, camUpDownY, camUpDownX, camLeftRightY,
+									camLeftRightX, i, j);
 					} else if (class30_sub3_7.myShapedTile != null && !method320(0, i, j))
-						method316(i, camUpDownY, camLeftRightY,
-								class30_sub3_7.myShapedTile, camUpDownX, j,
-                                camLeftRightX);
+						method316(i, camUpDownY, camLeftRightY, class30_sub3_7.myShapedTile, camUpDownX, j,
+								camLeftRightX);
 					WallObject class10 = class30_sub3_7.wallObject;
 					if (class10 != null)
 						class10.renderable1.renderAtPoint(0, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX,
@@ -1008,7 +1086,9 @@ public final class SceneGraph {
 					for (int i2 = 0; i2 < class30_sub3_7.gameObjectIndex; i2++) {
 						GameObject class28 = class30_sub3_7.gameObjects[i2];
 						if (class28 != null)
-							class28.renderable.renderAtPoint(class28.turnValue, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX, class28.xPos - xCameraPos, class28.tileHeight - zCameraPos, class28.yPos - yCameraPos, class28.uid);
+							class28.renderable.renderAtPoint(class28.turnValue, camUpDownY, camUpDownX, camLeftRightY,
+									camLeftRightX, class28.xPos - xCameraPos, class28.tileHeight - zCameraPos,
+									class28.yPos - yCameraPos, class28.uid);
 					}
 
 				}
@@ -1016,12 +1096,12 @@ public final class SceneGraph {
 				if (currentTile.mySimpleTile != null) {
 					if (!method320(l, i, j)) {
 						flag1 = true;
-						method315(currentTile.mySimpleTile, l, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX, i, j);
+						method315(currentTile.mySimpleTile, l, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX, i,
+								j);
 					}
 				} else if (currentTile.myShapedTile != null && !method320(l, i, j)) {
 					flag1 = true;
-					method316(i, camUpDownY, camLeftRightY,
-							currentTile.myShapedTile, camUpDownX, j, camLeftRightX);
+					method316(i, camUpDownY, camLeftRightY, currentTile.myShapedTile, camUpDownX, j, camLeftRightX);
 				}
 				int j1 = 0;
 				int j2 = 0;
@@ -1063,17 +1143,17 @@ public final class SceneGraph {
 					}
 					if ((class10_3.orientation1 & j2) != 0 && !method321(l, i, j, class10_3.orientation1))
 						class10_3.renderable1.renderAtPoint(0, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX,
-								class10_3.xPos - xCameraPos, class10_3.zPos - zCameraPos,
-								class10_3.yPos - yCameraPos, class10_3.uid);
+								class10_3.xPos - xCameraPos, class10_3.zPos - zCameraPos, class10_3.yPos - yCameraPos,
+								class10_3.uid);
 					if ((class10_3.orientation2 & j2) != 0 && !method321(l, i, j, class10_3.orientation2))
 						class10_3.renderable2.renderAtPoint(0, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX,
-								class10_3.xPos - xCameraPos, class10_3.zPos - zCameraPos,
-								class10_3.yPos - yCameraPos, class10_3.uid);
+								class10_3.xPos - xCameraPos, class10_3.zPos - zCameraPos, class10_3.yPos - yCameraPos,
+								class10_3.uid);
 				}
 				if (class26_1 != null && !method322(l, i, j, class26_1.renderable.modelBaseY))
 					if ((class26_1.orientation & j2) != 0)
-						class26_1.renderable.renderAtPoint(class26_1.orientation2, camUpDownY, camUpDownX, camLeftRightY,
-                                camLeftRightX, class26_1.xPos - xCameraPos, class26_1.zPos - zCameraPos,
+						class26_1.renderable.renderAtPoint(class26_1.orientation2, camUpDownY, camUpDownX,
+								camLeftRightY, camLeftRightX, class26_1.xPos - xCameraPos, class26_1.zPos - zCameraPos,
 								class26_1.yPos - yCameraPos, class26_1.uid);
 					else if ((class26_1.orientation & 0x300) != 0) {
 						int j4 = class26_1.xPos - xCameraPos;
@@ -1094,13 +1174,13 @@ public final class SceneGraph {
 							int i11 = j4 + anIntArray463[i8];
 							int k11 = k6 + anIntArray464[i8];
 							class26_1.renderable.renderAtPoint(i8 * 512 + 256, camUpDownY, camUpDownX, camLeftRightY,
-                                    camLeftRightX, i11, l5, k11, class26_1.uid);
+									camLeftRightX, i11, l5, k11, class26_1.uid);
 						}
 						if ((class26_1.orientation & 0x200) != 0 && k10 > k9) {
 							int j11 = j4 + anIntArray465[i8];
 							int l11 = k6 + anIntArray466[i8];
 							class26_1.renderable.renderAtPoint(i8 * 512 + 1280 & 0x7ff, camUpDownY, camUpDownX,
-                                    camLeftRightY, camLeftRightX, j11, l5, l11, class26_1.uid);
+									camLeftRightY, camLeftRightX, j11, l5, l11, class26_1.uid);
 						}
 					}
 				if (flag1) {
@@ -1152,8 +1232,8 @@ public final class SceneGraph {
 			if (currentTile.someTileMask != 0) {
 				boolean flag2 = true;
 				for (int k1 = 0; k1 < currentTile.gameObjectIndex; k1++) {
-					if (currentTile.gameObjects[k1].anInt528 == anInt448 || (currentTile.tiledObjectMasks[k1]
-							& currentTile.someTileMask) != currentTile.anInt1326)
+					if (currentTile.gameObjects[k1].anInt528 == anInt448
+							|| (currentTile.tiledObjectMasks[k1] & currentTile.someTileMask) != currentTile.anInt1326)
 						continue;
 					flag2 = false;
 					break;
@@ -1163,8 +1243,8 @@ public final class SceneGraph {
 					WallObject class10_1 = currentTile.wallObject;
 					if (!method321(l, i, j, class10_1.orientation1))
 						class10_1.renderable1.renderAtPoint(0, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX,
-								class10_1.xPos - xCameraPos, class10_1.zPos - zCameraPos,
-								class10_1.yPos - yCameraPos, class10_1.uid);
+								class10_1.xPos - xCameraPos, class10_1.zPos - zCameraPos, class10_1.yPos - yCameraPos,
+								class10_1.uid);
 					currentTile.someTileMask = 0;
 				}
 			}
@@ -1239,11 +1319,11 @@ public final class SceneGraph {
 							break;
 						GameObject class28_3 = interactableObjects[l3];
 						class28_3.anInt528 = anInt448;
-						if (!method323(l, class28_3.xLocLow, class28_3.xLocHigh, class28_3.yLocHigh,
-								class28_3.yLocLow, class28_3.renderable.modelBaseY))
-							class28_3.renderable.renderAtPoint(class28_3.turnValue, camUpDownY, camUpDownX, camLeftRightY,
-                                    camLeftRightX, class28_3.xPos - xCameraPos, class28_3.tileHeight - zCameraPos,
-									class28_3.yPos - yCameraPos, class28_3.uid);
+						if (!method323(l, class28_3.xLocLow, class28_3.xLocHigh, class28_3.yLocHigh, class28_3.yLocLow,
+								class28_3.renderable.modelBaseY))
+							class28_3.renderable.renderAtPoint(class28_3.turnValue, camUpDownY, camUpDownX,
+									camLeftRightY, camLeftRightX, class28_3.xPos - xCameraPos,
+									class28_3.tileHeight - zCameraPos, class28_3.yPos - yCameraPos, class28_3.uid);
 						for (int k7 = class28_3.xLocLow; k7 <= class28_3.xLocHigh; k7++) {
 							for (int l8 = class28_3.yLocHigh; l8 <= class28_3.yLocLow; l8++) {
 								Tile class30_sub3_22 = aclass30_sub3[k7][l8];
@@ -1305,7 +1385,7 @@ public final class SceneGraph {
 				if (class26 != null && !method322(l, i, j, class26.renderable.modelBaseY))
 					if ((class26.orientation & currentTile.anInt1328) != 0)
 						class26.renderable.renderAtPoint(class26.orientation2, camUpDownY, camUpDownX, camLeftRightY,
-                                camLeftRightX, class26.xPos - xCameraPos, class26.zPos - zCameraPos,
+								camLeftRightX, class26.xPos - xCameraPos, class26.zPos - zCameraPos,
 								class26.yPos - yCameraPos, class26.uid);
 					else if ((class26.orientation & 0x300) != 0) {
 						int l2 = class26.xPos - xCameraPos;
@@ -1326,13 +1406,13 @@ public final class SceneGraph {
 							int i9 = l2 + anIntArray463[k5];
 							int i10 = i4 + anIntArray464[k5];
 							class26.renderable.renderAtPoint(k5 * 512 + 256, camUpDownY, camUpDownX, camLeftRightY,
-                                    camLeftRightX, i9, j3, i10, class26.uid);
+									camLeftRightX, i9, j3, i10, class26.uid);
 						}
 						if ((class26.orientation & 0x200) != 0 && l7 <= j6) {
 							int j9 = l2 + anIntArray465[k5];
 							int j10 = i4 + anIntArray466[k5];
 							class26.renderable.renderAtPoint(k5 * 512 + 1280 & 0x7ff, camUpDownY, camUpDownX,
-                                    camLeftRightY, camLeftRightX, j9, j3, j10, class26.uid);
+									camLeftRightY, camLeftRightX, j9, j3, j10, class26.uid);
 						}
 					}
 				WallObject class10_2 = currentTile.wallObject;
@@ -1340,13 +1420,13 @@ public final class SceneGraph {
 					if ((class10_2.orientation2 & currentTile.anInt1328) != 0
 							&& !method321(l, i, j, class10_2.orientation2))
 						class10_2.renderable2.renderAtPoint(0, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX,
-								class10_2.xPos - xCameraPos, class10_2.zPos - zCameraPos,
-								class10_2.yPos - yCameraPos, class10_2.uid);
+								class10_2.xPos - xCameraPos, class10_2.zPos - zCameraPos, class10_2.yPos - yCameraPos,
+								class10_2.uid);
 					if ((class10_2.orientation1 & currentTile.anInt1328) != 0
 							&& !method321(l, i, j, class10_2.orientation1))
 						class10_2.renderable1.renderAtPoint(0, camUpDownY, camUpDownX, camLeftRightY, camLeftRightX,
-								class10_2.xPos - xCameraPos, class10_2.zPos - zCameraPos,
-								class10_2.yPos - yCameraPos, class10_2.uid);
+								class10_2.xPos - xCameraPos, class10_2.zPos - zCameraPos, class10_2.yPos - yCameraPos,
+								class10_2.uid);
 				}
 			}
 			if (k < numberOfZ - 1) {
@@ -1432,43 +1512,55 @@ public final class SceneGraph {
 		int l6 = Rasterizer3D.originViewY + (k4 << viewDistance) / j3;
 		Rasterizer3D.alpha = 0;
 		if ((i6 - k6) * (l5 - l6) - (j6 - l6) * (k5 - k6) > 0) {
-			Rasterizer3D.textureOutOfDrawingBounds = i6 < 0 || k6 < 0 || k5 < 0 || i6 > Rasterizer2D.lastX || k6 > Rasterizer2D.lastX || k5 > Rasterizer2D.lastX;
+			Rasterizer3D.textureOutOfDrawingBounds = i6 < 0 || k6 < 0 || k5 < 0 || i6 > Rasterizer2D.lastX
+					|| k6 > Rasterizer2D.lastX || k5 > Rasterizer2D.lastX;
 			if (clicked && method318(clickScreenX, clickScreenY, j6, l6, l5, i6, k6, k5)) {
 				clickedTileX = j1;
 				clickedTileY = k1;
 			}
 			if (simpleTile.getTexture() == -1) {
 				if (simpleTile.getCenterColor() != 0xbc614e)
-					Rasterizer3D.drawShadedTriangle(j6, l6, l5, i6, k6, k5, simpleTile.getCenterColor(), simpleTile.getEastColor(), simpleTile.getNorthColor(), k3, j3, j2);
+					Rasterizer3D.drawShadedTriangle(j6, l6, l5, i6, k6, k5, simpleTile.getCenterColor(),
+							simpleTile.getEastColor(), simpleTile.getNorthColor(), k3, j3, j2);
 			} else if (!lowMem) {
 				if (simpleTile.isFlat())
-					Rasterizer3D.drawTexturedTriangle(j6, l6, l5, i6, k6, k5, simpleTile.getCenterColor(), simpleTile.getEastColor(), simpleTile.getNorthColor(), i2, i3, l1, l3, i4, k4, k2, j2, j3, simpleTile.getTexture(), k3, j3, j2);
+					Rasterizer3D.drawTexturedTriangle(j6, l6, l5, i6, k6, k5, simpleTile.getCenterColor(),
+							simpleTile.getEastColor(), simpleTile.getNorthColor(), i2, i3, l1, l3, i4, k4, k2, j2, j3,
+							simpleTile.getTexture(), k3, j3, j2);
 				else
-					Rasterizer3D.drawTexturedTriangle(j6, l6, l5, i6, k6, k5, simpleTile.getCenterColor(), simpleTile.getEastColor(), simpleTile.getNorthColor(), l2, l1, i3, j4, k4, i4, k3, j3, j2, simpleTile.getTexture(), k3, j3, j2);
-			} else {				
-				int textureColor = TEXTURE_COLORS[simpleTile.getTexture()];				
-				Rasterizer3D.drawShadedTriangle(j6, l6, l5, i6, k6, k5, light(textureColor, simpleTile.getCenterColor()), light(textureColor, simpleTile.getEastColor()), light(textureColor, simpleTile.getNorthColor()), k3, j3, j2);
+					Rasterizer3D.drawTexturedTriangle(j6, l6, l5, i6, k6, k5, simpleTile.getCenterColor(),
+							simpleTile.getEastColor(), simpleTile.getNorthColor(), l2, l1, i3, j4, k4, i4, k3, j3, j2,
+							simpleTile.getTexture(), k3, j3, j2);
+			} else {
+				int textureColor = TEXTURE_COLORS[simpleTile.getTexture()];
+				Rasterizer3D.drawShadedTriangle(j6, l6, l5, i6, k6, k5,
+						light(textureColor, simpleTile.getCenterColor()),
+						light(textureColor, simpleTile.getEastColor()), light(textureColor, simpleTile.getNorthColor()),
+						k3, j3, j2);
 			}
 		}
 		if ((i5 - k5) * (l6 - l5) - (j5 - l5) * (k6 - k5) > 0) {
-			Rasterizer3D.textureOutOfDrawingBounds = i5 < 0 || k5 < 0 || k6 < 0 || i5 > Rasterizer2D.lastX || k5 > Rasterizer2D.lastX || k6 > Rasterizer2D.lastX;
+			Rasterizer3D.textureOutOfDrawingBounds = i5 < 0 || k5 < 0 || k6 < 0 || i5 > Rasterizer2D.lastX
+					|| k5 > Rasterizer2D.lastX || k6 > Rasterizer2D.lastX;
 			if (clicked && method318(clickScreenX, clickScreenY, j5, l5, l6, i5, k5, k6)) {
 				clickedTileX = j1;
 				clickedTileY = k1;
 			}
 			if (simpleTile.getTexture() == -1) {
 				if (simpleTile.getNorthEastColor() != 0xbc614e) {
-					Rasterizer3D.drawShadedTriangle(j5, l5, l6, i5, k5, k6, simpleTile.getNorthEastColor(), simpleTile.getNorthColor(),
-							simpleTile.getEastColor(), k2, j2, j3);
+					Rasterizer3D.drawShadedTriangle(j5, l5, l6, i5, k5, k6, simpleTile.getNorthEastColor(),
+							simpleTile.getNorthColor(), simpleTile.getEastColor(), k2, j2, j3);
 				}
 			} else {
 				if (!lowMem) {
-					Rasterizer3D.drawTexturedTriangle(j5, l5, l6, i5, k5, k6, simpleTile.getNorthEastColor(), simpleTile.getNorthColor(),
-							simpleTile.getEastColor(), i2, i3, l1, l3, i4, k4, k2, j2, j3, simpleTile.getTexture(), k2, j2, j3);
+					Rasterizer3D.drawTexturedTriangle(j5, l5, l6, i5, k5, k6, simpleTile.getNorthEastColor(),
+							simpleTile.getNorthColor(), simpleTile.getEastColor(), i2, i3, l1, l3, i4, k4, k2, j2, j3,
+							simpleTile.getTexture(), k2, j2, j3);
 					return;
 				}
 				int j7 = TEXTURE_COLORS[simpleTile.getTexture()];
-				Rasterizer3D.drawShadedTriangle(j5, l5, l6, i5, k5, k6, light(j7, simpleTile.getNorthEastColor()), light(j7, simpleTile.getNorthColor()), light(j7, simpleTile.getEastColor()), k2, j2, j3);
+				Rasterizer3D.drawShadedTriangle(j5, l5, l6, i5, k5, k6, light(j7, simpleTile.getNorthEastColor()),
+						light(j7, simpleTile.getNorthColor()), light(j7, simpleTile.getEastColor()), k2, j2, j3);
 			}
 		}
 	}
@@ -1516,8 +1608,8 @@ public final class SceneGraph {
 					clickedTileX = i;
 					clickedTileY = i1;
 				}
-				Rasterizer3D.drawDepthTriangle(i4, j4, k4, l4, i5, j5, ShapedTile.depthPoint[l2], ShapedTile.depthPoint[j3],
-						ShapedTile.depthPoint[l3]);
+				Rasterizer3D.drawDepthTriangle(i4, j4, k4, l4, i5, j5, ShapedTile.depthPoint[l2],
+						ShapedTile.depthPoint[j3], ShapedTile.depthPoint[l3]);
 				if (class40.anIntArray682 == null || class40.anIntArray682[j2] == -1) {
 					if (class40.anIntArray676[j2] != 0xbc614e)
 						Rasterizer3D.drawShadedTriangle(l4, i5, j5, i4, j4, k4, class40.anIntArray676[j2],
@@ -1534,8 +1626,9 @@ public final class SceneGraph {
 					else
 						Rasterizer3D.drawTexturedTriangle(l4, i5, j5, i4, j4, k4, class40.anIntArray676[j2],
 								class40.anIntArray677[j2], class40.anIntArray678[j2], ShapedTile.anIntArray690[l2],
-								ShapedTile.anIntArray690[j3], ShapedTile.anIntArray690[l3], ShapedTile.anIntArray691[l2],
-								ShapedTile.anIntArray691[j3], ShapedTile.anIntArray691[l3], ShapedTile.anIntArray692[l2],
+								ShapedTile.anIntArray690[j3], ShapedTile.anIntArray690[l3],
+								ShapedTile.anIntArray691[l2], ShapedTile.anIntArray691[j3],
+								ShapedTile.anIntArray691[l3], ShapedTile.anIntArray692[l2],
 								ShapedTile.anIntArray692[j3], ShapedTile.anIntArray692[l3], class40.anIntArray682[j2],
 								ShapedTile.depthPoint[l2], ShapedTile.depthPoint[j3], ShapedTile.depthPoint[l3]);
 				} else {
@@ -1548,7 +1641,7 @@ public final class SceneGraph {
 		}
 	}
 
-	private int light(int j, int k) {		
+	private int light(int j, int k) {
 		k = 127 - k;
 		k = (k * (j & 0x7f)) / 160;
 		if (k < 2)
@@ -1579,7 +1672,7 @@ public final class SceneGraph {
 		anInt475 = 0;
 		for (int sceneIndex = 0; sceneIndex < sceneClusterCount; sceneIndex++) {
 			SceneCluster sceneCluster = sceneClusters[sceneIndex];
-			if (sceneCluster.orientation == 1) { //YZ-plane
+			if (sceneCluster.orientation == 1) { // YZ-plane
 				int relativeX = (sceneCluster.startXLoc - xCameraTile) + 25;
 				if (relativeX < 0 || relativeX > 50)
 					continue;
@@ -1613,7 +1706,7 @@ public final class SceneGraph {
 				aClass47Array476[anInt475++] = sceneCluster;
 				continue;
 			}
-			if (sceneCluster.orientation == 2) { //XZ-plane
+			if (sceneCluster.orientation == 2) { // XZ-plane
 				int relativeY = (sceneCluster.startYLoc - yCameraTile) + 25;
 				if (relativeY < 0 || relativeY > 50)
 					continue;
@@ -1634,18 +1727,18 @@ public final class SceneGraph {
 				int dYPos = yCameraPos - sceneCluster.startYPos;
 				if (dYPos > 32) {
 					sceneCluster.cullDirection = 3;
-				} else if (dYPos < -32){
+				} else if (dYPos < -32) {
 					sceneCluster.cullDirection = 4;
 					dYPos = -dYPos;
 				} else {
-                    continue;
-                }
+					continue;
+				}
 				sceneCluster.anInt799 = (sceneCluster.startXPos - xCameraPos << 8) / dYPos;
 				sceneCluster.anInt800 = (sceneCluster.endXPos - xCameraPos << 8) / dYPos;
 				sceneCluster.anInt803 = (sceneCluster.startZPos - zCameraPos << 8) / dYPos;
 				sceneCluster.anInt804 = (sceneCluster.endZPos - zCameraPos << 8) / dYPos;
 				aClass47Array476[anInt475++] = sceneCluster;
-			} else if (sceneCluster.orientation == 4) { //XY-plane
+			} else if (sceneCluster.orientation == 4) { // XY-plane
 				int relativeZ = sceneCluster.startZPos - zCameraPos;
 				if (relativeZ > 128) {
 					int minRelativeY = (sceneCluster.startYLoc - yCameraTile) + 25;
@@ -1695,7 +1788,10 @@ public final class SceneGraph {
 			return true;
 		int xPos = xLoc << 7;
 		int yPos = yLoc << 7;
-		if (method324(xPos + 1, heightMap[zLoc][xLoc][yLoc], yPos + 1) && method324((xPos + 128) - 1, heightMap[zLoc][xLoc + 1][yLoc], yPos + 1) && method324((xPos + 128) - 1, heightMap[zLoc][xLoc + 1][yLoc + 1], (yPos + 128) - 1) && method324(xPos + 1, heightMap[zLoc][xLoc][yLoc + 1], (yPos + 128) - 1)) {
+		if (method324(xPos + 1, heightMap[zLoc][xLoc][yLoc], yPos + 1)
+				&& method324((xPos + 128) - 1, heightMap[zLoc][xLoc + 1][yLoc], yPos + 1)
+				&& method324((xPos + 128) - 1, heightMap[zLoc][xLoc + 1][yLoc + 1], (yPos + 128) - 1)
+				&& method324(xPos + 1, heightMap[zLoc][xLoc][yLoc + 1], (yPos + 128) - 1)) {
 			anIntArrayArrayArray445[zLoc][xLoc][yLoc] = anInt448;
 			return true;
 		} else {
@@ -1786,7 +1882,7 @@ public final class SceneGraph {
 		if (l == 128) {
 			return method324(i1, i2, j1);
 		} else {
-			System.out.println("Warning unsupported wall type"); //TODO
+			System.out.println("Warning unsupported wall type"); // TODO
 			return true;
 		}
 	}
@@ -1940,9 +2036,9 @@ public final class SceneGraph {
 	private static final int[] anIntArray482 = { 2, 0, 0, 2, 0, 0, 0, 4, 4 };
 	private static final int[] anIntArray483 = { 0, 4, 4, 8, 0, 0, 8, 0, 0 };
 	private static final int[] anIntArray484 = { 1, 1, 0, 0, 0, 8, 0, 0, 8 };
-	private static final int[] TEXTURE_COLORS = { 41, 39248, 41, 4643, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 43086,
-			41, 41, 41, 41, 41, 41, 41, 8602, 41, 28992, 41, 41, 41, 41, 41, 5056, 41, 41, 41, 7079, 41, 41, 41, 41, 41,
-			41, 41, 41, 41, 41, 3131, 41, 41, 41 };
+	private static final int[] TEXTURE_COLORS = { 41, 39248, 41, 4643, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41, 41,
+			43086, 41, 41, 41, 41, 41, 41, 41, 8602, 41, 28992, 41, 41, 41, 41, 41, 5056, 41, 41, 41, 7079, 41, 41, 41,
+			41, 41, 41, 41, 41, 41, 41, 3131, 41, 41, 41 };
 	private final int[] anIntArray486;
 	private final int[] anIntArray487;
 	private int anInt488;

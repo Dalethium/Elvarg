@@ -1,10 +1,10 @@
 package com.runescape.scene;
 
 public final class CollisionMap {
-	
+
 	private static final int BLOCKED_TILE = 0x200000;
-	//private static final int OBJECT_TILE = 0x100;
-	
+	// private static final int OBJECT_TILE = 0x100;
+
 	private final int xOffset;
 	private final int yOffset;
 	private final int width;
@@ -23,8 +23,7 @@ public final class CollisionMap {
 	public void initialize() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++)
-				if (x == 0 || y == 0 || x == width - 1
-						|| y == height - 1)
+				if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
 					adjacencies[x][y] = 0xffffff;
 				else
 					adjacencies[x][y] = 0x1000000;
@@ -351,38 +350,30 @@ public final class CollisionMap {
 			if (i1 == 0) {
 				if (j == i - 1 && k == k1)
 					return true;
-				if (j == i && k == k1 + 1
-						&& (adjacencies[j][k] & 0x1280120) == 0)
+				if (j == i && k == k1 + 1 && (adjacencies[j][k] & 0x1280120) == 0)
 					return true;
-				if (j == i && k == k1 - 1
-						&& (adjacencies[j][k] & 0x1280102) == 0)
+				if (j == i && k == k1 - 1 && (adjacencies[j][k] & 0x1280102) == 0)
 					return true;
 			} else if (i1 == 1) {
 				if (j == i && k == k1 + 1)
 					return true;
-				if (j == i - 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280108) == 0)
+				if (j == i - 1 && k == k1 && (adjacencies[j][k] & 0x1280108) == 0)
 					return true;
-				if (j == i + 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280180) == 0)
+				if (j == i + 1 && k == k1 && (adjacencies[j][k] & 0x1280180) == 0)
 					return true;
 			} else if (i1 == 2) {
 				if (j == i + 1 && k == k1)
 					return true;
-				if (j == i && k == k1 + 1
-						&& (adjacencies[j][k] & 0x1280120) == 0)
+				if (j == i && k == k1 + 1 && (adjacencies[j][k] & 0x1280120) == 0)
 					return true;
-				if (j == i && k == k1 - 1
-						&& (adjacencies[j][k] & 0x1280102) == 0)
+				if (j == i && k == k1 - 1 && (adjacencies[j][k] & 0x1280102) == 0)
 					return true;
 			} else if (i1 == 3) {
 				if (j == i && k == k1 - 1)
 					return true;
-				if (j == i - 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280108) == 0)
+				if (j == i - 1 && k == k1 && (adjacencies[j][k] & 0x1280108) == 0)
 					return true;
-				if (j == i + 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280180) == 0)
+				if (j == i + 1 && k == k1 && (adjacencies[j][k] & 0x1280180) == 0)
 					return true;
 			}
 		if (j1 == 2)
@@ -391,29 +382,23 @@ public final class CollisionMap {
 					return true;
 				if (j == i && k == k1 + 1)
 					return true;
-				if (j == i + 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280180) == 0)
+				if (j == i + 1 && k == k1 && (adjacencies[j][k] & 0x1280180) == 0)
 					return true;
-				if (j == i && k == k1 - 1
-						&& (adjacencies[j][k] & 0x1280102) == 0)
+				if (j == i && k == k1 - 1 && (adjacencies[j][k] & 0x1280102) == 0)
 					return true;
 			} else if (i1 == 1) {
-				if (j == i - 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280108) == 0)
+				if (j == i - 1 && k == k1 && (adjacencies[j][k] & 0x1280108) == 0)
 					return true;
 				if (j == i && k == k1 + 1)
 					return true;
 				if (j == i + 1 && k == k1)
 					return true;
-				if (j == i && k == k1 - 1
-						&& (adjacencies[j][k] & 0x1280102) == 0)
+				if (j == i && k == k1 - 1 && (adjacencies[j][k] & 0x1280102) == 0)
 					return true;
 			} else if (i1 == 2) {
-				if (j == i - 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280108) == 0)
+				if (j == i - 1 && k == k1 && (adjacencies[j][k] & 0x1280108) == 0)
 					return true;
-				if (j == i && k == k1 + 1
-						&& (adjacencies[j][k] & 0x1280120) == 0)
+				if (j == i && k == k1 + 1 && (adjacencies[j][k] & 0x1280120) == 0)
 					return true;
 				if (j == i + 1 && k == k1)
 					return true;
@@ -422,11 +407,9 @@ public final class CollisionMap {
 			} else if (i1 == 3) {
 				if (j == i - 1 && k == k1)
 					return true;
-				if (j == i && k == k1 + 1
-						&& (adjacencies[j][k] & 0x1280120) == 0)
+				if (j == i && k == k1 + 1 && (adjacencies[j][k] & 0x1280120) == 0)
 					return true;
-				if (j == i + 1 && k == k1
-						&& (adjacencies[j][k] & 0x1280180) == 0)
+				if (j == i + 1 && k == k1 && (adjacencies[j][k] & 0x1280180) == 0)
 					return true;
 				if (j == i && k == k1 - 1)
 					return true;
@@ -494,18 +477,12 @@ public final class CollisionMap {
 		int i2 = (i + l) - 1;
 		if (k >= j && k <= l1 && k1 >= i && k1 <= i2)
 			return true;
-		if (k == j - 1 && k1 >= i && k1 <= i2
-				&& (adjacencies[k - xOffset][k1 - yOffset] & 8) == 0
-				&& (i1 & 8) == 0)
+		if (k == j - 1 && k1 >= i && k1 <= i2 && (adjacencies[k - xOffset][k1 - yOffset] & 8) == 0 && (i1 & 8) == 0)
 			return true;
-		if (k == l1 + 1 && k1 >= i && k1 <= i2
-				&& (adjacencies[k - xOffset][k1 - yOffset] & 0x80) == 0
-				&& (i1 & 2) == 0)
+		if (k == l1 + 1 && k1 >= i && k1 <= i2 && (adjacencies[k - xOffset][k1 - yOffset] & 0x80) == 0 && (i1 & 2) == 0)
 			return true;
-		return k1 == i - 1 && k >= j && k <= l1
-				&& (adjacencies[k - xOffset][k1 - yOffset] & 2) == 0
-				&& (i1 & 4) == 0 || k1 == i2 + 1 && k >= j && k <= l1
-				&& (adjacencies[k - xOffset][k1 - yOffset] & 0x20) == 0
-				&& (i1 & 1) == 0;
+		return k1 == i - 1 && k >= j && k <= l1 && (adjacencies[k - xOffset][k1 - yOffset] & 2) == 0 && (i1 & 4) == 0
+				|| k1 == i2 + 1 && k >= j && k <= l1 && (adjacencies[k - xOffset][k1 - yOffset] & 0x20) == 0
+						&& (i1 & 1) == 0;
 	}
 }

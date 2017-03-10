@@ -1,15 +1,16 @@
 package com.runescape.scene.object.tile;
+
 import com.runescape.collection.Linkable;
+import com.runescape.entity.GameObject;
 import com.runescape.entity.GroundItemTile;
 import com.runescape.scene.object.GroundDecoration;
-import com.runescape.scene.object.WallObject;
 import com.runescape.scene.object.WallDecoration;
-import com.runescape.entity.GameObject;
+import com.runescape.scene.object.WallObject;
 
 public final class Tile extends Linkable {
-	public Tile(int i, int j, int k){
+	public Tile(int i, int j, int k) {
 		gameObjects = new GameObject[5];
-        tiledObjectMasks = new int[5];
+		tiledObjectMasks = new int[5];
 		anInt1310 = z1AnInt1307 = i;
 		anInt1308 = j;
 		anInt1309 = k;

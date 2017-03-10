@@ -1,4 +1,5 @@
 package com.runescape.scene;
+
 import com.runescape.Configuration;
 import com.runescape.cache.anim.Frame;
 import com.runescape.cache.anim.Graphic;
@@ -13,7 +14,7 @@ public final class AnimableObject extends Renderable {
 	public final int anInt1563;
 	public final int anInt1564;
 	public boolean aBoolean1567;
-	private final Graphic graphic;	
+	private final Graphic graphic;
 	private int anInt1569;
 	private int anInt1570;
 	private int nextAnimFrameId;
@@ -29,19 +30,21 @@ public final class AnimableObject extends Renderable {
 		aBoolean1567 = false;
 	}
 
+	@Override
 	public Model getRotatedModel() {
 		Model model = graphic.getModel();
-		if(model == null) {
+		if (model == null) {
 			return null;
 		}
 		int j = graphic.animationSequence.primaryFrames[anInt1569];
 		Model model_1 = new Model(true, Frame.noAnimationInProgress(j), false, model);
 		System.out.println(Configuration.enableTweening);
-		if(!aBoolean1567) {
+		if (!aBoolean1567) {
 
 			model_1.skin();
-			if(Configuration.enableTweening && nextAnimFrameId != -1) {
-				model_1.applyAnimationFrame(j, graphic.animationSequence.primaryFrames[nextAnimFrameId], anInt1570, graphic.animationSequence.durations[anInt1569]);
+			if (Configuration.enableTweening && nextAnimFrameId != -1) {
+				model_1.applyAnimationFrame(j, graphic.animationSequence.primaryFrames[nextAnimFrameId], anInt1570,
+						graphic.animationSequence.durations[anInt1569]);
 			} else {
 				model_1.applyTransform(j);
 			}
@@ -49,18 +52,18 @@ public final class AnimableObject extends Renderable {
 			model_1.vertexGroups = null;
 
 		}
-		if(graphic.resizeXY != 128 || graphic.resizeZ != 128) {
+		if (graphic.resizeXY != 128 || graphic.resizeZ != 128) {
 			model_1.scale(graphic.resizeXY, graphic.resizeXY, graphic.resizeZ);
 		}
-		if(graphic.rotation != 0) {
-			if(graphic.rotation == 90) {
+		if (graphic.rotation != 0) {
+			if (graphic.rotation == 90) {
 				model_1.rotate90Degrees();
 			}
-			if(graphic.rotation == 180) {
+			if (graphic.rotation == 180) {
 				model_1.rotate90Degrees();
 				model_1.rotate90Degrees();
 			}
-			if(graphic.rotation == 270) {
+			if (graphic.rotation == 270) {
 				model_1.rotate90Degrees();
 				model_1.rotate90Degrees();
 				model_1.rotate90Degrees();
@@ -71,10 +74,11 @@ public final class AnimableObject extends Renderable {
 	}
 
 	public void method454(int i) {
-		for(anInt1570 += i; anInt1570 > graphic.animationSequence.duration(anInt1569);) {
+		for (anInt1570 += i; anInt1570 > graphic.animationSequence.duration(anInt1569);) {
 			anInt1570 -= graphic.animationSequence.duration(anInt1569) + 1;
 			anInt1569++;
-			if(anInt1569 >= graphic.animationSequence.frameCount && (anInt1569 < 0 || anInt1569 >= graphic.animationSequence.frameCount)) {
+			if (anInt1569 >= graphic.animationSequence.frameCount
+					&& (anInt1569 < 0 || anInt1569 >= graphic.animationSequence.frameCount)) {
 				anInt1569 = 0;
 				aBoolean1567 = true;
 			}

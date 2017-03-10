@@ -4,6 +4,7 @@ import com.runescape.Client;
 
 public final class MouseDetection implements Runnable {
 
+	@Override
 	public void run() {
 		while (running) {
 			synchronized (syncObject) {

@@ -1,16 +1,30 @@
 package com.runescape;
 
 import java.applet.Applet;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import com.runescape.Client.ScreenMode;
 import com.runescape.cache.graphics.Widget;
 import com.runescape.draw.ProducingGraphicsBuffer;
 
-public class GameApplet extends Applet implements Runnable, MouseListener,
-		MouseMotionListener, MouseWheelListener, KeyListener, FocusListener,
-		WindowListener {
+public class GameApplet extends Applet implements Runnable, MouseListener, MouseMotionListener, MouseWheelListener,
+		KeyListener, FocusListener, WindowListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,8 +62,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 	protected int rotationGliding;
 	public boolean resized;
 
-	public void refreshFrameSize(boolean undecorated, int width, int height,
-			boolean resizable, boolean full) {
+	public void refreshFrameSize(boolean undecorated, int width, int height, boolean resizable, boolean full) {
 		boolean createdByApplet = (isApplet && !full);
 		myWidth = width;
 		myHeight = height;
@@ -57,8 +70,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 			gameFrame.dispose();
 		}
 		if (!createdByApplet) {
-			gameFrame = new GameFrame(this, width, height, resizable,
-					undecorated);
+			gameFrame = new GameFrame(this, width, height, resizable, undecorated);
 			gameFrame.addWindowListener(this);
 		}
 		graphics = (createdByApplet ? this : gameFrame).getGraphics();
@@ -79,8 +91,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		isApplet = false;
 		myWidth = w;
 		myHeight = h;
-		gameFrame = new GameFrame(this, myWidth, myHeight,
-				Client.frameMode == Client.ScreenMode.RESIZABLE,
+		gameFrame = new GameFrame(this, myWidth, myHeight, Client.frameMode == Client.ScreenMode.RESIZABLE,
 				Client.frameMode == Client.ScreenMode.FULLSCREEN);
 		gameFrame.setFocusTraversalKeysEnabled(false);
 		graphics = getGameComponent().getGraphics();
@@ -97,6 +108,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		startRunnable(this, 1);
 	}
 
+	@Override
 	public void run() {
 		getGameComponent().addMouseListener(this);
 		getGameComponent().addMouseMotionListener(this);
@@ -136,14 +148,14 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 				j = k1;
 				k = i2;
 			} else if (l2 > aLongArray7[i]) {
-				j = (int) ((long) (2560 * delayTime) / (l2 - aLongArray7[i]));
+				j = (int) (2560 * delayTime / (l2 - aLongArray7[i]));
 			}
 			if (j < 25) {
 				j = 25;
 			}
 			if (j > 256) {
 				j = 256;
-				k = (int) ((long) delayTime - (l2 - aLongArray7[i]) / 10L);
+				k = (int) (delayTime - (l2 - aLongArray7[i]) / 10L);
 			}
 			if (k > delayTime) {
 				k = delayTime;
@@ -181,23 +193,19 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 			}
 			processDrawing();
 			if (shouldDebug) {
-				System.out.println((new StringBuilder()).append("ntime:")
-						.append(l2).toString());
+				System.out.println((new StringBuilder()).append("ntime:").append(l2).toString());
 				for (int k2 = 0; k2 < 10; k2++) {
 					int i3 = ((i - k2 - 1) + 20) % 10;
-					System.out.println((new StringBuilder()).append("otim")
-							.append(i3).append(":").append(aLongArray7[i3])
-							.toString());
+					System.out.println((new StringBuilder()).append("otim").append(i3).append(":")
+							.append(aLongArray7[i3]).toString());
 				}
 
-				System.out.println((new StringBuilder()).append("fps:")
-						.append(fps).append(" ratio:").append(j)
+				System.out.println((new StringBuilder()).append("fps:").append(fps).append(" ratio:").append(j)
 						.append(" count:").append(l).toString());
-				System.out.println((new StringBuilder()).append("del:")
-						.append(k).append(" deltime:").append(delayTime)
+				System.out.println((new StringBuilder()).append("del:").append(k).append(" deltime:").append(delayTime)
 						.append(" mindel:").append(minDelay).toString());
-				System.out.println((new StringBuilder()).append("intex:")
-						.append(i1).append(" opos:").append(i).toString());
+				System.out.println(
+						(new StringBuilder()).append("intex:").append(i1).append(" opos:").append(i).toString());
 				shouldDebug = false;
 				i1 = 0;
 			}
@@ -226,18 +234,21 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		delayTime = 1000 / i;
 	}
 
+	@Override
 	public final void start() {
 		if (anInt4 >= 0) {
 			anInt4 = 0;
 		}
 	}
 
+	@Override
 	public final void stop() {
 		if (anInt4 >= 0) {
 			anInt4 = 4000 / delayTime;
 		}
 	}
 
+	@Override
 	public final void destroy() {
 		anInt4 = -1;
 		try {
@@ -249,6 +260,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		}
 	}
 
+	@Override
 	public final void update(Graphics g) {
 		if (graphics == null) {
 			graphics = g;
@@ -257,6 +269,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		raiseWelcomeScreen();
 	}
 
+	@Override
 	public final void paint(Graphics g) {
 		if (graphics == null) {
 			graphics = g;
@@ -265,11 +278,11 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		raiseWelcomeScreen();
 	}
 
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent event) {
 		int rotation = event.getWheelRotation();
 		handleInterfaceScrolling(event);
-		if (mouseX > 0 && mouseX < 512 && mouseY > Client.frameHeight - 165
-				&& mouseY < Client.frameHeight - 25) {
+		if (mouseX > 0 && mouseX < 512 && mouseY > Client.frameHeight - 165 && mouseY < Client.frameHeight - 25) {
 			int scrollPos = Client.anInt1089;
 			scrollPos -= rotation * 30;
 			if (scrollPos < 0)
@@ -280,43 +293,40 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 				Client.anInt1089 = scrollPos;
 				Client.updateChatbox = true;
 			}
-		} else if(Client.loggedIn) {
-			
+		} else if (Client.loggedIn) {
+
 			/** ZOOMING **/
 			boolean zoom = Client.frameMode == ScreenMode.FIXED ? (mouseX < 512) : (mouseX < Client.frameWidth - 200);
-			if(zoom && Client.openInterfaceId == -1) {
+			if (zoom && Client.openInterfaceId == -1) {
 				Client.cameraZoom += rotation * 35;
 
 				int max_zoom_1 = (Client.frameMode == ScreenMode.FIXED ? -150 : -300);
-				if(Client.cameraZoom < max_zoom_1) {
+				if (Client.cameraZoom < max_zoom_1) {
 					Client.cameraZoom = max_zoom_1;
 				}
-				
-				if(Client.cameraZoom > 1200) {
+
+				if (Client.cameraZoom > 1200) {
 					Client.cameraZoom = 1200;
 				}
-				
+
 				int setting = 0;
-				
-				if(Client.cameraZoom > 1000) {
+
+				if (Client.cameraZoom > 1000) {
 					setting = 4;
-				} else if(Client.cameraZoom > 800) {
+				} else if (Client.cameraZoom > 800) {
 					setting = 3;
-				} else if(Client.cameraZoom > 600) {
+				} else if (Client.cameraZoom > 600) {
 					setting = 2;
-				} else if(Client.cameraZoom > 400) {
+				} else if (Client.cameraZoom > 400) {
 					setting = 1;
-				}				
-				
+				}
+
 				Client.instance.settings[168] = setting;
 			}
-			
-			
-			
+
 			Client.updateChatbox = true;
 		}
-		
-		
+
 	}
 
 	public void handleInterfaceScrolling(MouseWheelEvent event) {
@@ -332,12 +342,10 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		if (tabInterfaceID != -1) {
 			Widget tab = Widget.interfaceCache[tabInterfaceID];
 			offsetX = Client.frameMode == Client.ScreenMode.FIXED ? Client.frameWidth - 218
-					: (Client.frameMode == Client.ScreenMode.FIXED ? 28
-							: Client.frameWidth - 197);
+					: (Client.frameMode == Client.ScreenMode.FIXED ? 28 : Client.frameWidth - 197);
 			offsetY = Client.frameMode == Client.ScreenMode.FIXED ? Client.frameHeight - 298
 					: (Client.frameMode == Client.ScreenMode.FIXED ? 37
-							: Client.frameHeight
-									- (Client.frameWidth >= 1000 ? 37 : 74) - 267);
+							: Client.frameHeight - (Client.frameWidth >= 1000 ? 37 : 74) - 267);
 			for (int index = 0; index < tab.children.length; index++) {
 				if (Widget.interfaceCache[tab.children[index]].scrollMax > 0) {
 					childID = index;
@@ -348,18 +356,15 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 					break;
 				}
 			}
-			if (mouseX > offsetX + positionX && mouseY > offsetY + positionY
-					&& mouseX < offsetX + positionX + width
+			if (mouseX > offsetX + positionX && mouseY > offsetY + positionY && mouseX < offsetX + positionX + width
 					&& mouseY < offsetY + positionY + height) {
 				Widget.interfaceCache[tab.children[childID]].scrollPosition += rotation * 30;
 			}
 		}
 		if (Client.openInterfaceId != -1) {
 			Widget rsi = Widget.interfaceCache[Client.openInterfaceId];
-			offsetX = Client.frameMode == Client.ScreenMode.FIXED ? 4
-					: (Client.frameWidth / 2) - 356;
-			offsetY = Client.frameMode == Client.ScreenMode.FIXED ? 4
-					: (Client.frameHeight / 2) - 230;
+			offsetX = Client.frameMode == Client.ScreenMode.FIXED ? 4 : (Client.frameWidth / 2) - 356;
+			offsetY = Client.frameMode == Client.ScreenMode.FIXED ? 4 : (Client.frameHeight / 2) - 230;
 			for (int index = 0; index < rsi.children.length; index++) {
 				if (Widget.interfaceCache[rsi.children[index]].scrollMax > 0) {
 					childID = index;
@@ -370,8 +375,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 					break;
 				}
 			}
-			if (mouseX > offsetX + positionX && mouseY > offsetY + positionY
-					&& mouseX < offsetX + positionX + width
+			if (mouseX > offsetX + positionX && mouseY > offsetY + positionY && mouseX < offsetX + positionX + width
 					&& mouseY < offsetY + positionY + height) {
 				Widget.interfaceCache[rsi.children[childID]].scrollPosition += rotation * 30;
 			}
@@ -388,6 +392,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 	public int releasedY;
 	public boolean mouseWheelDown;
 
+	@Override
 	public final void mousePressed(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
@@ -418,6 +423,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		}
 	}
 
+	@Override
 	public final void mouseReleased(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
@@ -434,12 +440,15 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		mouseWheelDown = false;
 	}
 
+	@Override
 	public final void mouseClicked(MouseEvent mouseevent) {
 	}
 
+	@Override
 	public final void mouseEntered(MouseEvent mouseevent) {
 	}
 
+	@Override
 	public final void mouseExited(MouseEvent mouseevent) {
 		idleTime = 0;
 		mouseX = -1;
@@ -449,6 +458,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 	public int mouseWheelX;
 	public int mouseWheelY;
 
+	@Override
 	public final void mouseDragged(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
@@ -475,6 +485,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 
 	}
 
+	@Override
 	public final void mouseMoved(MouseEvent mouseevent) {
 		int x = mouseevent.getX();
 		int y = mouseevent.getY();
@@ -489,6 +500,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		clickType = MOVE;
 	}
 
+	@Override
 	public final void keyPressed(KeyEvent keyevent) {
 		idleTime = 0;
 		int i = keyevent.getKeyCode();
@@ -546,6 +558,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		}
 	}
 
+	@Override
 	public final void keyReleased(KeyEvent keyevent) {
 		idleTime = 0;
 		int i = keyevent.getKeyCode();
@@ -574,6 +587,7 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 			keyArray[c] = 0;
 	}
 
+	@Override
 	public final void keyTyped(KeyEvent keyevent) {
 	}
 
@@ -590,12 +604,14 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		return k;
 	}
 
+	@Override
 	public final void focusGained(FocusEvent focusevent) {
 		awtFocus = true;
 		shouldClearScreen = true;
 		raiseWelcomeScreen();
 	}
 
+	@Override
 	public final void focusLost(FocusEvent focusevent) {
 		awtFocus = false;
 		for (int i = 0; i < 128; i++) {
@@ -604,26 +620,33 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 
 	}
 
+	@Override
 	public final void windowActivated(WindowEvent windowevent) {
 	}
 
+	@Override
 	public final void windowClosed(WindowEvent windowevent) {
 	}
 
+	@Override
 	public final void windowClosing(WindowEvent windowevent) {
 		destroy();
 
 	}
 
+	@Override
 	public final void windowDeactivated(WindowEvent windowevent) {
 	}
 
+	@Override
 	public final void windowDeiconified(WindowEvent windowevent) {
 	}
 
+	@Override
 	public final void windowIconified(WindowEvent windowevent) {
 	}
 
+	@Override
 	public final void windowOpened(WindowEvent windowevent) {
 	}
 
@@ -683,15 +706,11 @@ public class GameApplet extends Applet implements Runnable, MouseListener,
 		graphics.drawRect(Client.frameWidth / 2 - 152, y, 304, 34);
 		graphics.fillRect(Client.frameWidth / 2 - 150, y + 2, percentage * 3, 30);
 		graphics.setColor(Color.black);
-		graphics.fillRect((Client.frameWidth / 2 - 150) + percentage * 3, y + 2,
-				300 - percentage * 3, 30);
+		graphics.fillRect((Client.frameWidth / 2 - 150) + percentage * 3, y + 2, 300 - percentage * 3, 30);
 		graphics.setFont(font);
 		graphics.setColor(Color.white);
-		graphics.drawString(loadingText,
-				(Client.frameWidth - fontmetrics.stringWidth(loadingText)) / 2,
-				y + 22);
-		graphics.drawString("",
-				(Client.frameWidth - fontmetrics1.stringWidth("")) / 2, y - 8);
+		graphics.drawString(loadingText, (Client.frameWidth - fontmetrics.stringWidth(loadingText)) / 2, y + 22);
+		graphics.drawString("", (Client.frameWidth - fontmetrics1.stringWidth("")) / 2, y - 8);
 	}
 
 	GameApplet() {

@@ -11,9 +11,7 @@ import java.util.Comparator;
 import java.util.Map.Entry;
 
 import com.elvarg.util.Misc;
-import com.elvarg.world.entity.impl.npc.NPC;
 import com.elvarg.world.entity.impl.player.Player;
-import com.elvarg.world.model.Item;
 import com.elvarg.world.model.dialogue.DialogueManager;
 import com.elvarg.world.model.dialogue.DialogueOptions;
 import com.elvarg.world.model.syntax.impl.JoinClanChat;
@@ -561,10 +559,8 @@ public class ClanChatManager {
 		// Other buttons..
 		switch (button) {
 		case 37132: // CC Setup
-
 			if (!player.busy()) {
 				if (getClanChatChannel(player) == null) {
-
 					player.setDialogueOptions(new DialogueOptions() {
 						@Override
 						public void handleOption1(Player player) {
@@ -577,15 +573,12 @@ public class ClanChatManager {
 							player.getPacketSender().sendInterfaceRemoval();
 						}
 					});
-
 					DialogueManager.start(player, 9);
-
 					return true;
 				}
 			} else {
 				player.getPacketSender().sendMessage("You cannot do that right now.");
 			}
-
 			return true;
 
 		case 37129: // Join / Leave clan
@@ -599,72 +592,6 @@ public class ClanChatManager {
 			return true;
 		}
 		return false;
-	}
-
-	public static boolean dropShareLoot(Player player, NPC npc, Item itemDropped) {
-		/*
-		 * ClanChat clan = player.getFields().getClanChat(); if (clan != null) {
-		 * boolean received = false; List<Player> players =
-		 * getPlayersWithinPosition(clan, npc.getPosition()); String green =
-		 * "<col=" +
-		 * ClanChatMessageColor.GREEN.getRGB()[player.getFields().rgbIndex] +
-		 * ">"; if (clan.isItemSharing() && itemDropped.getId() != 995) { Player
-		 * rewarded = players.size() > 0 ?
-		 * players.get(MathUtils.random(players.size() - 1)) : null; if
-		 * (rewarded != null) { rewarded.getPacketSender().sendMessage(green +
-		 * "You have received " + itemDropped.getAmount() + "x " +
-		 * itemDropped.getDefinition().getName() + "."); received = true; } } if
-		 * (clan.isCoinSharing() && itemDropped.getId() == 995) { for (Item drop
-		 * : npc.getDrops()) { if ((drop.getDefinition().getValue() *
-		 * drop.getAmount()) < 50000) { GroundItem groundItem = new
-		 * GroundItem(drop, npc.getPosition().copy());
-		 * GameServer.getWorld().register(groundItem, player); continue; } int
-		 * amount = (int) (ItemDefinition.forId(drop.getId()).getValue() /
-		 * players.size()); Item split = new Item(995, amount); for (Player
-		 * member : players) { GroundItem groundItem = new
-		 * GroundItem(split.copy(), npc.getPosition().copy());
-		 * GameServer.getWorld().register(groundItem, member);
-		 * member.getPacketSender().sendMessage(green + "You have received " +
-		 * amount + "x " + split.getDefinition().getName() +
-		 * " as part of a split drop."); } } } else if(!clan.isItemSharing() &&
-		 * !clan.isCoinSharing() || !received) return false; } else return
-		 * false;
-		 */
-		return false;
-	}
-
-	public static void toggleLootShare(Player player) {
-		final ClanChat clan = player.getCurrentClanChat();
-		if (clan == null) {
-			player.getPacketSender().sendMessage("You're not in a clan channel.");
-			return;
-		}
-		if (!player.getRights().isStaff()) {
-			if (clan.getOwner() == null)
-				return;
-			if (!clan.getOwner().equals(player)) {
-				player.getPacketSender().sendMessage("Only the owner of the channel has the power to do this.");
-				return;
-			}
-		}
-		if (clan.getLastAction().elapsed(5000) || player.getRights().isStaff()) {
-			clan.setLootShare(!clan.getLootShare());
-			sendMessage(clan, "<col=16777215>[<col=255>" + clan.getName() + "<col=16777215>] <col=3300CC>"
-					+ player.getUsername() + " has " + (clan.getLootShare() ? "enabled" : "disabled") + " Lootshare.");
-			for (Player member : clan.getMembers()) {
-				if (member != null) {
-					// member.getPacketSender().sendString(29454, "Lootshare:
-					// "+getLootshareStatus(clan));
-				}
-			}
-			clan.getLastAction().reset();
-		} else {
-			player.getPacketSender().sendMessage("You need to wait a few seconds between every clanchat action.");
-		}
-	}
-
-	private static String getLootshareStatus(ClanChat clan) {
-		return clan.getLootShare() ? "@gre@On" : "Off";
 	}
 
 	private static int getIndex() {

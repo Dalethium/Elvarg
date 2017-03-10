@@ -1,10 +1,10 @@
 package com.runescape.scene.object;
+
 import com.runescape.collection.Linkable;
 
 public final class SpawnedObject extends Linkable {
 
-	public SpawnedObject()
-	{
+	public SpawnedObject() {
 		getLongetivity = -1;
 	}
 

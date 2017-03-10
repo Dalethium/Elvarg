@@ -218,13 +218,6 @@ public class PacketSender {
 		return this;
 	}
 
-	public PacketSender updateSpecialAttackOrb() {
-		PacketBuilder out = new PacketBuilder(137);
-		out.put(player.getSpecialPercentage());
-		player.getSession().write(out);
-		return this;
-	}
-
 	public PacketSender sendDungeoneeringTabIcon(boolean show) {
 		PacketBuilder out = new PacketBuilder(103);
 		out.put(show ? 1 : 0);

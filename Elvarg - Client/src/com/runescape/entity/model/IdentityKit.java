@@ -4,7 +4,7 @@ import com.runescape.cache.FileArchive;
 import com.runescape.io.Buffer;
 
 public final class IdentityKit {
-	
+
 	public static int length;
 	public static IdentityKit kits[];
 	public int part;
@@ -13,7 +13,7 @@ public final class IdentityKit {
 	private final int[] replacementColors;
 	private final int[] headModels = { -1, -1, -1, -1, -1 };
 	public boolean validStyle;
-	
+
 	private IdentityKit() {
 		part = -1;
 		originalColors = new int[6];

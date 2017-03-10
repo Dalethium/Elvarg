@@ -25,7 +25,7 @@ public class Mob extends Renderable {
 	public int movementAnimation;
 	public int displayedMovementFrames;
 	public int anInt1519;
-	public int graphic;	
+	public int graphic;
 	public int currentAnimation;
 	public int anInt1522;
 	public int graphicDelay;
@@ -41,10 +41,10 @@ public class Mob extends Renderable {
 	public int currentHealth;
 	public int maxHealth;
 	public int textCycle;
-	public int time;	
+	public int time;
 	public int faceX;
 	public int faceY;
-	public int size;	
+	public int size;
 	public boolean animationStretches;
 	public int anInt1542;
 	public int initialX;
@@ -67,7 +67,7 @@ public class Mob extends Renderable {
 	public int nextGraphicsAnimationFrame;
 	public int nextIdleAnimationFrame;
 	public int nextSpotAnimFrame;
-	
+
 	public Mob() {
 		pathX = new int[10];
 		pathY = new int[10];
@@ -97,7 +97,7 @@ public class Mob extends Renderable {
 	public final void setPos(int x, int y, boolean flag) {
 		if (emoteAnimation != -1 && Animation.animations[emoteAnimation].priority == 1)
 			emoteAnimation = -1;
-		
+
 		if (!flag) {
 			int dx = x - pathX[0];
 			int dy = y - pathY[0];
@@ -141,16 +141,16 @@ public class Mob extends Renderable {
 	}
 
 	public void nextPreForcedStep() {
-		int remaining = startForceMovement - Client.tick;        
-		int tempX = initialX * 128 + size * 64;        
-		int tempY = initialY * 128 + size * 64;        
+		int remaining = startForceMovement - Client.tick;
+		int tempX = initialX * 128 + size * 64;
+		int tempY = initialY * 128 + size * 64;
 		x += (tempX - x) / remaining;
 		y += (tempY - y) / remaining;
 
 		anInt1503 = 0;
 
 		if (direction == 0) {
-			nextStepOrientation = 1024;              
+			nextStepOrientation = 1024;
 		}
 
 		if (direction == 1) {
@@ -167,17 +167,14 @@ public class Mob extends Renderable {
 	}
 
 	public void nextForcedMovementStep() {
-		if (endForceMovement == Client.tick || emoteAnimation == -1
-				|| animationDelay != 0
-				|| emoteTimeRemaining
-				+ 1 > Animation.animations[emoteAnimation]
-						.duration(displayedEmoteFrames)) {
-			int remaining = endForceMovement - startForceMovement;              
-			int elapsed = Client.tick - startForceMovement;              
-			int initialX = this.initialX * 128 + size * 64;              
+		if (endForceMovement == Client.tick || emoteAnimation == -1 || animationDelay != 0
+				|| emoteTimeRemaining + 1 > Animation.animations[emoteAnimation].duration(displayedEmoteFrames)) {
+			int remaining = endForceMovement - startForceMovement;
+			int elapsed = Client.tick - startForceMovement;
+			int initialX = this.initialX * 128 + size * 64;
 			int initialY = this.initialY * 128 + size * 64;
-			int endX = destinationX * 128 + size * 64;              
-			int endY = destinationY * 128 + size * 64;              
+			int endX = destinationX * 128 + size * 64;
+			int endY = destinationY * 128 + size * 64;
 			x = (initialX * (remaining - elapsed) + endX * elapsed) / remaining;
 			y = (initialY * (remaining - elapsed) + endY * elapsed) / remaining;
 		}
@@ -199,18 +196,18 @@ public class Mob extends Renderable {
 			nextStepOrientation = 512;
 		}
 
-		orientation = nextStepOrientation;        
+		orientation = nextStepOrientation;
 	}
 
 	public void nextStep() {
-		movementAnimation = idleAnimation;   
+		movementAnimation = idleAnimation;
 
-		if (remainingPath == 0) {              
+		if (remainingPath == 0) {
 			anInt1503 = 0;
 			return;
 		}
-		
-		if(emoteAnimation > Animation.animations.length) {
+
+		if (emoteAnimation > Animation.animations.length) {
 			emoteAnimation = -1;
 			return;
 		}
@@ -226,8 +223,8 @@ public class Mob extends Renderable {
 				return;
 			}
 		}
-		int tempX = x;        
-		int tempY = y;          
+		int tempX = x;
+		int tempY = y;
 		int nextX = pathX[remainingPath - 1] * 128 + size * 64;
 		int nextY = pathY[remainingPath - 1] * 128 + size * 64;
 		if (nextX - tempX > 256 || nextX - tempX < -256 || nextY - tempY > 256 || nextY - tempY < -256) {
@@ -281,8 +278,7 @@ public class Mob extends Renderable {
 
 		int positionDelta = 4;
 
-		if (orientation != nextStepOrientation && interactingEntity == -1
-				&& degreesToTurn != 0) {
+		if (orientation != nextStepOrientation && interactingEntity == -1 && degreesToTurn != 0) {
 			positionDelta = 2;
 		}
 
@@ -303,8 +299,7 @@ public class Mob extends Renderable {
 			positionDelta <<= 1;
 		}
 
-		if (positionDelta >= 8 && movementAnimation == walkAnimIndex
-				&& runAnimIndex != -1) {
+		if (positionDelta >= 8 && movementAnimation == walkAnimIndex && runAnimIndex != -1) {
 			movementAnimation = runAnimIndex;
 		}
 
@@ -384,81 +379,84 @@ public class Mob extends Renderable {
 	public void updateAnimation() {
 
 		try {
-				if (movementAnimation > 13798) {
-					movementAnimation = -1;
+			if (movementAnimation > 13798) {
+				movementAnimation = -1;
+			}
+			animationStretches = false;
+			if (movementAnimation != -1) {
+				Animation animation = Animation.animations[movementAnimation];
+				anInt1519++;
+				if (displayedMovementFrames < animation.frameCount
+						&& anInt1519 > animation.duration(displayedMovementFrames)) {
+					anInt1519 = 1;
+					displayedMovementFrames++;
+					nextIdleAnimationFrame++;
 				}
-				animationStretches = false;
-				if (movementAnimation != -1) {
-					Animation animation = Animation.animations[movementAnimation];
-					anInt1519++;
-					if (displayedMovementFrames < animation.frameCount && anInt1519 > animation.duration(displayedMovementFrames)) {
-						anInt1519 = 1;
-						displayedMovementFrames++;
-						nextIdleAnimationFrame++;
-					}
-					nextIdleAnimationFrame = displayedMovementFrames + 1;
+				nextIdleAnimationFrame = displayedMovementFrames + 1;
+				if (nextIdleAnimationFrame >= animation.frameCount) {
 					if (nextIdleAnimationFrame >= animation.frameCount) {
-						if (nextIdleAnimationFrame >= animation.frameCount) {
-							nextIdleAnimationFrame = 0;
-						}
-					}
-					if (displayedMovementFrames >= animation.frameCount) {
-						anInt1519 = 1;
-						displayedMovementFrames = 0;
+						nextIdleAnimationFrame = 0;
 					}
 				}
-				if (graphic != -1 && Client.tick >= graphicDelay) {
-					if (currentAnimation < 0)
-						currentAnimation = 0;
-					Animation animation_1 = Graphic.cache[graphic].animationSequence;
-					
-					for (anInt1522++; currentAnimation < animation_1.frameCount && anInt1522 > animation_1.duration(currentAnimation); currentAnimation++)
-						anInt1522 -= animation_1.duration(currentAnimation);
-					
-					
-					if (currentAnimation >= animation_1.frameCount && (currentAnimation < 0 || currentAnimation >= animation_1.frameCount)) {
-						graphic = -1;
-					}
-					if (Configuration.enableTweening) {
-						nextIdleAnimationFrame = displayedMovementFrames + 1;
-					}
-					if (nextSpotAnimFrame >= animation_1.frameCount) {
-						nextSpotAnimFrame = -1;
-					}
+				if (displayedMovementFrames >= animation.frameCount) {
+					anInt1519 = 1;
+					displayedMovementFrames = 0;
 				}
-				if (emoteAnimation != -1 && animationDelay <= 1) {
-					Animation animation_2 = Animation.animations[emoteAnimation];
-					if (animation_2.animatingPrecedence == 1 && anInt1542 > 0 && startForceMovement <= Client.tick && endForceMovement < Client.tick) {
-						animationDelay = 1;
-						return;
-					}
-				}
-				if (emoteAnimation != -1 && animationDelay == 0) {
-					Animation animation_3 = Animation.animations[emoteAnimation];
-					for (emoteTimeRemaining++; displayedEmoteFrames < animation_3.frameCount && emoteTimeRemaining > animation_3.duration(displayedEmoteFrames); displayedEmoteFrames++)
-						emoteTimeRemaining -= animation_3.duration(displayedEmoteFrames);
+			}
+			if (graphic != -1 && Client.tick >= graphicDelay) {
+				if (currentAnimation < 0)
+					currentAnimation = 0;
+				Animation animation_1 = Graphic.cache[graphic].animationSequence;
 
-					if (displayedEmoteFrames >= animation_3.frameCount) {
-						displayedEmoteFrames -= animation_3.loopOffset;
-						currentAnimationLoops++;
-						if (currentAnimationLoops >= animation_3.maximumLoops)
-							emoteAnimation = -1;
-						if (displayedEmoteFrames < 0 || displayedEmoteFrames >= animation_3.frameCount)
-							emoteAnimation = -1;
-					}
-					if (Configuration.enableTweening) {
-						nextAnimationFrame = displayedEmoteFrames + 1;
-					}
-					if (nextAnimationFrame >= animation_3.frameCount) {
-						nextAnimationFrame = -1;
-					}
-					animationStretches = animation_3.stretches;
-				}
-				if (animationDelay > 0)
-					animationDelay--;
+				for (anInt1522++; currentAnimation < animation_1.frameCount
+						&& anInt1522 > animation_1.duration(currentAnimation); currentAnimation++)
+					anInt1522 -= animation_1.duration(currentAnimation);
 
-		
-		} catch(Exception e) {
+				if (currentAnimation >= animation_1.frameCount
+						&& (currentAnimation < 0 || currentAnimation >= animation_1.frameCount)) {
+					graphic = -1;
+				}
+				if (Configuration.enableTweening) {
+					nextIdleAnimationFrame = displayedMovementFrames + 1;
+				}
+				if (nextSpotAnimFrame >= animation_1.frameCount) {
+					nextSpotAnimFrame = -1;
+				}
+			}
+			if (emoteAnimation != -1 && animationDelay <= 1) {
+				Animation animation_2 = Animation.animations[emoteAnimation];
+				if (animation_2.animatingPrecedence == 1 && anInt1542 > 0 && startForceMovement <= Client.tick
+						&& endForceMovement < Client.tick) {
+					animationDelay = 1;
+					return;
+				}
+			}
+			if (emoteAnimation != -1 && animationDelay == 0) {
+				Animation animation_3 = Animation.animations[emoteAnimation];
+				for (emoteTimeRemaining++; displayedEmoteFrames < animation_3.frameCount
+						&& emoteTimeRemaining > animation_3.duration(displayedEmoteFrames); displayedEmoteFrames++)
+					emoteTimeRemaining -= animation_3.duration(displayedEmoteFrames);
+
+				if (displayedEmoteFrames >= animation_3.frameCount) {
+					displayedEmoteFrames -= animation_3.loopOffset;
+					currentAnimationLoops++;
+					if (currentAnimationLoops >= animation_3.maximumLoops)
+						emoteAnimation = -1;
+					if (displayedEmoteFrames < 0 || displayedEmoteFrames >= animation_3.frameCount)
+						emoteAnimation = -1;
+				}
+				if (Configuration.enableTweening) {
+					nextAnimationFrame = displayedEmoteFrames + 1;
+				}
+				if (nextAnimationFrame >= animation_3.frameCount) {
+					nextAnimationFrame = -1;
+				}
+				animationStretches = animation_3.stretches;
+			}
+			if (animationDelay > 0)
+				animationDelay--;
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

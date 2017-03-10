@@ -10,5 +10,4 @@ public class FinalizedRegionChange implements OutgoingPacket {
 		buf.putOpcode(121);
 	}
 
-
 }

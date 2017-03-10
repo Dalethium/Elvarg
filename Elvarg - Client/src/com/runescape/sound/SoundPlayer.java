@@ -1,5 +1,7 @@
 package com.runescape.sound;
+
 import java.io.InputStream;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -23,6 +25,7 @@ public class SoundPlayer implements Runnable {
 
 	/**
 	 * Initializes the sound player.
+	 * 
 	 * @param stream
 	 * @param level
 	 * @param delay
@@ -69,6 +72,7 @@ public class SoundPlayer implements Runnable {
 
 	/**
 	 * Sets the client's volume level.
+	 * 
 	 * @param level
 	 */
 	public static void setVolume(int level) {
@@ -84,33 +88,34 @@ public class SoundPlayer implements Runnable {
 
 	/**
 	 * Returns the decibels for a given volume level.
+	 * 
 	 * @param level
 	 * @return
 	 */
 	public float getDecibels(int level) {
 		switch (level) {
-			case 1:
-				return (float) -80.0;
-			case 2:
-				return (float) -70.0;
-			case 3:
-				return (float) -60.0;
-			case 4:
-				return (float) -50.0;
-			case 5:
-				return (float) -40.0;
-			case 6:
-				return (float) -30.0;
-			case 7:
-				return (float) -20.0;
-			case 8:
-				return (float) -10.0;
-			case 9:
-				return (float) -0.0;
-			case 10:
-				return (float) 6.0;
-			default:
-				return (float) 0.0;
+		case 1:
+			return (float) -80.0;
+		case 2:
+			return (float) -70.0;
+		case 3:
+			return (float) -60.0;
+		case 4:
+			return (float) -50.0;
+		case 5:
+			return (float) -40.0;
+		case 6:
+			return (float) -30.0;
+		case 7:
+			return (float) -20.0;
+		case 8:
+			return (float) -10.0;
+		case 9:
+			return (float) -0.0;
+		case 10:
+			return (float) 6.0;
+		default:
+			return (float) 0.0;
 		}
 	}
 }

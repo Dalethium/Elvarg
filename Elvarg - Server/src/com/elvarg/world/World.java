@@ -11,7 +11,6 @@ import java.util.concurrent.Phaser;
 import com.elvarg.Elvarg;
 import com.elvarg.GameConstants;
 import com.elvarg.util.Misc;
-import com.elvarg.world.content.ServerFeed;
 import com.elvarg.world.entity.impl.CharacterList;
 import com.elvarg.world.entity.impl.npc.NPC;
 import com.elvarg.world.entity.impl.object.ObjectHandler;
@@ -223,8 +222,5 @@ public class World {
 
 		// Objects updating
 		ObjectHandler.process();
-
-		// Misc updating
-		ServerFeed.updateEntries();
 	}
 }

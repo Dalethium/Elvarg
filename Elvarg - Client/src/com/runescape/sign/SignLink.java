@@ -87,6 +87,7 @@ public final class SignLink implements Runnable {
 			}
 	}
 
+	@Override
 	public void run() {
 		active = true;
 		String directory = findcachedir();
@@ -94,10 +95,8 @@ public final class SignLink implements Runnable {
 
 			cache_dat = new RandomAccessFile(directory + "main_file_cache.dat", "rw");
 			for (int index = 0; index < 5; index++) {
-				indices[index] = new RandomAccessFile(directory + "main_file_cache.idx"
-						+ index, "rw");
+				indices[index] = new RandomAccessFile(directory + "main_file_cache.idx" + index, "rw");
 			}
-
 
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -126,8 +125,7 @@ public final class SignLink implements Runnable {
 			} else if (savereq != null) {
 				if (savebuf != null)
 					try {
-						FileOutputStream fileoutputstream = new FileOutputStream(
-								directory + savereq);
+						FileOutputStream fileoutputstream = new FileOutputStream(directory + savereq);
 						fileoutputstream.write(savebuf, 0, savelen);
 						fileoutputstream.close();
 					} catch (Exception _ex) {
@@ -137,8 +135,7 @@ public final class SignLink implements Runnable {
 					waveplay = false;
 					AudioInputStream audioInputStream = null;
 					try {
-						audioInputStream = AudioSystem
-								.getAudioInputStream(new File(wave));
+						audioInputStream = AudioSystem.getAudioInputStream(new File(wave));
 					} catch (UnsupportedAudioFileException e1) {
 						e1.printStackTrace();
 						return;
@@ -148,8 +145,7 @@ public final class SignLink implements Runnable {
 					}
 					AudioFormat format = audioInputStream.getFormat();
 					SourceDataLine auline = null;
-					DataLine.Info info = new DataLine.Info(
-							SourceDataLine.class, format);
+					DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
 					try {
 						auline = (SourceDataLine) AudioSystem.getLine(info);
 						auline.open(format);
@@ -179,8 +175,7 @@ public final class SignLink implements Runnable {
 			} else if (urlRequest != null) {
 				try {
 					System.out.println("urlstream");
-					urlStream = new DataInputStream((new URL(
-							mainapp.getCodeBase(), urlRequest)).openStream());
+					urlStream = new DataInputStream((new URL(mainapp.getCodeBase(), urlRequest)).openStream());
 				} catch (Exception _ex) {
 					urlStream = null;
 				}
@@ -204,23 +199,22 @@ public final class SignLink implements Runnable {
 		final File cacheDirectory = new File(Configuration.CACHE_DIRECTORY);
 
 		if (!cacheDirectory.exists()) {
-			if(!localDirectory.exists()) {
+			if (!localDirectory.exists()) {
 				localDirectory.mkdir();
 			}
 			return local;
 		}
 
 		// windows
-		if (os.indexOf("win") >= 0) {	
-			return cacheLoc;	
+		if (os.indexOf("win") >= 0) {
+			return cacheLoc;
 
 			// macintosh
-		} else if (os.indexOf("mac") >= 0) {					
+		} else if (os.indexOf("mac") >= 0) {
 			return cacheLoc;
 
 			// linux
-		} else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0
-				|| os.indexOf("aix") > 0) {
+		} else if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") > 0) {
 			return cacheLoc;
 
 			// solaris
@@ -258,11 +252,9 @@ public final class SignLink implements Runnable {
 				synthesizer = MidiSystem.getSynthesizer();
 				synthesizer.open();
 				if (synthesizer.getDefaultSoundbank() == null) {
-					music.getTransmitter()
-					.setReceiver(MidiSystem.getReceiver());
+					music.getTransmitter().setReceiver(MidiSystem.getReceiver());
 				} else {
-					music.getTransmitter().setReceiver(
-							synthesizer.getReceiver());
+					music.getTransmitter().setReceiver(synthesizer.getReceiver());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -285,10 +277,8 @@ public final class SignLink implements Runnable {
 			try {
 				ShortMessage volumeMessage = new ShortMessage();
 				for (int i = 0; i < 16; i++) {
-					volumeMessage.setMessage(ShortMessage.CONTROL_CHANGE, i,
-							CHANGE_VOLUME, midiVolume);
-					volumeMessage.setMessage(ShortMessage.CONTROL_CHANGE, i,
-							39, midiVolume);
+					volumeMessage.setMessage(ShortMessage.CONTROL_CHANGE, i, CHANGE_VOLUME, midiVolume);
+					volumeMessage.setMessage(ShortMessage.CONTROL_CHANGE, i, 39, midiVolume);
 					MidiSystem.getReceiver().send(volumeMessage, -1);
 				}
 			} catch (Exception e) {
@@ -358,8 +348,7 @@ public final class SignLink implements Runnable {
 			return socket;
 	}
 
-	public static synchronized DataInputStream openUrl(String url)
-			throws IOException {
+	public static synchronized DataInputStream openUrl(String url) throws IOException {
 		for (urlRequest = url; urlRequest != null;) {
 			try {
 				Thread.sleep(50L);
@@ -410,8 +399,7 @@ public final class SignLink implements Runnable {
 	}
 
 	public static String indexLocation(int cacheIndex, int index) {
-		return SignLink.findcachedir() + "index" + cacheIndex + "/"
-				+ (index != -1 ? index + ".gz" : "");
+		return SignLink.findcachedir() + "index" + cacheIndex + "/" + (index != -1 ? index + ".gz" : "");
 	}
 
 	public static void reporterror(String s) {

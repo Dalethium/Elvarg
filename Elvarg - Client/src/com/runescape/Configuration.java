@@ -8,9 +8,9 @@ import java.io.File;
  * @author Seven
  */
 public final class Configuration {
-	
+
 	private Configuration() {
-		
+
 	}
 
 	/**
@@ -21,7 +21,7 @@ public final class Configuration {
 	/**
 	 * The address of the server that the client will be connecting to
 	 */
-	public static String server_address = "localhost"; // 149.56.164.17
+	public static String server_address = "localhost";
 
 	public static final String CACHE_DIRECTORY = System.getProperty("user.home") + File.separator + "Cache/";
 
@@ -29,8 +29,8 @@ public final class Configuration {
 	 * The port of the server that the client will be connecting to
 	 */
 	public static int server_port = 43595;
-	
-	//JAGGRAB
+
+	// JAGGRAB
 	public static final int JAGGRAB_PORT = 43596;
 	public static final int FILE_SERVER_PORT = 43597;
 
@@ -155,7 +155,7 @@ public final class Configuration {
 	 * Enables the HUD to display 10 X the amount of hitpoints
 	 */
 	public static boolean tenXHp = false;
-	
+
 	/**
 	 * Should it be snow in the game? White floor.
 	 */

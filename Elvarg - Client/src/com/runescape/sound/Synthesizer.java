@@ -52,7 +52,7 @@ final class Synthesizer {
 
 		SINE = new int[32768];
 		for (int j = 0; j < 32768; j++)
-			SINE[j] = (int) (Math.sin((double) j / 5215.1903000000002D) * 16384D);
+			SINE[j] = (int) (Math.sin(j / 5215.1903000000002D) * 16384D);
 
 		samples = new int[0x35d54];
 	}
@@ -63,7 +63,7 @@ final class Synthesizer {
 
 		if (duration < 10)
 			return samples;
-		double d = (double) sampleCount / ((double) duration + 0.0D);
+		double d = sampleCount / (duration + 0.0D);
 		pitch.resetValues();
 		volume.resetValues();
 		int pitchMultiplierStep = 0;
@@ -72,8 +72,8 @@ final class Synthesizer {
 		if (pitchModifier != null) {
 			pitchModifier.resetValues();
 			pitchModifierAmplitude.resetValues();
-			pitchMultiplierStep = (int) (((double) (pitchModifier.end - pitchModifier.start) * 32.768000000000001D) / d);
-			pitchModifierBaseStep = (int) (((double) pitchModifier.start * 32.768000000000001D) / d);
+			pitchMultiplierStep = (int) (((pitchModifier.end - pitchModifier.start) * 32.768000000000001D) / d);
+			pitchModifierBaseStep = (int) ((pitchModifier.start * 32.768000000000001D) / d);
 		}
 		int volumeMultiplierStep = 0;
 		int volumeMultiplierBaseStep = 0;
@@ -81,17 +81,17 @@ final class Synthesizer {
 		if (volumeMultiplier != null) {
 			volumeMultiplier.resetValues();
 			volumeMultiplierAmplitude.resetValues();
-			volumeMultiplierStep = (int) (((double) (volumeMultiplier.end - volumeMultiplier.start) * 32.768000000000001D) / d);
-			volumeMultiplierBaseStep = (int) (((double) volumeMultiplier.start * 32.768000000000001D) / d);
+			volumeMultiplierStep = (int) (((volumeMultiplier.end - volumeMultiplier.start) * 32.768000000000001D) / d);
+			volumeMultiplierBaseStep = (int) ((volumeMultiplier.start * 32.768000000000001D) / d);
 		}
 		for (int index = 0; index < 5; index++)
 			if (oscillatorVolume[index] != 0) {
 				phases[index] = 0;
-				delays[index] = (int) ((double) anIntArray108[index] * d);
+				delays[index] = (int) (anIntArray108[index] * d);
 				volumeSteps[index] = (oscillatorVolume[index] << 14) / 100;
-				pitchSteps[index] = (int) (((double) (pitch.end - pitch.start) * 32.768000000000001D * Math
-						.pow(1.0057929410678534D, anIntArray107[index])) / d);
-				pitchBaseSteps[index] = (int) (((double) pitch.start * 32.768000000000001D) / d);
+				pitchSteps[index] = (int) (((pitch.end - pitch.start) * 32.768000000000001D
+						* Math.pow(1.0057929410678534D, anIntArray107[index])) / d);
+				pitchBaseSteps[index] = (int) ((pitch.start * 32.768000000000001D) / d);
 			}
 
 		for (int sample = 0; sample < sampleCount; sample++) {
@@ -100,29 +100,23 @@ final class Synthesizer {
 			if (pitchModifier != null) {
 				int modifier = pitchModifier.step(sampleCount);
 				int ampModifier = pitchModifierAmplitude.step(sampleCount);
-				pitchChange += evaluateWave(ampModifier, pitchModifierPhase,
-						pitchModifier.form) >> 1;
-				pitchModifierPhase += (modifier * pitchMultiplierStep >> 16)
-						+ pitchModifierBaseStep;
+				pitchChange += evaluateWave(ampModifier, pitchModifierPhase, pitchModifier.form) >> 1;
+				pitchModifierPhase += (modifier * pitchMultiplierStep >> 16) + pitchModifierBaseStep;
 			}
 			if (volumeMultiplier != null) {
 				int multiplier = volumeMultiplier.step(sampleCount);
 				int ampMultiplier = volumeMultiplierAmplitude.step(sampleCount);
 				volumeChange = volumeChange
-						* ((evaluateWave(ampMultiplier, volumeMultiplierPhase,
-								volumeMultiplier.form) >> 1) + 32768) >> 15;
-				volumeMultiplierPhase += (multiplier * volumeMultiplierStep >> 16)
-						+ volumeMultiplierBaseStep;
+						* ((evaluateWave(ampMultiplier, volumeMultiplierPhase, volumeMultiplier.form) >> 1)
+								+ 32768) >> 15;
+				volumeMultiplierPhase += (multiplier * volumeMultiplierStep >> 16) + volumeMultiplierBaseStep;
 			}
 			for (int delay = 0; delay < 5; delay++)
 				if (oscillatorVolume[delay] != 0) {
 					int id = sample + delays[delay];
 					if (id < sampleCount) {
-						samples[id] += evaluateWave(volumeChange
-								* volumeSteps[delay] >> 15, phases[delay],
-								pitch.form);
-						phases[delay] += (pitchChange * pitchSteps[delay] >> 16)
-								+ pitchBaseSteps[delay];
+						samples[id] += evaluateWave(volumeChange * volumeSteps[delay] >> 15, phases[delay], pitch.form);
+						phases[delay] += (pitchChange * pitchSteps[delay] >> 16) + pitchBaseSteps[delay];
 					}
 				}
 
@@ -138,11 +132,9 @@ final class Synthesizer {
 				int off = attack.step(sampleCount);
 				int threshold;
 				if (muted)
-					threshold = release.start
-							+ ((release.end - release.start) * on >> 8);
+					threshold = release.start + ((release.end - release.start) * on >> 8);
 				else
-					threshold = release.start
-							+ ((release.end - release.start) * off >> 8);
+					threshold = release.start + ((release.end - release.start) * off >> 8);
 				if ((counter += 256) >= threshold) {
 					counter = 0;
 					muted = !muted;
@@ -153,7 +145,7 @@ final class Synthesizer {
 
 		}
 		if (delayTime > 0 && delayDecay > 0) {
-			int delay = (int) ((double) delayTime * d);
+			int delay = (int) (delayTime * d);
 			for (int index = delay; index < sampleCount; index++)
 				samples[index] += (samples[index - delay] * delayDecay) / 100;
 
@@ -161,24 +153,21 @@ final class Synthesizer {
 		if (filter.pairs[0] > 0 || filter.pairs[1] > 0) {
 			filterEnvelope.resetValues();
 			int change = filterEnvelope.step(sampleCount + 1);
-			int forwardOrder = filter.compute(0, (float) change / 65536F);
-			int backOrder = filter.compute(1, (float) change / 65536F);
+			int forwardOrder = filter.compute(0, change / 65536F);
+			int backOrder = filter.compute(1, change / 65536F);
 			if (sampleCount >= forwardOrder + backOrder) {
 				int index = 0;
 				int delay = backOrder;
 				if (delay > sampleCount - forwardOrder)
 					delay = sampleCount - forwardOrder;
 				for (; index < delay; index++) {
-					int sample = (int) ((long) samples[index + forwardOrder]
-							* (long) Filter.forwardMultiplier >> 16);
+					int sample = (int) ((long) samples[index + forwardOrder] * (long) Filter.forwardMultiplier >> 16);
 					for (int j8 = 0; j8 < forwardOrder; j8++)
-						sample += (int) ((long) samples[(index + forwardOrder)
-								- 1 - j8]
+						sample += (int) ((long) samples[(index + forwardOrder) - 1 - j8]
 								* (long) Filter.coefficients[0][j8] >> 16);
 
 					for (int j9 = 0; j9 < index; j9++)
-						sample -= (int) ((long) samples[index - 1 - j9]
-								* (long) Filter.coefficients[1][j9] >> 16);
+						sample -= (int) ((long) samples[index - 1 - j9] * (long) Filter.coefficients[1][j9] >> 16);
 
 					samples[index] = sample;
 					change = filterEnvelope.step(sampleCount + 1);
@@ -190,16 +179,13 @@ final class Synthesizer {
 					if (delay > sampleCount - forwardOrder)
 						delay = sampleCount - forwardOrder;
 					for (; index < delay; index++) {
-						int l8 = (int) ((long) samples[index + forwardOrder]
-								* (long) Filter.forwardMultiplier >> 16);
+						int l8 = (int) ((long) samples[index + forwardOrder] * (long) Filter.forwardMultiplier >> 16);
 						for (int k9 = 0; k9 < forwardOrder; k9++)
-							l8 += (int) ((long) samples[(index + forwardOrder)
-									- 1 - k9]
+							l8 += (int) ((long) samples[(index + forwardOrder) - 1 - k9]
 									* (long) Filter.coefficients[0][k9] >> 16);
 
 						for (int i10 = 0; i10 < backOrder; i10++)
-							l8 -= (int) ((long) samples[index - 1 - i10]
-									* (long) Filter.coefficients[1][i10] >> 16);
+							l8 -= (int) ((long) samples[index - 1 - i10] * (long) Filter.coefficients[1][i10] >> 16);
 
 						samples[index] = l8;
 						change = filterEnvelope.step(sampleCount + 1);
@@ -207,20 +193,18 @@ final class Synthesizer {
 
 					if (index >= sampleCount - forwardOrder)
 						break;
-					forwardOrder = filter.compute(0, (float) change / 65536F);
-					backOrder = filter.compute(1, (float) change / 65536F);
+					forwardOrder = filter.compute(0, change / 65536F);
+					backOrder = filter.compute(1, change / 65536F);
 					delay += c;
 				} while (true);
 				for (; index < sampleCount; index++) {
 					int sample = 0;
 					for (int l9 = (index + forwardOrder) - sampleCount; l9 < forwardOrder; l9++)
-						sample += (int) ((long) samples[(index + forwardOrder)
-								- 1 - l9]
+						sample += (int) ((long) samples[(index + forwardOrder) - 1 - l9]
 								* (long) Filter.coefficients[0][l9] >> 16);
 
 					for (int j10 = 0; j10 < backOrder; j10++)
-						sample -= (int) ((long) samples[index - 1 - j10]
-								* (long) Filter.coefficients[1][j10] >> 16);
+						sample -= (int) ((long) samples[index - 1 - j10] * (long) Filter.coefficients[1][j10] >> 16);
 
 					samples[index] = sample;
 				}

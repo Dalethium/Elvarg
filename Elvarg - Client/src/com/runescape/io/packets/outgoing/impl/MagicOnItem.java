@@ -9,14 +9,14 @@ public class MagicOnItem implements OutgoingPacket {
 	int nodeId;
 	int interfaceId;
 	int selectedSpellId;
-	
+
 	public MagicOnItem(int slot, int nodeId, int interfaceId, int selectedSpellId) {
 		this.slot = slot;
 		this.nodeId = nodeId;
 		this.interfaceId = interfaceId;
 		this.selectedSpellId = selectedSpellId;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(237);
@@ -25,6 +25,5 @@ public class MagicOnItem implements OutgoingPacket {
 		buf.putShort(interfaceId);
 		buf.writeUnsignedWordA(selectedSpellId);
 	}
-
 
 }

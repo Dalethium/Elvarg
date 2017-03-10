@@ -10,5 +10,4 @@ public class BasicPing implements OutgoingPacket {
 		buf.putOpcode(0);
 	}
 
-
 }

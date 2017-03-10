@@ -33,26 +33,9 @@ public final class Widget {
 	public static final int TYPE_MODEL = 6;
 	public static final int TYPE_ITEM_LIST = 7;
 
-	private static final int[] SPECIAL_BARS =
-		{
-				7474,
-				7499,
-				7549,
-				7574,
-				7599,
-				7624,
-				7649,
-				7674,
-				7699,
-				7800,
-				8493,
-				6117,
-				7524,
-				7749,
-				7724,
-				12323,
-		};
-	
+	private static final int[] SPECIAL_BARS = { 7474, 7499, 7549, 7574, 7599, 7624, 7649, 7674, 7699, 7800, 8493, 6117,
+			7524, 7749, 7724, 12323, };
+
 	public void swapInventoryItems(int i, int j) {
 		int id = inventoryItemId[i];
 		inventoryItemId[i] = inventoryItemId[j];
@@ -118,20 +101,19 @@ public final class Widget {
 				widget.invisible = buffer.readUnsignedByte() == 1;
 				int length = buffer.readUShort();
 
-				if(widget.id == 5608) {
+				if (widget.id == 5608) {
 
 					widget.children = new int[PRAYER_INTERFACE_CHILDREN];
 					widget.childX = new int[PRAYER_INTERFACE_CHILDREN];
 					widget.childY = new int[PRAYER_INTERFACE_CHILDREN];
 
 					for (int index = 0; index < length; index++) {
-						widget.children[BEGIN_READING_PRAYER_INTERFACE+ index] = buffer.readUShort();
-						widget.childX[BEGIN_READING_PRAYER_INTERFACE+ index] = buffer.readShort();
-						widget.childY[BEGIN_READING_PRAYER_INTERFACE+ index] = buffer.readShort();
+						widget.children[BEGIN_READING_PRAYER_INTERFACE + index] = buffer.readUShort();
+						widget.childX[BEGIN_READING_PRAYER_INTERFACE + index] = buffer.readShort();
+						widget.childY[BEGIN_READING_PRAYER_INTERFACE + index] = buffer.readShort();
 					}
 
 				} else {
-
 
 					widget.children = new int[length];
 					widget.childX = new int[length];
@@ -315,46 +297,37 @@ public final class Widget {
 		shop();
 		prayerBook();
 		priceChecker(textDrawingAreas);
-		
 		bankInterface(textDrawingAreas);
 		bankSettings(textDrawingAreas);
-		
 		killFeed(textDrawingAreas);
-		teleportInterface(textDrawingAreas);
-
-		mainTeleports();
-		normalSpellbookEdit(textDrawingAreas);
-		ancientSpellbookEdit(textDrawingAreas);
 		settingsTab();
-
-		//specialBars();
-		
 		spriteCache = null;
 	}
 
 	public static void settingsTab() {
 		Widget p = addTabInterface(42500);
 
-		//Removing adjust bars such as music/sounds
-		int[] to_remove = {19131, 19149, 19157, 22635, 941, 942, 943, 944, 945, 19150, 19151, 19152, 19153, 19154, 19155};
-		for(int i : to_remove) {
+		// Removing adjust bars such as music/sounds
+		int[] to_remove = { 19131, 19149, 19157, 22635, 941, 942, 943, 944, 945, 19150, 19151, 19152, 19153, 19154,
+				19155 };
+		for (int i : to_remove) {
 			removeSomething(i);
 		}
 
-		for(int i : new int[]{930, 931, 932, 933, 934, 22634}) {
-			interfaceCache[i].tooltip
-			= interfaceCache[i].defaultText = "Adjust Camera Zoom";
+		for (int i : new int[] { 930, 931, 932, 933, 934, 22634 }) {
+			interfaceCache[i].tooltip = interfaceCache[i].defaultText = "Adjust Camera Zoom";
 		}
 
-		//Adding zoom image
+		// Adding zoom image
 		addSpriteLoader(42508, 189);
 
-		//Adding key bindings image
+		// Adding key bindings image
 		addSpriteLoader(42510, 190);
-		addButton(42511, 42500, 30, 30, interfaceCache[19156].disabledSprite, interfaceCache[19156].enabledSprite, -1, "Adjust Key bindings");
-		removeSomething(19156); //Removes house button
+		addButton(42511, 42500, 30, 30, interfaceCache[19156].disabledSprite, interfaceCache[19156].enabledSprite, -1,
+				"Adjust Key bindings");
+		removeSomething(19156); // Removes house button
 
-		//Adding screen sizes
+		// Adding screen sizes
 		addButton(42501, 42500, 54, 46, 185, 186, 42502, "Fixed Screen");
 		addHoveredButton_sprite_loader(42502, 186, 54, 46, 42503);
 
@@ -363,333 +336,26 @@ public final class Widget {
 
 		p.totalChildren(8);
 
-		//Screen sizes
+		// Screen sizes
 		setBounds(42501, 30, 95, 0, p);
 		setBounds(42502, 30, 95, 1, p);
 		setBounds(42504, 110, 95, 2, p);
 		setBounds(42505, 110, 95, 3, p);
 
-		//Camera zoom image
+		// Camera zoom image
 		setBounds(42508, 10, 49, 4, p);
 
-		//key bindings images
+		// key bindings images
 		setBounds(42511, 132, 212, 5, p);
 		setBounds(42510, 136, 215, 6, p);
 
-		//Main settings interface
+		// Main settings interface
 		setBounds(904, 0, 0, 7, p);
 
 	}
 
-	public static void mainTeleports() {
-		addButton(39101, 38100, 79, 30, 1, 805, 174, 175, 39102, "Home Teleport");
-		addHoveredButton_sprite_loader(39102, 175, 79, 30, 39103);
-		addButton(39104, 38100, 79, 30, 1, 806, 176, 177, 39105, "Other Teleports");
-		addHoveredButton_sprite_loader(39105, 177, 79, 30, 39106);
-	}
-
-	public static void ancientSpellbookEdit(GameFont[] t) {
-		Widget tab = addInterface(39100);
-		tab.totalChildren(36);
-
-		//ADD "HOME" AND "OTHER" TELEPORTS
-		setBounds(39101, 10, 9, 0, tab);
-		setBounds(39102, 10, 9, 1, tab);
-		setBounds(39104, 105, 9, 2, tab);
-		setBounds(39105, 105, 9, 3, tab);
-
-		//Row 1
-		setBounds(12939, 25, 50, 4, tab);
-		setBounds(12987, 65, 50, 5, tab);
-		setBounds(12901, 105, 50, 6, tab);
-		setBounds(12861, 145, 50, 7, tab);
-
-		//Row 2
-		setBounds(12963, 25, 90, 8, tab);
-		setBounds(13011, 65, 90, 9, tab);
-		setBounds(12919, 105, 90, 10, tab);
-		setBounds(12881, 145, 90, 11, tab);
-
-		//Row 3
-		setBounds(12951, 25, 130, 12, tab);
-		setBounds(12999, 65, 130, 13, tab);
-		setBounds(12911, 105, 130, 14, tab);
-		setBounds(12871, 145, 130, 15, tab);
-
-		//Row 4
-		setBounds(12975, 25, 170, 16, tab);
-		setBounds(13023, 65, 170, 17, tab);
-		setBounds(12929, 105, 170, 18, tab);
-		setBounds(12891, 145, 170, 19, tab);
-
-		//Spell hovers
-
-		//Row 1
-		setBounds(21758, 3, 180, 20, tab);
-		setBounds(21793, 3, 180, 21, tab);
-		setBounds(21874, 3, 180, 22, tab);
-		setBounds(21903, 3, 180, 23, tab);
-
-		//Row 2
-		setBounds(21988, 3, 180, 24, tab);
-		setBounds(22018, 3, 180, 25, tab);
-		setBounds(22068, 3, 180, 26, tab);
-		setBounds(22093, 3, 180, 27, tab);
-
-		//Row 3
-		setBounds(22169, 3, 180, 28, tab);
-		setBounds(22198, 3, 180, 29, tab);
-		setBounds(22252, 3, 180, 30, tab);
-		setBounds(22277, 3, 180, 31, tab);
-
-		//Row 4
-		setBounds(22352, 3, 10, 32, tab);
-		setBounds(22381, 3, 10, 33, tab);
-		setBounds(22431, 3, 10, 34, tab);
-		setBounds(22460, 3, 10, 35, tab);
-	}
-
-	public static void normalSpellbookEdit(GameFont[] t) {
-		Widget tab = addInterface(39000);
-		tab.totalChildren(62);
-
-		//ADD "HOME" AND "OTHER" TELEPORTS
-		setBounds(39101, 10, 9, 0, tab);
-		setBounds(39102, 10, 9, 1, tab);
-		setBounds(39104, 105, 9, 2, tab);
-		setBounds(39105, 105, 9, 3, tab);
-
-		//Row 1
-		setBounds(1152, 10, 50, 4, tab);
-		setBounds(1154, 40, 50, 5, tab);
-		setBounds(1156, 70, 50, 6, tab);
-		setBounds(1158, 100, 50, 7, tab);
-
-		//Row 2
-		setBounds(1160, 10, 80, 8, tab);
-		setBounds(1163, 40, 80, 9, tab);
-		setBounds(1166, 70, 80, 10, tab);
-		setBounds(1169, 100, 80, 11, tab);
-
-		//Row 3
-		setBounds(1172, 10, 110, 12, tab);
-		setBounds(1175, 40, 110, 13, tab);
-		setBounds(1177, 70, 110, 14, tab);
-		setBounds(1181, 100, 110, 15, tab);
-
-		//Row 4
-		setBounds(1183, 10, 140, 16, tab);
-		setBounds(1185, 40, 140, 17, tab);
-		setBounds(1188, 70, 140, 18, tab);
-		setBounds(1189, 100, 140, 19, tab);
-
-		//Row 5
-		setBounds(1539, 9, 172, 20, tab);
-		setBounds(1190, 40, 175, 21, tab);
-		setBounds(1191, 70, 173, 22, tab);
-		setBounds(1192, 100, 175, 23, tab);
-
-		//Row 6
-		setBounds(1572, 35, 230, 24, tab);
-		setBounds(1582, 65, 230, 25, tab);
-		setBounds(1592, 95, 230, 26, tab);
-		setBounds(12445, 125, 230, 27, tab);
-
-
-		//Side row
-		setBounds(1159, 160, 50, 28, tab);
-		setBounds(15877, 160, 80, 29, tab);
-		setBounds(1173, 164, 110, 30, tab);
-		setBounds(1162, 164, 140, 31, tab);
-		setBounds(1178, 160, 170, 32, tab);
-
-
-		//HOVERS
-
-		//Row 1
-		setBounds(19226, 3, 180, 33, tab);
-		setBounds(19297, 3, 180, 34, tab);
-		setBounds(19371, 3, 180, 35, tab);
-		setBounds(19429, 3, 180, 36, tab);
-		setBounds(19458, 3, 180, 37, tab);
-
-		//Row 2
-		setBounds(19487, 3, 180, 38, tab);
-		setBounds(19591, 3, 180, 39, tab);
-		setBounds(19672, 3, 180, 40, tab);
-		setBounds(19753, 3, 180, 41, tab);
-		setBounds(20418, 3, 180, 42, tab);
-
-		//Row 3
-		setBounds(19897, 3, 180, 43, tab);
-		setBounds(19966, 3, 180, 44, tab);
-		setBounds(20201, 3, 180, 45, tab);
-		setBounds(20360, 3, 180, 46, tab);
-		setBounds(19920, 3, 180, 47, tab);
-
-		//Row 4
-		setBounds(20576, 3, 180, 48, tab);
-		setBounds(20663, 3, 180, 49, tab);
-		setBounds(20780, 3, 180, 50, tab);
-		setBounds(20867, 3, 180, 51, tab);
-		setBounds(19568, 3, 180, 52, tab);
-
-		//Row 5
-		setBounds(20088, 3, 10, 53, tab);
-		setBounds(20448, 3, 10, 54, tab);
-		setBounds(20483, 3, 10, 55, tab);
-		setBounds(20518, 3, 10, 56, tab);
-		setBounds(20230, 3, 10, 57, tab);
-
-		//Row 6
-		setBounds(19539, 3, 10, 58, tab);
-		setBounds(20119, 3, 10, 59, tab);
-		setBounds(20896, 3, 10, 60, tab);
-		setBounds(21012, 3, 10, 61, tab);
-	}
-
-	public static void teleportInterface(GameFont[] t) {
-		Widget tab = addInterface(38100);
-		tab.totalChildren(13);
-		tab.drawsTransparent = true;
-
-		//Background
-		addTransparentSprite(38101, 163, 255);
-		setBounds(38101, 5, 5, 0, tab);
-
-		//Buttons
-
-		/** MONSTERS **/
-		addButton(38102, 38100, 173, 38, 1, 800, 164, 165, 38103, "Monsters");
-		addHoveredButton_sprite_loader(38103, 165, 173, 38, 38104);
-		setBounds(38102, 15, 45, 1, tab);
-		setBounds(38103, 15, 45, 2, tab);
-
-		/** BOSSES **/
-		addButton(38105, 38100, 173, 38, 1, 801, 166, 167, 38106, "Bosses");
-		addHoveredButton_sprite_loader(38106, 167, 173, 38, 38107);
-		setBounds(38105, 15, 88, 3, tab);
-		setBounds(38106, 15, 88, 4, tab);
-
-		/** Skills **/
-		addButton(38108, 38100, 173, 38, 1, 802, 168, 169, 38109, "Skills");
-		addHoveredButton_sprite_loader(38109, 169, 173, 38, 38110);
-		setBounds(38108, 15, 131, 5, tab);
-		setBounds(38109, 15, 131, 6, tab);
-
-		/** Minigames **/
-		addButton(38111, 38100, 173, 38, 1, 803, 170, 171, 38112, "Minigames");
-		addHoveredButton_sprite_loader(38112, 171, 173, 38, 38113);
-		setBounds(38111, 15, 174, 7, tab);
-		setBounds(38112, 15, 174, 8, tab);		
-
-		/** Wilderness **/
-		addButton(38114, 38100, 173, 38, 1, 804, 172, 173, 38115, "Wilderness");
-		addHoveredButton_sprite_loader(38115, 173, 173, 38, 38116);
-		setBounds(38114, 15, 217, 9, tab);
-		setBounds(38115, 15, 217, 10, tab);
-
-		//Close button
-		addHoverButton_sprite_loader(38117, 137, 17, 17, "Close", -1, 38118, 1);
-		addHoveredButton_sprite_loader(38118, 138, 17, 17, 38119);
-		setBounds(38117, 480, 15, 11, tab);
-		setBounds(38118, 480, 15, 12, tab);
-
-		monsters(t);
-		bosses(t);
-		skills(t);
-		minigames(t);
-		wilderness(t);
-	}
-
-	public static void monsters(GameFont[] t) {
-		Widget tab = addInterface(38200);
-		tab.parent = 38100;
-		tab.totalChildren(2);		
-		setBounds(38100, 0, 0, 0, tab); //Main interface
-		setBounds(38201, 180, 47, 1, tab); //Scroll interface (monsters below)
-
-		Widget scroll = addInterface(38201);
-		scroll.width = 300;
-		scroll.height = 270; 
-		scroll.scrollPosition = 0;
-		scroll.scrollMax = 400;
-
-		//Add all monsters into the scroll..
-		String[] tooltips = {"Teleport: Rock Crabs", "Teleport: Pack Yaks", "Teleport: Experiments", "Teleport: Zombies", "Teleport: Bandits", "Teleport: Rock Crab", "Teleport: Rock Crab", "Teleport: Rock Crab", "Teleport: Rock Crab"};
-		int[] sprites = {178, 179, 178, 179, 178, 179, 178, 179, 178, 179, 178, 179, 178, 179, 178, 179, 178, 179};
-		int sprite_w = 65;
-		int sprite_h = 54;
-		int index = 0;
-
-		scroll.totalChildren(tooltips.length * 3);
-
-		int frame = 38202, frameHover = frame + 1, bounds = 0;
-		for(int i = 0, counter = 0, yDraw = 0; i < tooltips.length; i++, frame+=4, frameHover +=4, counter++, index+=2) {
-
-			int hoverXOffset = 1;
-			int hoverYOffset = 55;
-
-			if(counter == 3) {
-				hoverXOffset = -120;
-				hoverYOffset = 20;
-			} else if(counter == 4) {
-				counter = 0;
-				yDraw += 60;
-			}
-
-			int x = 22 + (counter * 70);
-
-			String s = tooltips[i];
-			addButton(frame, 38200, sprite_w, sprite_h, sprites[index], sprites[index], frameHover, s);
-			addHoveredButtonWTooltip(frameHover, sprites[index+1], sprite_w, sprite_h, frameHover + 1, frameHover + 2, s, hoverXOffset, hoverYOffset);
-			setBounds(frame, x, yDraw, bounds++, scroll);
-			setBounds(frameHover, x, yDraw, bounds++, scroll);
-		}
-
-		//Now do hovers so that sprites dont draw over
-		frameHover = 38203; 
-		for(int i = 0, counter = 0, yDraw = 0; i < tooltips.length; i++, frameHover +=4, counter++) {
-
-			if(counter == 4) {
-				counter = 0;
-				yDraw += 60;
-			}
-
-			int x = 22 + (counter * 70);
-			setBounds(frameHover + 2, x, yDraw, bounds++, scroll); // HOVER
-		}
-	}
-
-	public static void bosses(GameFont[] t) {
-		Widget tab = addInterface(38300);
-		tab.parent = 38100;
-		tab.totalChildren(1);
-		setBounds(38100, 0, 0, 0, tab);
-	}
-
-	public static void skills(GameFont[] t) {
-		Widget tab = addInterface(38400);
-		tab.parent = 38100;
-		tab.totalChildren(1);
-		setBounds(38100, 0, 0, 0, tab);
-	}
-
-	public static void minigames(GameFont[] t) {
-		Widget tab = addInterface(38500);
-		tab.parent = 38100;
-		tab.totalChildren(1);
-		setBounds(38100, 0, 0, 0, tab);
-	}
-
-	public static void wilderness(GameFont[] t) {
-		Widget tab = addInterface(38600);
-		tab.parent = 38100;
-		tab.totalChildren(1);
-		setBounds(38100, 0, 0, 0, tab);
-	}
-
-	public static void addButton(int i, int parent, int w, int h, int config, int configFrame, int sprite1, int sprite2, int hoverOver, String tooltip) {
+	public static void addButton(int i, int parent, int w, int h, int config, int configFrame, int sprite1, int sprite2,
+			int hoverOver, String tooltip) {
 		Widget p = addInterface(i);
 		p.parent = parent;
 		p.type = TYPE_SPRITE;
@@ -711,7 +377,8 @@ public final class Widget {
 		p.enabledSprite = Client.cacheSprite[sprite2];
 	}
 
-	public static void addButton(int i, int parent, int w, int h, int sprite1, int sprite2, int hoverOver, String tooltip) {
+	public static void addButton(int i, int parent, int w, int h, int sprite1, int sprite2, int hoverOver,
+			String tooltip) {
 		Widget p = addInterface(i);
 		p.parent = parent;
 		p.type = TYPE_SPRITE;
@@ -725,8 +392,8 @@ public final class Widget {
 		p.enabledSprite = Client.cacheSprite[sprite2];
 	}
 
-
-	public static void addButton(int i, int parent, int w, int h, Sprite sprite1, Sprite sprite2, int hoverOver, String tooltip) {
+	public static void addButton(int i, int parent, int w, int h, Sprite sprite1, Sprite sprite2, int hoverOver,
+			String tooltip) {
 		Widget p = addInterface(i);
 		p.parent = parent;
 		p.type = TYPE_SPRITE;
@@ -740,7 +407,8 @@ public final class Widget {
 		p.enabledSprite = sprite2;
 	}
 
-	public static void addHoveredButtonWTooltip(int i, int spriteId, int w, int h, int IMAGEID, int tooltipId, String hover, int hoverXOffset, int hoverYOffset) {// hoverable
+	public static void addHoveredButtonWTooltip(int i, int spriteId, int w, int h, int IMAGEID, int tooltipId,
+			String hover, int hoverXOffset, int hoverYOffset) {// hoverable
 		// button
 		Widget tab = addTabInterface(i);
 		tab.parent = i;
@@ -763,12 +431,11 @@ public final class Widget {
 		p.width = w;
 		p.height = h;
 
-		p.hoverText = p.defaultText = 
-				p.tooltip = hover;
+		p.hoverText = p.defaultText = p.tooltip = hover;
 
 		p.hoverXOffset = hoverXOffset;
 		p.hoverYOffset = hoverYOffset;
-		p.regularHoverBox = true;		
+		p.regularHoverBox = true;
 
 	}
 
@@ -776,15 +443,19 @@ public final class Widget {
 		Widget tab = addInterface(38000);
 		tab.totalChildren(13);
 		int y = 45;
-		for(int i = 38001, index = 0; i < 38014; i++, index++) {
+		for (int i = 38001, index = 0; i < 38014; i++, index++) {
 			addText(i, "", t, 0, 0xff9040, false, true);
 			setBounds(i, 10, y, index, tab);
 			y += 20;
 		}
 	}
 
-	public static final int BEGIN_READING_PRAYER_INTERFACE = 6;//Amount of total custom prayers we've added
-	public static final int CUSTOM_PRAYER_HOVERS = 3; //Amount of custom prayer hovers we've added
+	public static final int BEGIN_READING_PRAYER_INTERFACE = 6;// Amount of
+																// total custom
+																// prayers we've
+																// added
+	public static final int CUSTOM_PRAYER_HOVERS = 3; // Amount of custom prayer
+														// hovers we've added
 
 	public static final int PRAYER_INTERFACE_CHILDREN = 80 + BEGIN_READING_PRAYER_INTERFACE + CUSTOM_PRAYER_HOVERS;
 
@@ -798,65 +469,67 @@ public final class Widget {
 
 		Widget rsinterface = interfaceCache[5608];
 
-		//Moves down chivalry
+		// Moves down chivalry
 		rsinterface.childX[50 + BEGIN_READING_PRAYER_INTERFACE] = 10;
-		rsinterface.childY[50+ BEGIN_READING_PRAYER_INTERFACE] = 195;
-		rsinterface.childX[51+ BEGIN_READING_PRAYER_INTERFACE] = 10;
-		rsinterface.childY[51+ BEGIN_READING_PRAYER_INTERFACE] = 195;
-		rsinterface.childX[63+ BEGIN_READING_PRAYER_INTERFACE] = 10;
-		rsinterface.childY[63+ BEGIN_READING_PRAYER_INTERFACE] = 190;
+		rsinterface.childY[50 + BEGIN_READING_PRAYER_INTERFACE] = 195;
+		rsinterface.childX[51 + BEGIN_READING_PRAYER_INTERFACE] = 10;
+		rsinterface.childY[51 + BEGIN_READING_PRAYER_INTERFACE] = 195;
+		rsinterface.childX[63 + BEGIN_READING_PRAYER_INTERFACE] = 10;
+		rsinterface.childY[63 + BEGIN_READING_PRAYER_INTERFACE] = 190;
 
-		//Adjust prayer glow sprites position
-		interfaceCache[rsinterface.children[50+ BEGIN_READING_PRAYER_INTERFACE]].spriteXOffset = -7;
-		interfaceCache[rsinterface.children[50+ BEGIN_READING_PRAYER_INTERFACE]].spriteYOffset = -2;
+		// Adjust prayer glow sprites position
+		interfaceCache[rsinterface.children[50 + BEGIN_READING_PRAYER_INTERFACE]].spriteXOffset = -7;
+		interfaceCache[rsinterface.children[50 + BEGIN_READING_PRAYER_INTERFACE]].spriteYOffset = -2;
 
+		// Moves piety to the right
+		rsinterface.childX[52 + BEGIN_READING_PRAYER_INTERFACE] = 43;
+		rsinterface.childY[52 + BEGIN_READING_PRAYER_INTERFACE] = 204;
+		rsinterface.childX[53 + BEGIN_READING_PRAYER_INTERFACE] = 43;
+		rsinterface.childY[53 + BEGIN_READING_PRAYER_INTERFACE] = 204;
+		rsinterface.childX[64 + BEGIN_READING_PRAYER_INTERFACE] = 43;
+		rsinterface.childY[64 + BEGIN_READING_PRAYER_INTERFACE] = 190;
 
-		//Moves piety to the right
-		rsinterface.childX[52+ BEGIN_READING_PRAYER_INTERFACE] = 43;
-		rsinterface.childY[52+ BEGIN_READING_PRAYER_INTERFACE] = 204;
-		rsinterface.childX[53+ BEGIN_READING_PRAYER_INTERFACE] = 43;
-		rsinterface.childY[53+ BEGIN_READING_PRAYER_INTERFACE] = 204;
-		rsinterface.childX[64+ BEGIN_READING_PRAYER_INTERFACE] = 43;
-		rsinterface.childY[64+ BEGIN_READING_PRAYER_INTERFACE] = 190;
+		// Adjust prayer glow sprites
+		interfaceCache[rsinterface.children[52 + BEGIN_READING_PRAYER_INTERFACE]].spriteXOffset = -2;
+		interfaceCache[rsinterface.children[52 + BEGIN_READING_PRAYER_INTERFACE]].spriteYOffset = -11;
 
-		//Adjust prayer glow sprites
-		interfaceCache[rsinterface.children[52+ BEGIN_READING_PRAYER_INTERFACE]].spriteXOffset = -2;
-		interfaceCache[rsinterface.children[52+ BEGIN_READING_PRAYER_INTERFACE]].spriteYOffset = -11;
-
-		//Now we add new prayers..
-		//AddPrayer adds a glow at the id
-		//Adds the actual prayer sprite at id+1
-		//Adds a hover box at id + 2
+		// Now we add new prayers..
+		// AddPrayer adds a glow at the id
+		// Adds the actual prayer sprite at id+1
+		// Adds a hover box at id + 2
 		addPrayer(28001, "Activate @or1@Preserve", 31, 32, 150, -2, -1, 151, 152, 1, 708, 28003);
-		setBounds(28001, 153, 158, 0, rsinterface); //Prayer glow sprite
-		setBounds(28002, 153, 158, 1, rsinterface); //Prayer sprites
-
+		setBounds(28001, 153, 158, 0, rsinterface); // Prayer glow sprite
+		setBounds(28002, 153, 158, 1, rsinterface); // Prayer sprites
 
 		addPrayer(28004, "Activate @or1@Rigour", 31, 32, 150, -3, -5, 153, 154, 1, 710, 28006);
-		setBounds(28004, 84, 198, 2, rsinterface); //Prayer glow sprite
-		setBounds(28005, 84, 198, 3, rsinterface); //Prayer sprites
+		setBounds(28004, 84, 198, 2, rsinterface); // Prayer glow sprite
+		setBounds(28005, 84, 198, 3, rsinterface); // Prayer sprites
 
 		addPrayer(28007, "Activate @or1@Augury", 31, 32, 150, -3, -5, 155, 156, 1, 712, 28009);
-		setBounds(28007, 120, 198, 4, rsinterface); //Prayer glow sprite
-		setBounds(28008, 120, 198, 5, rsinterface); //Prayer sprites
+		setBounds(28007, 120, 198, 4, rsinterface); // Prayer glow sprite
+		setBounds(28008, 120, 198, 5, rsinterface); // Prayer sprites
 
-		//Now we add hovers..
+		// Now we add hovers..
 		addPrayerHover(28003, "Level 55\nPreserve\nBoosted stats last 20% longer.", -135, -60);
-		setBounds(28003, 153, 158,  86, rsinterface); //Hover box
+		setBounds(28003, 153, 158, 86, rsinterface); // Hover box
 
-		addPrayerHover(28006, "Level 74\nRigour\nIncreases your Ranged attack\nby 20% and damage by 23%,\nand your defence by 25%", -70, -100);
-		setBounds(28006, 84, 200, 87, rsinterface); //Hover box
+		addPrayerHover(28006,
+				"Level 74\nRigour\nIncreases your Ranged attack\nby 20% and damage by 23%,\nand your defence by 25%",
+				-70, -100);
+		setBounds(28006, 84, 200, 87, rsinterface); // Hover box
 
-		addPrayerHover(28009, "Level 77\nAugury\nIncreases your Magic attack\nby 25% and your defence by 25%", -110, -100);
-		setBounds(28009, 120, 198, 88, rsinterface); //Hover box
+		addPrayerHover(28009, "Level 77\nAugury\nIncreases your Magic attack\nby 25% and your defence by 25%", -110,
+				-100);
+		setBounds(28009, 120, 198, 88, rsinterface); // Hover box
 
 	}
 
-	public static void addPrayer(int ID, String tooltip, int w, int h, int glowSprite, int glowX, int glowY, int disabledSprite, int enabledSprite, int config, int configFrame, int hover) {
+	public static void addPrayer(int ID, String tooltip, int w, int h, int glowSprite, int glowX, int glowY,
+			int disabledSprite, int enabledSprite, int config, int configFrame, int hover) {
 		Widget p = addTabInterface(ID);
 
-		//Adding config-toggleable glow on the prayer
-		//Also clickable
+		// Adding config-toggleable glow on the prayer
+		// Also clickable
 		p.parent = 5608;
 		p.type = TYPE_SPRITE;
 		p.atActionType = 1;
@@ -877,8 +550,8 @@ public final class Widget {
 		p.spriteXOffset = glowX;
 		p.spriteYOffset = glowY;
 
-		//Adding config-toggleable prayer sprites
-		//not clickable
+		// Adding config-toggleable prayer sprites
+		// not clickable
 		p = addTabInterface(ID + 1);
 		p.parent = 5608;
 		p.type = TYPE_SPRITE;
@@ -895,19 +568,21 @@ public final class Widget {
 		p.valueIndexArray[0][2] = 0;
 		p.tooltip = tooltip;
 		p.defaultText = tooltip;
-		p.enabledSprite = Client.cacheSprite[disabledSprite]; //imageLoader(disabledSprite, "s");
-		p.disabledSprite = Client.cacheSprite[enabledSprite]; //imageLoader(enabledSprite, "s");
+		p.enabledSprite = Client.cacheSprite[disabledSprite]; // imageLoader(disabledSprite,
+																// "s");
+		p.disabledSprite = Client.cacheSprite[enabledSprite]; // imageLoader(enabledSprite,
+																// "s");
 		p.hoverType = hover;
 	}
 
 	public static void addPrayerHover(int ID, String hover, int xOffset, int yOffset) {
-		//Adding hover box
+		// Adding hover box
 		Widget p = addTabInterface(ID);
 		p.parent = 5608;
 		p.type = 8;
 		p.width = 40;
 		p.height = 32;
-		p.hoverText = p.defaultText =  hover;
+		p.hoverText = p.defaultText = hover;
 		p.hoverXOffset = xOffset;
 		p.hoverYOffset = yOffset;
 		p.regularHoverBox = true;
@@ -918,7 +593,7 @@ public final class Widget {
 	 */
 	private static void priceChecker(GameFont[] fonts) {
 		Widget rsi = addTabInterface(42000);
-		final String[] options = {"Remove 1", "Remove 5", "Remove 10", "Remove All", "Remove X"};
+		final String[] options = { "Remove 1", "Remove 5", "Remove 10", "Remove All", "Remove X" };
 		addAdvancedSprite(18245, 180);
 
 		addHoverButton_sprite_loader(18247, 137, 17, 17, "Close", -1, 18250, 1);
@@ -933,7 +608,7 @@ public final class Widget {
 		addText(18351, "0", fonts, 0, 0xFFFFFF, true, true);
 		addText(18355, "", fonts, 0, 0xFFFFFF, true, true);
 
-		//Actual items
+		// Actual items
 		Widget container = addTabInterface(18500);
 		container.actions = options;
 		container.spritesX = new int[20];
@@ -944,7 +619,7 @@ public final class Widget {
 		container.filled = false;
 		container.replaceItems = false;
 		container.usableItems = false;
-		//rsi.isInventoryInterface = false;
+		// rsi.isInventoryInterface = false;
 		container.allowSwapItems = false;
 		container.spritePaddingX = 50;
 		container.spritePaddingY = 30;
@@ -956,26 +631,26 @@ public final class Widget {
 		rsi.totalChildren(58);
 		int child = 0;
 
-		rsi.child(child++, 18245, 10, 20);//was 10 so + 10
-		rsi.child(child++, 18247, 471, 23);		
+		rsi.child(child++, 18245, 10, 20);// was 10 so + 10
+		rsi.child(child++, 18247, 471, 23);
 		rsi.child(child++, 18351, 251, 306);
 		rsi.child(child++, 18355, 260, 155);
-		rsi.child(child++, 18250, 471, 23); //Close button hover	
-		rsi.child(child++, 18500, 28, 50); //Container
+		rsi.child(child++, 18250, 471, 23); // Close button hover
+		rsi.child(child++, 18500, 28, 50); // Container
 
-		//Deposit hovers
+		// Deposit hovers
 		rsi.child(child++, 18252, 455, 285);
 		rsi.child(child++, 18253, 455, 285);
 
 		rsi.child(child++, 18255, 420, 285);
 		rsi.child(child++, 18256, 420, 285);
 
-		//Add text next to items, ROW 1
+		// Add text next to items, ROW 1
 		int interface_ = 18300;
 		int xDraw = 47;
 		int yDraw = 81;
 		int counter = 0;
-		for(int i = 0; i < container.inventoryItemId.length; i++) {
+		for (int i = 0; i < container.inventoryItemId.length; i++) {
 
 			addText(interface_, "", fonts, 0, 0xFFFFFF, true, true);
 			rsi.child(child++, interface_, xDraw, yDraw);
@@ -984,19 +659,19 @@ public final class Widget {
 			counter++;
 			xDraw += 80;
 
-			if(counter == container.width) {
+			if (counter == container.width) {
 				xDraw = 47;
 				yDraw += 62;
 				counter = 0;
 			}
 		}
 
-		//Add text next to items, ROW 2
+		// Add text next to items, ROW 2
 		interface_ = 18400;
 		xDraw = 47;
 		yDraw = 93;
 		counter = 0;
-		for(int i = 0; i < container.inventoryItemId.length; i++) {
+		for (int i = 0; i < container.inventoryItemId.length; i++) {
 
 			addText(interface_, "", fonts, 0, 0xFFFFFF, true, true);
 			rsi.child(child++, interface_, xDraw, yDraw);
@@ -1005,7 +680,7 @@ public final class Widget {
 			counter++;
 			xDraw += 80;
 
-			if(counter == container.width) {
+			if (counter == container.width) {
 				xDraw = 47;
 				yDraw += 62;
 				counter = 0;
@@ -1023,7 +698,7 @@ public final class Widget {
 		rsinterface.spritePaddingX = 15;
 		rsinterface.spritePaddingY = 25;
 
-		//Position the item container in the actual shop interface
+		// Position the item container in the actual shop interface
 		rsinterface = interfaceCache[3824];
 		setBounds(3900, 26, 65, 75, rsinterface);
 	}
@@ -1033,7 +708,7 @@ public final class Widget {
 		addTransparentSprite(23301, 97, 150);
 
 		addConfigSprite(23303, -1, 98, 0, 876);
-		//  addSprite(23304, 104);
+		// addSprite(23304, 104);
 
 		addText(23305, "---", TDA, 0, 0xffff00, true, true);
 		addText(23306, "Target:", TDA, 0, 0xffff00, true, true);
@@ -1055,7 +730,7 @@ public final class Widget {
 		addConfigSprite(23320, -1, 103, 0, 881);
 		addText(23321, "Level: ", TDA, 1, 0xFFFF33, true, false);
 
-		//Kda
+		// Kda
 		addTransparentSprite(23322, 97, 150);
 		addText(23323, "Targets killed: 0", TDA, 0, 0xFFFF33, true, false);
 		addText(23324, "Players killed: 0", TDA, 0, 0xFFFF33, true, false);
@@ -1064,25 +739,25 @@ public final class Widget {
 		tab.totalChildren(18);
 		tab.child(0, 23301, 319, 8);
 		tab.child(1, 23322, 319, 54);
-		//  tab.child(1, 23302, 339, 56);
+		// tab.child(1, 23302, 339, 56);
 		tab.child(2, 23303, 345, 65);
 		// tab.child(2, 23304, 348, 73);
 		tab.child(3, 23305, 358, 84);
 		tab.child(4, 23306, 455, 58);
 		tab.child(5, 23307, 456, 71);
 		tab.child(6, 23308, 457, 87);
-		//  tab.child(8, 23309, 460, 59);
-		//  tab.child(9, 23310, 438, 72);
-		//  tab.child(10, 23311, 481, 72);
-		//  tab.child(11, 23312, 438, 85);
-		//  tab.child(12, 23313, 481, 85);
-		//  tab.child(13, 23314, 393, 72);
-		//  tab.child(14, 23315, 394, 85);
+		// tab.child(8, 23309, 460, 59);
+		// tab.child(9, 23310, 438, 72);
+		// tab.child(10, 23311, 481, 72);
+		// tab.child(11, 23312, 438, 85);
+		// tab.child(12, 23313, 481, 85);
+		// tab.child(13, 23314, 393, 72);
+		// tab.child(14, 23315, 394, 85);
 		tab.child(7, 23316, 345, 65);
 		tab.child(8, 23317, 345, 65);
 		tab.child(9, 23318, 345, 65);
 		tab.child(10, 23319, 345, 65);
-		tab.child(11, 23320, 345, 65);	 
+		tab.child(11, 23320, 345, 65);
 
 		tab.child(12, 23323, 435, 13);
 		tab.child(13, 23324, 435, 26);
@@ -1100,7 +775,7 @@ public final class Widget {
 
 	public static void itemsKeptOnDeath(GameFont[] tda) {
 
-		removeSomething(16999); //close button in text
+		removeSomething(16999); // close button in text
 		Widget rsinterface = interfaceCache[10494];
 		rsinterface.spritePaddingX = 6;
 		rsinterface.spritePaddingY = 5;
@@ -1108,18 +783,18 @@ public final class Widget {
 		rsinterface.spritePaddingX = 6;
 		rsinterface.spritePaddingY = 5;
 
-
 		rsinterface = addInterface(17100);
 		addSpriteLoader(17101, 139);
-		/*Widget scroll = addTabInterface(17149);
-		scroll.width = 300; scroll.height = 183; scroll.scrollMax = 220;*/
+		/*
+		 * Widget scroll = addTabInterface(17149); scroll.width = 300;
+		 * scroll.height = 183; scroll.scrollMax = 220;
+		 */
 		addText(17103, "Items Kept on Death", tda, 2, 0xff981f, false, false);
 		addText(17104, "Items you will keep on death:", tda, 1, 0xff981f, false, false);
 		addText(17105, "Items you will lose on death:", tda, 1, 0xff981f, false, false);
 		addText(17106, "Info", tda, 1, 0xff981f, false, false);
 		addText(17107, "3", tda, 2, 0xffff00, false, false);
-		String[] options = {null};
-
+		String[] options = { null };
 
 		addHoverButton_sprite_loader(17018, 137, 17, 17, "Close", -1, 17019, 1);
 		addHoveredButton_sprite_loader(17019, 138, 17, 17, 17020);
@@ -1128,39 +803,39 @@ public final class Widget {
 		 * Items on interface
 		 */
 
-		//Top Row
-		for(int top = 17108; top <= 17111; top++) {
+		// Top Row
+		for (int top = 17108; top <= 17111; top++) {
 			addItemOnInterface(top, 17100, options);
 		}
-		//1st row
-		for(int top = 17112; top <= 17119; top++) {
+		// 1st row
+		for (int top = 17112; top <= 17119; top++) {
 			addItemOnInterface(top, 17100, options);
 		}
-		//2nd row
-		for(int top = 17120; top <= 17127; top++) {
+		// 2nd row
+		for (int top = 17120; top <= 17127; top++) {
 			addItemOnInterface(top, 17100, options);
 		}
-		//3rd row
-		for(int top = 17128; top <= 17135; top++) {
+		// 3rd row
+		for (int top = 17128; top <= 17135; top++) {
 			addItemOnInterface(top, 17100, options);
 		}
-		//4th row
+		// 4th row
 		for (int top = 17136; top <= 17142; top++) {
 			addItemOnInterface(top, 17100, options);
 		}
-		//5th row
+		// 5th row
 		for (int top = 17143; top <= 17148; top++) {
 			addItemOnInterface(top, 17100, options);
 		}
 
-		//6th row (4 items)
-		for(int top = 17149; top <= 17152; top++) {
+		// 6th row (4 items)
+		for (int top = 17149; top <= 17152; top++) {
 			addItemOnInterface(top, 17100, options);
 		}
 
 		setChildren(58, rsinterface);
 		addTabInterface(5);
-		setBounds(17101, 7,8, 0, rsinterface);
+		setBounds(17101, 7, 8, 0, rsinterface);
 		setBounds(16999, 478, 14, 1, rsinterface);
 		setBounds(17103, 185, 18, 2, rsinterface);
 		setBounds(17104, 22, 50, 3, rsinterface);
@@ -1173,10 +848,10 @@ public final class Widget {
 		setBounds(17019, 480, 18, 9, rsinterface);
 		setBounds(5, 480, 18, 10, rsinterface);
 
-		//Positions for  item on interface (items kept on death
-		int	child_index = 11;
+		// Positions for item on interface (items kept on death
+		int child_index = 11;
 		int topPos = 26;
-		for(int top = 17108; top <= 17111; top++) {
+		for (int top = 17108; top <= 17111; top++) {
 			setBounds(top, topPos, 72, child_index, rsinterface);
 			topPos += 44;
 			child_index++;
@@ -1187,34 +862,34 @@ public final class Widget {
 
 		topPos = 26;
 
-		//1st row
-		for(int top = 17112; top <= 17118; top++) {
+		// 1st row
+		for (int top = 17112; top <= 17118; top++) {
 			setBounds(top, topPos, 133, child_index, rsinterface);
 			topPos += 44;
 			child_index++;
 		}
-		//2nd row
+		// 2nd row
 		topPos = 26;
-		for(int top = 17119; top <= 17125; top++) {
+		for (int top = 17119; top <= 17125; top++) {
 			setBounds(top, topPos, 168, child_index, rsinterface);
 			topPos += 44;
 			child_index++;
 		}
-		//3rd row
+		// 3rd row
 		topPos = 26;
-		for(int top = 17126; top <= 17132; top++) {
+		for (int top = 17126; top <= 17132; top++) {
 			setBounds(top, topPos, 203, child_index, rsinterface);
 			topPos += 44;
 			child_index++;
 		}
-		//4th row
+		// 4th row
 		topPos = 26;
 		for (int top = 17133; top <= 17139; top++) {
 			setBounds(top, topPos, 238, child_index, rsinterface);
 			topPos += 44;
 			child_index++;
 		}
-		//5th row
+		// 5th row
 		topPos = 26;
 		for (int top = 17140; top <= 17145; top++) {
 			setBounds(top, topPos, 273, child_index, rsinterface);
@@ -1222,9 +897,9 @@ public final class Widget {
 			child_index++;
 		}
 
-		//6th row (4 items)
+		// 6th row (4 items)
 		topPos = 26;
-		for(int top = 17146; top <= 17152; top++) {
+		for (int top = 17146; top <= 17152; top++) {
 			setBounds(top, topPos, 311, child_index, rsinterface);
 			topPos += 44;
 			child_index++;
@@ -1383,7 +1058,7 @@ public final class Widget {
 				widget.childY[57] = 198;
 				break;
 
-				// 150 x is end of the line
+			// 150 x is end of the line
 
 			case 12455: // tele other camelot
 				widget.childX[56] = 147;
@@ -1392,7 +1067,6 @@ public final class Widget {
 			}
 		}
 	}
-
 
 	public static void clanChatTab(GameFont[] tda) {
 		Widget tab = addTabInterface(37128);
@@ -1413,8 +1087,8 @@ public final class Widget {
 		addText(37139, "Talking in: N/A", tda, 0, 0xff9b00, false, true);
 		addText(37140, "Owner: N/A", tda, 0, 0xff9b00, false, true);
 		tab.totalChildren(11);
-		//tab.child(0, 16126, 0, 221);
-		//tab.child(1, 16126, 0, 59);
+		// tab.child(0, 16126, 0, 221);
+		// tab.child(1, 16126, 0, 59);
 
 		tab.child(0, 37137, 0, 62);
 		tab.child(1, 37143, 0, 62);
@@ -1434,16 +1108,9 @@ public final class Widget {
 			addText(i, "", tda, 0, 0xffffff, false, true);
 		}
 		for (int id = 37144, i = 0; id <= 37243 && i <= 99; id++, i++) {
-			interfaceCache[id].actions = new String[] {
-					"Promote to Recruit", 
-					"Promote to Corporal", 
-					"Promote to Sergeant", 
-					"Promote to Lieutenant", 
-					"Promote to Captain", 
-					"Promote to General", 
-					"Demote", 
-					"Kick"
-			};
+			interfaceCache[id].actions = new String[] { "Promote to Recruit", "Promote to Corporal",
+					"Promote to Sergeant", "Promote to Lieutenant", "Promote to Captain", "Promote to General",
+					"Demote", "Kick" };
 			interfaceCache[id].parent = 37128;
 			list.children[i] = id;
 			list.childX[i] = 5;
@@ -1583,7 +1250,6 @@ public final class Widget {
 		rsinterface.secondaryHoverColor = 0;
 	}
 
-
 	public static void equipmentTab(GameFont[] wid) {
 		Widget Interface = interfaceCache[1644];
 		addSprite(15101, 0, "Interfaces/Equipment/bl");// cheap hax
@@ -1632,7 +1298,6 @@ public final class Widget {
 		@SuppressWarnings("unused")
 		Widget rsi = interfaceCache[id] = new Widget();
 	}
-
 
 	public static void equipmentScreen(GameFont[] wid) {
 		Widget Interface = Widget.interfaceCache[1644];
@@ -1713,7 +1378,7 @@ public final class Widget {
 		tab.child(42, 1667, 321 + 134, 58 + 162);
 		tab.child(43, 1688, 50 + 297 - 2, 110 - 13 + 5);
 
-		//Maxhits
+		// Maxhits
 		tab.child(44, 15115, 370, 260);
 		tab.child(45, 15116, 370, 275);
 		tab.child(46, 15117, 370, 290);
@@ -1756,8 +1421,10 @@ public final class Widget {
 		tab.contentType = 0;
 		tab.opacity = (byte) 0;
 		tab.hoverType = 52;
-		tab.disabledSprite = Client.cacheSprite[sid];// imageLoader(sid, spriteName);
-		tab.enabledSprite = Client.cacheSprite[sid];//imageLoader(sid, spriteName);
+		tab.disabledSprite = Client.cacheSprite[sid];// imageLoader(sid,
+														// spriteName);
+		tab.enabledSprite = Client.cacheSprite[sid];// imageLoader(sid,
+													// spriteName);
 		tab.width = tab.disabledSprite.myWidth;
 		tab.height = tab.enabledSprite.myHeight;
 		tab.tooltip = tooltip;
@@ -2074,7 +1741,7 @@ public final class Widget {
 		rsi.filled = false;
 		rsi.replaceItems = false;
 		rsi.usableItems = false;
-		//rsi.isInventoryInterface = false;
+		// rsi.isInventoryInterface = false;
 		rsi.allowSwapItems = false;
 		rsi.spritePaddingX = 4;
 		rsi.spritePaddingY = 5;
@@ -2127,8 +1794,8 @@ public final class Widget {
 		RSInterface.textColor = k;
 	}
 
-	public static void addConfigButton(int ID, int pID, int bID, int bID2, int width, int height,
-			String tT, int configID, int aT, int configFrame) {
+	public static void addConfigButton(int ID, int pID, int bID, int bID2, int width, int height, String tT,
+			int configID, int aT, int configFrame) {
 		Widget Tab = addTabInterface(ID);
 		Tab.parent = pID;
 		Tab.id = ID;
@@ -2147,7 +1814,7 @@ public final class Widget {
 		Tab.valueIndexArray[0][0] = 5;
 		Tab.valueIndexArray[0][1] = configFrame;
 		Tab.valueIndexArray[0][2] = 0;
-		Tab.disabledSprite = Client.cacheSprite[bID];//imageLoader(bID, bName);
+		Tab.disabledSprite = Client.cacheSprite[bID];// imageLoader(bID, bName);
 		Tab.enabledSprite = Client.cacheSprite[bID2];
 		Tab.tooltip = tT;
 	}
@@ -2184,8 +1851,9 @@ public final class Widget {
 		tab.height = height;
 		tab.tooltip = text;
 	}
-	
-	public static void addHoverText(int id, String text, String tooltip, GameFont tda[], int idx, int color, boolean center, boolean textShadow, int width) {
+
+	public static void addHoverText(int id, String text, String tooltip, GameFont tda[], int idx, int color,
+			boolean center, boolean textShadow, int width) {
 		Widget rsinterface = addInterface(id);
 		rsinterface.id = id;
 		rsinterface.parent = id;
@@ -2218,40 +1886,40 @@ public final class Widget {
 
 		Sprite disabled = Client.cacheSprite[129];
 		Sprite enabled = Client.cacheSprite[130];
-		///Sprite button1 = getSprite(0, interfaceLoader, "miscgraphics");
-		//Sprite button2 = getSprite(9, interfaceLoader, "miscgraphics");
+		/// Sprite button1 = getSprite(0, interfaceLoader, "miscgraphics");
+		// Sprite button2 = getSprite(9, interfaceLoader, "miscgraphics");
 
 		addSprite(id, 106);
 		addHoverButton_sprite_loader(id + 1, 107, 17, 17, "Close", -1, id + 2, 1);
 		addHoveredButton_sprite_loader(id + 2, 108, 17, 17, id + 3);
-		
+
 		bank.child(child++, id, 12, 2);
 		bank.child(child++, id + 1, 472, 9);
 		bank.child(child++, id + 2, 472, 9);
-	
+
 		addHoverButton_sprite_loader(id + 4, 117, 32, 32, "Deposit Inventory", -1, id + 5, 1);
 		addHoveredButton_sprite_loader(id + 5, 118, 32, 32, id + 6);
-		
+
 		addHoverButton_sprite_loader(id + 7, 119, 32, 32, "Deposit Equipment", -1, id + 8, 1);
 		addHoveredButton_sprite_loader(id + 8, 120, 32, 32, id + 9);
-		
+
 		addHoverButtonWConfig(id + 10, 115, 116, 32, 32, "Search", -1, id + 11, 1, 117, 117);
 		addHoveredButton_sprite_loader(id + 11, 116, 32, 32, id + 12);
 
-		
 		bank.child(child++, id + 4, 415, 292);
 		bank.child(child++, id + 5, 415, 292);
 		bank.child(child++, id + 7, 455, 292);
 		bank.child(child++, id + 8, 455, 292);
 		bank.child(child++, id + 10, 375, 292);
 		bank.child(child++, id + 11, 375, 292);
-		
-		addButton(id + 13, getSprite(0, interfaceLoader, "miscgraphics3"), getSprite(0, interfaceLoader, "miscgraphics3"), "Show menu", 25, 25);
+
+		addButton(id + 13, getSprite(0, interfaceLoader, "miscgraphics3"),
+				getSprite(0, interfaceLoader, "miscgraphics3"), "Show menu", 25, 25);
 		addSprite(id + 14, 209);
 		bank.child(child++, id + 13, 463, 43);
 		bank.child(child++, id + 14, 463, 44);
-				
-		//Text
+
+		// Text
 		addText(id + 53, "%1", tda, 0, 0xFE9624, true);
 		Widget line = addInterface(id + 54);
 		line.type = 3;
@@ -2263,7 +1931,7 @@ public final class Widget {
 		bank.child(child++, id + 53, 30, 8);
 		bank.child(child++, id + 54, 24, 19);
 		bank.child(child++, id + 55, 30, 20);
-		
+
 		bank.child(child++, 5383, 180, 12);
 		bank.child(child++, 5385, 0, 79);
 		bank.child(child++, 8131, 102, 306);
@@ -2276,40 +1944,43 @@ public final class Widget {
 		bank.child(child++, 5389, 227, 309);
 		bank.child(child++, 5391, 311, 309);
 		bank.child(child++, 5388, 248, 291);
-		
+
 		id = 50070;
 		for (int tab = 0, counter = 0; tab <= 36; tab += 4, counter++) {
 
-		//	addHoverButton_sprite_loader(id + 1 + tab, 206, 39, 40, null, -1, id + 2 + tab, 1);		
-		//	addHoveredButton_sprite_loader(id + 2 + tab, 207, 39, 40, id + 3 + tab);
+			// addHoverButton_sprite_loader(id + 1 + tab, 206, 39, 40, null, -1,
+			// id + 2 + tab, 1);
+			// addHoveredButton_sprite_loader(id + 2 + tab, 207, 39, 40, id + 3
+			// + tab);
 
-
-			int[] requiredValues = new int[]{1};
-			int[] valueCompareType = new int[]{1};
+			int[] requiredValues = new int[] { 1 };
+			int[] valueCompareType = new int[] { 1 };
 			int[][] valueIndexArray = new int[1][3];
 			valueIndexArray[0][0] = 5;
-			valueIndexArray[0][1] = 1000 + counter; //Config
+			valueIndexArray[0][1] = 1000 + counter; // Config
 			valueIndexArray[0][2] = 0;
-			
-			
-			addHoverConfigButton(id + tab, id + 1 + tab, 206, -1, 39, 40, null, valueCompareType, requiredValues, valueIndexArray);
+
+			addHoverConfigButton(id + tab, id + 1 + tab, 206, -1, 39, 40, null, valueCompareType, requiredValues,
+					valueIndexArray);
 			addHoveredConfigButton(interfaceCache[id + tab], id + 1 + tab, id + 2 + tab, 207, -1);
-			
-			
-			//addHoverButtonWConfig(id + 1 + tab, 206, -1, 39, 40, null, -1, id + 2 + tab, 1, 1, 1000+counter);
-			//addHoveredButton_sprite_loader(id + 2 + tab, 207, 39, 40, id + 3 + tab);
-			
-			interfaceCache[id + tab].actions = new String[]{"Select", tab == 0 ? null : "Collapse", null, null, null};
+
+			// addHoverButtonWConfig(id + 1 + tab, 206, -1, 39, 40, null, -1, id
+			// + 2 + tab, 1, 1, 1000+counter);
+			// addHoveredButton_sprite_loader(id + 2 + tab, 207, 39, 40, id + 3
+			// + tab);
+
+			interfaceCache[id + tab].actions = new String[] { "Select", tab == 0 ? null : "Collapse", null, null,
+					null };
 			interfaceCache[id + tab].parent = id;
 			interfaceCache[id + tab].drawingDisabled = true;
 			interfaceCache[id + 1 + tab].parent = id;
 			bank.child(child++, id + tab, 19 + 40 * (tab / 4), 37);
 			bank.child(child++, id + 1 + tab, 19 + 40 * (tab / 4), 37);
 		}
-		
+
 		interfaceCache[5385].height = 206;
 		interfaceCache[5385].width = 474;
-		
+
 		int[] interfaces = new int[] { 5386, 5387, 8130, 8131 };
 
 		for (int rsint : interfaces) {
@@ -2318,21 +1989,21 @@ public final class Widget {
 			interfaceCache[rsint].width = enabled.myWidth;
 			interfaceCache[rsint].height = enabled.myHeight;
 		}
-		
+
 		addSprite(50040, 208);
 		bank.child(child++, 50040, 20, 41);
-		
-		
+
 		final Widget scrollBar = Widget.interfaceCache[5385];
 		scrollBar.totalChildren(Client.MAX_BANK_TABS);
-		for(int i = 0; i < Client.MAX_BANK_TABS; i++) {
-			addBankTabContainer(50300 + i, 109, 10, 35, 352, new String[] { "Withdraw-1", "Withdraw-5", "Withdraw-10", "Withdraw-All", "Withdraw-X", null, "Withdraw-All but one" });
+		for (int i = 0; i < Client.MAX_BANK_TABS; i++) {
+			addBankTabContainer(50300 + i, 109, 10, 35, 352, new String[] { "Withdraw-1", "Withdraw-5", "Withdraw-10",
+					"Withdraw-All", "Withdraw-X", null, "Withdraw-All but one" });
 			scrollBar.child(i, 50300 + i, 40, 0);
 		}
 	}
-	
-	
-	public static void addHoverText(int id, String text, String tooltip, GameFont tda[], int idx, int color, boolean center, boolean textShadow, int width, int hoveredColor) {
+
+	public static void addHoverText(int id, String text, String tooltip, GameFont tda[], int idx, int color,
+			boolean center, boolean textShadow, int width, int hoveredColor) {
 		Widget rsinterface = addInterface(id);
 		rsinterface.id = id;
 		rsinterface.parent = id;
@@ -2354,24 +2025,24 @@ public final class Widget {
 		rsinterface.secondaryHoverColor = 0;
 		rsinterface.tooltip = tooltip;
 	}
-	
-	
+
 	/**
 	 * Bank settings
+	 * 
 	 * @param t
 	 */
 	public static void bankSettings(GameFont[] t) {
 		Widget tab = addInterface(32500);
 		addSprite(32501, 229);
-		addText(32502, ""+Configuration.CLIENT_NAME+" Bank Settings", 0xff9933, true, true, -1, t, 2);
-		
+		addText(32502, "" + Configuration.CLIENT_NAME + " Bank Settings", 0xff9933, true, true, -1, t, 2);
+
 		addHoverButton_sprite_loader(32503, 107, 21, 21, "Close", -1, 32504, 1);
 		addHoveredButton_sprite_loader(32504, 108, 21, 21, 32505);
-		
+
 		addConfigButton(32506, 32500, 230, 231, 14, 15, "Select", 0, 5, 1111);
 		addConfigButton(32507, 32500, 230, 231, 14, 15, "Select", 1, 5, 1111);
 		addConfigButton(32508, 32500, 230, 231, 14, 15, "Select", 2, 5, 1111);
-		
+
 		addText(32509, "First item in tab", 0xff9933, true, true, -1, t, 1);
 		addText(32510, "Digit (1, 2, 3)", 0xff9933, true, true, -1, t, 1);
 		addText(32511, "Roman numeral (I, II, III)", 0xff9933, true, true, -1, t, 1);
@@ -2389,7 +2060,7 @@ public final class Widget {
 		tab.child(9, 32511, 239, 65 + 90);
 		tab.child(10, 32512, 275, 265);
 	}
-	
+
 	public static void addHoveredConfigButton(Widget original, int ID, int IMAGEID, int disabledID, int enabledID) {
 		Widget rsint = addTabInterface(ID);
 		rsint.parent = original.id;
@@ -2408,17 +2079,18 @@ public final class Widget {
 		hover.valueCompareType = original.valueCompareType;
 		hover.requiredValues = original.requiredValues;
 		hover.valueIndexArray = original.valueIndexArray;
-		if(disabledID != -1)
+		if (disabledID != -1)
 			hover.disabledSprite = Client.cacheSprite[disabledID];
-		if(enabledID != -1)
+		if (enabledID != -1)
 			hover.enabledSprite = Client.cacheSprite[enabledID];
 		rsint.totalChildren(1);
 		setBounds(IMAGEID, 0, 0, 0, rsint);
 		rsint.tooltip = original.tooltip;
 		rsint.invisible = true;
 	}
-	
-	public static void addHoverConfigButton(int id, int hoverOver, int disabledID, int enabledID, int width, int height, String tooltip, int[] valueCompareType, int[] requiredValues, int[][] valueIndexArray) {
+
+	public static void addHoverConfigButton(int id, int hoverOver, int disabledID, int enabledID, int width, int height,
+			String tooltip, int[] valueCompareType, int[] requiredValues, int[][] valueIndexArray) {
 		Widget rsint = addTabInterface(id);
 		rsint.parent = id;
 		rsint.id = id;
@@ -2432,13 +2104,13 @@ public final class Widget {
 		rsint.valueCompareType = valueCompareType;
 		rsint.requiredValues = requiredValues;
 		rsint.valueIndexArray = valueIndexArray;
-		if(disabledID != -1)
+		if (disabledID != -1)
 			rsint.disabledSprite = Client.cacheSprite[disabledID];
-		if(enabledID != -1)
+		if (enabledID != -1)
 			rsint.enabledSprite = Client.cacheSprite[enabledID];
 		rsint.tooltip = tooltip;
 	}
-	
+
 	public static void addButton(int id, Sprite enabled, Sprite disabled, String tooltip, int w, int h) {
 		Widget tab = interfaceCache[id] = new Widget();
 		tab.id = id;
@@ -2454,8 +2126,9 @@ public final class Widget {
 		tab.height = h;
 		tab.tooltip = tooltip;
 	}
-	
-	public static void addConfigButton(int ID, int pID, Sprite disabled, Sprite enabled, int width, int height, String tT, int configID, int aT, int configFrame) {
+
+	public static void addConfigButton(int ID, int pID, Sprite disabled, Sprite enabled, int width, int height,
+			String tT, int configID, int aT, int configFrame) {
 		Widget Tab = addTabInterface(ID);
 		Tab.parent = pID;
 		Tab.id = ID;
@@ -2478,8 +2151,9 @@ public final class Widget {
 		Tab.enabledSprite = enabled;
 		Tab.tooltip = tT;
 	}
-	
-	public static Widget addBankTabContainer(int id, int contentType, int width, int height, int size, String... actions) {
+
+	public static Widget addBankTabContainer(int id, int contentType, int width, int height, int size,
+			String... actions) {
 		Widget container = addInterface(id);
 		container.parent = id;
 		container.type = 2;
@@ -2508,16 +2182,15 @@ public final class Widget {
 		rsi.disabledSprite = Client.cacheSprite[spriteId];
 		rsi.enabledSprite = Client.cacheSprite[spriteId];
 
-
-		//rsi.sprite1.spriteLoader = rsi.sprite2.spriteLoader = true;
-		//rsi.hoverSprite1 = Client.cacheSprite[hoverSpriteId];
-		//rsi.hoverSprite2 = Client.cacheSprite[hoverSpriteId];
-		//rsi.hoverSprite1.spriteLoader = rsi.hoverSprite2.spriteLoader = true;
-		//rsi.sprite1 = rsi.sprite2 = spriteId;
-		//rsi.hoverSprite1Id = rsi.hoverSprite2Id = hoverSpriteId;
+		// rsi.sprite1.spriteLoader = rsi.sprite2.spriteLoader = true;
+		// rsi.hoverSprite1 = Client.cacheSprite[hoverSpriteId];
+		// rsi.hoverSprite2 = Client.cacheSprite[hoverSpriteId];
+		// rsi.hoverSprite1.spriteLoader = rsi.hoverSprite2.spriteLoader = true;
+		// rsi.sprite1 = rsi.sprite2 = spriteId;
+		// rsi.hoverSprite1Id = rsi.hoverSprite2Id = hoverSpriteId;
 		rsi.width = rsi.disabledSprite.myWidth;
 		rsi.height = rsi.enabledSprite.myHeight - 2;
-		//rsi.isFalseTooltip = true;
+		// rsi.isFalseTooltip = true;
 	}
 
 	public static void addSprite(int childId, Sprite sprite1, Sprite sprite2) {
@@ -2532,8 +2205,6 @@ public final class Widget {
 		rsi.width = rsi.disabledSprite.myWidth;
 		rsi.height = rsi.enabledSprite.myHeight - 2;
 	}
-
-
 
 	public static void addButtonWSpriteLoader(int id, int spriteId) {
 		Widget tab = interfaceCache[id] = new Widget();
@@ -2572,12 +2243,11 @@ public final class Widget {
 		tab.valueIndexArray[0][0] = 5;
 		tab.valueIndexArray[0][1] = configFrame;
 		tab.valueIndexArray[0][2] = 0;
-		if(spriteId != -1)
+		if (spriteId != -1)
 			tab.disabledSprite = Client.cacheSprite[spriteId];
-		if(spriteId2 != -1)
+		if (spriteId2 != -1)
 			tab.enabledSprite = Client.cacheSprite[spriteId2];
 	}
-
 
 	public static void addHoverButton_sprite_loader(int i, int spriteId, int width, int height, String text,
 			int contentType, int hoverOver, int aT) {// hoverable
@@ -2630,8 +2300,7 @@ public final class Widget {
 		tab.enabledSprite = Client.cacheSprite[spriteId];
 	}
 
-	public static void addBankItem(int index, Boolean hasOption)
-	{
+	public static void addBankItem(int index, Boolean hasOption) {
 		Widget rsi = interfaceCache[index] = new Widget();
 		rsi.actions = new String[5];
 		rsi.spritesX = new int[20];
@@ -2643,7 +2312,7 @@ public final class Widget {
 		rsi.childX = new int[0];
 		rsi.childY = new int[0];
 
-		//rsi.hasExamine = false;
+		// rsi.hasExamine = false;
 
 		rsi.spritePaddingX = 24;
 		rsi.spritePaddingY = 24;
@@ -2687,7 +2356,6 @@ public final class Widget {
 		tab.enabledSprite = imageLoader(k, name);
 	}
 
-
 	public static Widget addTabInterface(int id) {
 		Widget tab = interfaceCache[id] = new Widget();
 		tab.id = id;// 250
@@ -2719,7 +2387,7 @@ public final class Widget {
 	}
 
 	private static Sprite imageLoader(int i, String s) {
-		long l = (StringUtils.hashSpriteName(s) << 8) + (long) i;
+		long l = (StringUtils.hashSpriteName(s) << 8) + i;
 		Sprite sprite = (Sprite) spriteCache.get(l);
 		if (sprite != null)
 			return sprite;
@@ -2779,7 +2447,7 @@ public final class Widget {
 	}
 
 	private static Sprite getSprite(int i, FileArchive streamLoader, String s) {
-		long l = (StringUtils.hashSpriteName(s) << 8) + (long) i;
+		long l = (StringUtils.hashSpriteName(s) << 8) + i;
 		Sprite sprite = (Sprite) spriteCache.get(l);
 		if (sprite != null)
 			return sprite;
@@ -2893,12 +2561,12 @@ public final class Widget {
 	public int modelRotation1;
 	public int modelRotation2;
 	public int childY[];
-	
+
 	private static final int LUNAR_RUNE_SPRITES_START = 232;
 	private static final int LUNAR_OFF_SPRITES_START = 246;
 	private static final int LUNAR_ON_SPRITES_START = 285;
 	private static final int LUNAR_HOVER_BOX_SPRITES_START = 324;
-	
+
 	public static void addLunarHoverBox(int interface_id, int spriteOffset) {
 		Widget RSInterface = addInterface(interface_id);
 		RSInterface.id = interface_id;
@@ -2913,7 +2581,7 @@ public final class Widget {
 		RSInterface.height = 500;
 		RSInterface.tooltip = "";
 	}
-		
+
 	public static void addLunarRune(int i, int spriteOffset, String runeName) {
 		Widget RSInterface = addInterface(i);
 		RSInterface.type = 5;
@@ -2993,9 +2661,9 @@ public final class Widget {
 		rsInterface.valueIndexArray[2][0] = 1;
 		rsInterface.valueIndexArray[2][1] = 6;
 		rsInterface.valueIndexArray[2][2] = 0;
-		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START+ spriteOffset];
-		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START+ spriteOffset];
-		
+		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START + spriteOffset];
+		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START + spriteOffset];
+
 		Widget hover = addInterface(ID + 1);
 		hover.parent = ID;
 		hover.hoverType = -1;
@@ -3063,9 +2731,9 @@ public final class Widget {
 		rsInterface.valueIndexArray[3][0] = 1;
 		rsInterface.valueIndexArray[3][1] = 6;
 		rsInterface.valueIndexArray[3][2] = 0;
-		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START+ spriteOffset];
-		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START+ spriteOffset];
-		
+		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START + spriteOffset];
+		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START + spriteOffset];
+
 		Widget hover = addInterface(ID + 1);
 		hover.parent = ID;
 		hover.hoverType = -1;
@@ -3136,9 +2804,9 @@ public final class Widget {
 		rsInterface.valueIndexArray[3][0] = 1;
 		rsInterface.valueIndexArray[3][1] = 6;
 		rsInterface.valueIndexArray[3][2] = 0;
-		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START+ spriteOffset];
-		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START+ spriteOffset];
-		
+		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START + spriteOffset];
+		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START + spriteOffset];
+
 		Widget hover = addInterface(ID + 1);
 		hover.parent = ID;
 		hover.hoverType = -1;
@@ -3209,8 +2877,8 @@ public final class Widget {
 		rsInterface.valueIndexArray[3][0] = 1;
 		rsInterface.valueIndexArray[3][1] = 6;
 		rsInterface.valueIndexArray[3][2] = 0;
-		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START+ spriteOffset];
-		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START+ spriteOffset];
+		rsInterface.enabledSprite = Client.cacheSprite[LUNAR_ON_SPRITES_START + spriteOffset];
+		rsInterface.disabledSprite = Client.cacheSprite[LUNAR_OFF_SPRITES_START + spriteOffset];
 		Widget hover = addInterface(ID + 1);
 		hover.parent = ID;
 		hover.hoverType = -1;
@@ -3337,105 +3005,104 @@ public final class Widget {
 		Widget Interface = addTabInterface(29999);
 		setChildren(51, Interface); // 50 children
 		int child = 0;
-		
-		//ADD "HOME" AND "OTHER" TELEPORTS
+
+		// ADD "HOME" AND "OTHER" TELEPORTS
 		setBounds(39101, 10, 9, child++, Interface);
 		setBounds(39102, 10, 9, child++, Interface);
 		setBounds(39104, 105, 9, child++, Interface);
 		setBounds(39105, 105, 9, child++, Interface);
-		
-		
-		//NOTE: Lunar Teleports have been removed from the spellbook (the ones that are commented out are teleports)
-		
-		//Row 1
+
+		// NOTE: Lunar Teleports have been removed from the spellbook (the ones
+		// that are commented out are teleports)
+
+		// Row 1
 		setBounds(30017, 20, 60, child++, Interface);
 		setBounds(30025, 61, 62, child++, Interface);
 		setBounds(30032, 102, 61, child++, Interface);
 		setBounds(30040, 142, 62, child++, Interface);
-		
-		//Row 2
+
+		// Row 2
 		setBounds(30048, 20, 93, child++, Interface);
 		setBounds(30056, 60, 92, child++, Interface);
 		setBounds(30091, 102, 92, child++, Interface);
 		setBounds(30099, 142, 90, child++, Interface);
-		
-		//Row 3
+
+		// Row 3
 		setBounds(30122, 20, 123, child++, Interface);
 		setBounds(30130, 62, 123, child++, Interface);
 		setBounds(30154, 106, 123, child++, Interface);
 		setBounds(30154, 147, 123, child++, Interface);
 
-		//Row 4
+		// Row 4
 		setBounds(30178, 19, 154, child++, Interface);
 		setBounds(30186, 63, 155, child++, Interface);
 		setBounds(30194, 106, 155, child++, Interface);
 		setBounds(30202, 145, 155, child++, Interface);
-		
-		//Row 5
+
+		// Row 5
 		setBounds(30210, 21, 184, child++, Interface);
 		setBounds(30218, 66, 186, child++, Interface);
 		setBounds(30282, 105, 184, child++, Interface);
 		setBounds(30290, 145, 183, child++, Interface);
-		
-		//Row 6
+
+		// Row 6
 		setBounds(30298, 23, 214, child++, Interface);
 		setBounds(30306, 66, 214, child++, Interface);
 		setBounds(30314, 105, 214, child++, Interface);
 		setBounds(30322, 147, 214, child++, Interface);
-		
-		
-		//setBounds(30064, 39, 39, child++, Interface);
-		//setBounds(30075, 71, 39, child++, Interface);
-		//setBounds(30083, 103, 39, child++, Interface);
-		//setBounds(30106, 12, 68, child++, Interface);
-	//	setBounds(30114, 42, 68, child++, Interface);
-	//	setBounds(30138, 135, 68, child++, Interface);
-	//	setBounds(30146, 165, 68, child++, Interface);
-	//	setBounds(30162, 42, 97, child++, Interface);
-	//	setBounds(30170, 71, 97, child++, Interface);
-		
-	//	setBounds(30226, 103, 125, child++, Interface);
-	//	setBounds(30234, 135, 125, child++, Interface);
-	//	setBounds(30242, 164, 126, child++, Interface);
-	//	setBounds(30250, 10, 155, child++, Interface);
-	//	setBounds(30258, 42, 155, child++, Interface);
-	//	setBounds(30266, 71, 155, child++, Interface);
-	//	setBounds(30274, 103, 155, child++, Interface);
-		
+
+		// setBounds(30064, 39, 39, child++, Interface);
+		// setBounds(30075, 71, 39, child++, Interface);
+		// setBounds(30083, 103, 39, child++, Interface);
+		// setBounds(30106, 12, 68, child++, Interface);
+		// setBounds(30114, 42, 68, child++, Interface);
+		// setBounds(30138, 135, 68, child++, Interface);
+		// setBounds(30146, 165, 68, child++, Interface);
+		// setBounds(30162, 42, 97, child++, Interface);
+		// setBounds(30170, 71, 97, child++, Interface);
+
+		// setBounds(30226, 103, 125, child++, Interface);
+		// setBounds(30234, 135, 125, child++, Interface);
+		// setBounds(30242, 164, 126, child++, Interface);
+		// setBounds(30250, 10, 155, child++, Interface);
+		// setBounds(30258, 42, 155, child++, Interface);
+		// setBounds(30266, 71, 155, child++, Interface);
+		// setBounds(30274, 103, 155, child++, Interface);
+
 		setBounds(30018, 5, 176, child++, Interface);// hover
 		setBounds(30026, 5, 176, child++, Interface);// hover
 		setBounds(30033, 5, 163, child++, Interface);// hover
 		setBounds(30041, 5, 176, child++, Interface);// hover
 		setBounds(30049, 5, 176, child++, Interface);// hover
 		setBounds(30057, 5, 176, child++, Interface);// hover
-		//setBounds(30065, 5, 176, child++, Interface);// hover
-		//setBounds(30076, 5, 163, child++, Interface);// hover
-		//setBounds(30084, 5, 176, child++, Interface);// hover
+		// setBounds(30065, 5, 176, child++, Interface);// hover
+		// setBounds(30076, 5, 163, child++, Interface);// hover
+		// setBounds(30084, 5, 176, child++, Interface);// hover
 		setBounds(30092, 5, 176, child++, Interface);// hover
 		setBounds(30100, 5, 176, child++, Interface);// hover
-	//	setBounds(30107, 5, 176, child++, Interface);// hover
-	//	setBounds(30115, 5, 163, child++, Interface);// hover
+		// setBounds(30107, 5, 176, child++, Interface);// hover
+		// setBounds(30115, 5, 163, child++, Interface);// hover
 		setBounds(30123, 5, 176, child++, Interface);// hover
 		setBounds(30131, 5, 163, child++, Interface);// hover
-	//	setBounds(30139, 5, 163, child++, Interface);// hover
-	//	setBounds(30147, 5, 163, child++, Interface);// hover
+		// setBounds(30139, 5, 163, child++, Interface);// hover
+		// setBounds(30147, 5, 163, child++, Interface);// hover
 		setBounds(30155, 5, 176, child++, Interface);// hover
-	//	setBounds(30163, 5, 176, child++, Interface);// hover
-	//	setBounds(30171, 5, 176, child++, Interface);// hover
+		// setBounds(30163, 5, 176, child++, Interface);// hover
+		// setBounds(30171, 5, 176, child++, Interface);// hover
 		setBounds(30179, 5, 40, child++, Interface);// hover
 		setBounds(30187, 5, 40, child++, Interface);// hover
 		setBounds(30195, 5, 40, child++, Interface);// hover
 		setBounds(30203, 5, 40, child++, Interface);// hover
 		setBounds(30211, 5, 40, child++, Interface);// hover
 		setBounds(30219, 5, 40, child++, Interface);// hover
-		
-	//	setBounds(30227, 5, 176, child++, Interface);// hover
-	//	setBounds(30235, 5, 149, child++, Interface);// hover
-	//	setBounds(30243, 5, 176, child++, Interface);// hover
-	//	setBounds(30251, 5, 5, child++, Interface);// hover
-	//	setBounds(30259, 5, 5, child++, Interface);// hover
-	//	setBounds(30267, 5, 5, child++, Interface);// hover
-	//	setBounds(30275, 5, 5, child++, Interface);// hover
+
+		// setBounds(30227, 5, 176, child++, Interface);// hover
+		// setBounds(30235, 5, 149, child++, Interface);// hover
+		// setBounds(30243, 5, 176, child++, Interface);// hover
+		// setBounds(30251, 5, 5, child++, Interface);// hover
+		// setBounds(30259, 5, 5, child++, Interface);// hover
+		// setBounds(30267, 5, 5, child++, Interface);// hover
+		// setBounds(30275, 5, 5, child++, Interface);// hover
 		setBounds(30283, 5, 40, child++, Interface);// hover
 		setBounds(30291, 5, 40, child++, Interface);// hover
 		setBounds(30299, 5, 40, child++, Interface);// hover
@@ -3449,7 +3116,7 @@ public final class Widget {
 		i.childX = new int[total];
 		i.childY = new int[total];
 	}
-	
+
 	public static void setBounds(int ID, int X, int Y, int frame, Widget r) {
 		r.children[frame] = ID;
 		r.childX[frame] = X;
@@ -3471,7 +3138,6 @@ public final class Widget {
 		RSInterface.height = H;
 		RSInterface.tooltip = S;
 	}
-
 
 	public static void addSprites(int ID, int i, int i2, String name, int configId, int configFrame) {
 		Widget Tab = addTabInterface(ID);
@@ -3495,22 +3161,22 @@ public final class Widget {
 		Tab.disabledSprite = imageLoader(i, name);
 		Tab.enabledSprite = imageLoader(i2, name);
 	}
-	
+
 	private static void specialBars() {
-		for(int id : SPECIAL_BARS) {
+		for (int id : SPECIAL_BARS) {
 			specialBar(id);
 		}
 	}
-	
+
 	private static void specialBar(int id) // 7599
 	{
-	//	addActionButton(id - 12, 70, -1, 150, 26, "Use @gre@Special Attack");
+		// addActionButton(id - 12, 70, -1, 150, 26, "Use @gre@Special Attack");
 
 		for (int i = id - 11; i < id; i++) {
 			removeSomething(i);
 		}
-		
-		System.out.println("Broken: "+id);
+
+		System.out.println("Broken: " + id);
 
 		Widget rsi = interfaceCache[id - 12];
 		rsi.width = 150;

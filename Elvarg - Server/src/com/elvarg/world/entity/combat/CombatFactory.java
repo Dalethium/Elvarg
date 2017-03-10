@@ -221,23 +221,20 @@ public class CombatFactory {
 		// Check good distance?
 		if (!(attacker.getPosition().isWithinDistance(target.getPosition(), distance))) {
 			return false;
-		} else {
-			// Stop running forward if we're in distance.
-			attacker.getMovementQueue().reset();
 		}
 
-		// Check blocked projectiles
-		if (method.getCombatType() != CombatType.MELEE) {
-			/*
-			 * if(!RegionClipping.canProjectileAttack(attacker, target)) {
-			 * return false; }
-			 */
-		} else {
-			// Check diagonal block
-			if (RegionClipping.isInDiagonalBlock(attacker, target)) {
-				RS317PathFinder.solveDiagonalBlock(attacker, target);
-				return false;
-			}
+		// Stop running forward if we're in distance.
+		attacker.getMovementQueue().reset();
+
+		// Check diagonal
+		if (RegionClipping.isInDiagonalBlock(attacker, target)) {
+			RS317PathFinder.solveDiagonalBlock(attacker, target);
+			return false;
+		}
+
+		// Check projectiles..
+		if (!RegionClipping.canProjectileAttack(attacker, target)) {
+			return false;
 		}
 
 		// Check same spot

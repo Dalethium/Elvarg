@@ -10,5 +10,4 @@ public class ClearMinimapFlag implements OutgoingPacket {
 		buf.putOpcode(78);
 	}
 
-
 }

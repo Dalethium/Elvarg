@@ -1,7 +1,7 @@
 package com.runescape.collection;
 
 public final class Deque {
-	
+
 	private final Linkable head;
 	private Linkable current;
 

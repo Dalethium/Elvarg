@@ -6,14 +6,14 @@ public class GameItem {
 		this.item = item;
 		this.amount = amount;
 	}
-	
+
 	int item;
 	int amount;
 
 	public int getItem() {
 		return item;
 	}
-	
+
 	public int getAmount() {
 		return amount;
 	}

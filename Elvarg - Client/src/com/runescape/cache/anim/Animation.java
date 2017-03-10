@@ -1,43 +1,41 @@
 package com.runescape.cache.anim;
+
 import com.runescape.cache.FileArchive;
 import com.runescape.io.Buffer;
 
 public final class Animation {
 
-	public static void init(FileArchive streamLoader)
-	{
+	public static void init(FileArchive streamLoader) {
 		Buffer stream = new Buffer(streamLoader.readFile("seq.dat"));
 		int length = stream.readUShort();
-		if(animations == null)
+		if (animations == null)
 			animations = new Animation[length + 5000];
-		for(int j = 0; j < length; j++) {
-			if(animations[j] == null)
+		for (int j = 0; j < length; j++) {
+			if (animations[j] == null)
 				animations[j] = new Animation();
 			animations[j].readValues(stream);
 
 		}
-		
-		System.out.println("Loaded: "+length+" Animations");
+
+		System.out.println("Loaded: " + length + " Animations");
 	}
 
 	public int duration(int i) {
 		int j = durations[i];
-		if(j == 0)
-		{
+		if (j == 0) {
 			Frame frame = Frame.method531(primaryFrames[i]);
-			if(frame != null) {
+			if (frame != null) {
 				j = durations[i] = frame.duration;
 			}
 		}
-		if(j == 0)
+		if (j == 0)
 			j = 1;
 		return j;
 	}
 
 	private void readValues(Buffer stream) {
 		int i;
-		while ((i = stream.readUnsignedByte()) != 0){
-
+		while ((i = stream.readUnsignedByte()) != 0) {
 
 			if (i == 1) {
 				frameCount = stream.readUShort();
@@ -48,7 +46,6 @@ public final class Animation {
 					primaryFrames[j] = stream.readInt();
 					secondaryFrames[j] = -1;
 				}
-
 
 				for (int j = 0; j < frameCount; j++)
 					durations[j] = stream.readUnsignedByte();
@@ -109,12 +106,12 @@ public final class Animation {
 		loopOffset = -1;
 		stretches = false;
 		forcedPriority = 5;
-		playerOffhand = -1; //Removes shield
-		playerMainhand = -1; //Removes weapon
+		playerOffhand = -1; // Removes shield
+		playerMainhand = -1; // Removes weapon
 		maximumLoops = 99;
-		animatingPrecedence = -1; //Stops character from moving
+		animatingPrecedence = -1; // Stops character from moving
 		priority = -1;
-		replayMode = 1; 
+		replayMode = 1;
 	}
 
 	public static Animation animations[];

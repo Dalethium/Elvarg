@@ -15,7 +15,7 @@ import com.elvarg.world.content.skills.herblore.UnfinishedPotionData;
 import com.elvarg.world.content.skills.prayer.BoneBurying;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Item;
-import com.elvarg.world.model.teleportation.tabs.TabHandler;
+import com.elvarg.world.model.teleportation.tabs.TeleportTablet;
 
 @SuppressWarnings("unused")
 public class ItemActionPacketListener implements PacketListener {
@@ -66,14 +66,22 @@ public class ItemActionPacketListener implements PacketListener {
 		if (Consumables.isFood(player, interacted)) {
 			return;
 		}
-		BoneBurying.bury(player, BoneBurying.forId(interacted.getId()), interacted);
-		if (ItemDefinition.forId(interacted.getId()).getName().contains("Grimy")) {
+		if (ItemDefinition.forId(interacted.getId()).getName().toLowerCase().contains("bone")) {
+			BoneBurying.bury(player, BoneBurying.forId(interacted.getId()), interacted);
+			return;
+		}
+		if (ItemDefinition.forId(interacted.getId()).getName().toLowerCase().contains("grimy")) {
 			HerbIdentification.cleanHerb(player, interacted);
 			return;
 		}
-		TabHandler.onClick(player, interacted);
+		if (ItemDefinition.forId(interacted.getId()).getName().toLowerCase().contains("teleport")) {
+			TeleportTablet.onClick(player, interacted);
+			return;
+		}
 		switch (interacted.getId()) {
-
+		default:
+			player.getPacketSender().sendMessage("Nothing interesting happens...");
+			break;
 		}
 	}
 

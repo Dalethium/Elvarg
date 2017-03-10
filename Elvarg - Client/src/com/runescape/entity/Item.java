@@ -5,6 +5,7 @@ import com.runescape.entity.model.Model;
 
 public final class Item extends Renderable {
 
+	@Override
 	public final Model getRotatedModel() {
 		ItemDefinition itemDef = ItemDefinition.lookup(ID);
 		return itemDef.getModel(itemCount);

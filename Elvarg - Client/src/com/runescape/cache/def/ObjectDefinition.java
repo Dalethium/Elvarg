@@ -1,6 +1,7 @@
 package com.runescape.cache.def;
 
 import java.io.IOException;
+
 import com.runescape.Client;
 import com.runescape.cache.FileArchive;
 import com.runescape.cache.anim.Frame;
@@ -342,7 +343,7 @@ public final class ObjectDefinition {
 		if (modelTypes == null) {
 			if (j != 10)
 				return null;
-			l1 = (long) ((type << 6) + l) + ((long) (k + 1) << 32);
+			l1 = (type << 6) + l + ((long) (k + 1) << 32);
 			Model model_1 = (Model) models.get(l1);
 			if (model_1 != null) {
 				applyTexture(model_1);
@@ -382,7 +383,7 @@ public final class ObjectDefinition {
 
 			if (i1 == -1)
 				return null;
-			l1 = (long) ((type << 8) + (i1 << 3) + l) + ((long) (k + 1) << 32);
+			l1 = (type << 8) + (i1 << 3) + l + ((long) (k + 1) << 32);
 			Model model_2 = (Model) models.get(l1);
 			if (model_2 != null) {
 				applyTexture(model_2);

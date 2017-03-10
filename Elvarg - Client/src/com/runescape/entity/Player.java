@@ -15,8 +15,8 @@ import com.runescape.util.StringUtils;
 
 public final class Player extends Mob {
 
-	private long cachedModel  = -1L;	
-	public NpcDefinition npcDefinition;	
+	private long cachedModel = -1L;
+	public NpcDefinition npcDefinition;
 	public boolean aBoolean1699;
 	public final int[] appearanceColors = new int[5];
 	public int team;
@@ -36,7 +36,7 @@ public final class Player extends Mob {
 	public int objectYPos;
 	public Model playerModel;
 	public final int[] equipment = new int[12];
-	private long appearanceOffset ;
+	private long appearanceOffset;
 	public int objectAnInt1719LesserXLoc;
 	public int objectAnInt1720LesserYLoc;
 	public int objectAnInt1721GreaterXLoc;
@@ -45,13 +45,14 @@ public final class Player extends Mob {
 	public String clanName = "None";
 	public int rights;
 
+	@Override
 	public Model getRotatedModel() {
 
 		if (!visible) {
 			return null;
 		}
 
-		Model animatedModel = getAnimatedModel();			
+		Model animatedModel = getAnimatedModel();
 
 		if (animatedModel == null) {
 			return null;
@@ -67,8 +68,8 @@ public final class Player extends Mob {
 		if (super.graphic != -1 && super.currentAnimation != -1) {
 			Graphic spotAnim = Graphic.cache[super.graphic];
 
-			Model spotAnimationModel  = spotAnim.getModel();
-			
+			Model spotAnimationModel = spotAnim.getModel();
+
 			/**
 			 * MAKE SURE WE'VE LOADED THE GRAPHIC BEFORE ATTEMPTING TO DO IT.
 			 * Fixes graphics flickering.
@@ -77,28 +78,32 @@ public final class Player extends Mob {
 				spotAnimationModel = null;
 			}
 
-			if (spotAnimationModel  != null) {
+			if (spotAnimationModel != null) {
 
-				Model model_3 = new Model(true, Frame.noAnimationInProgress(super.currentAnimation), false, spotAnimationModel );
+				Model model_3 = new Model(true, Frame.noAnimationInProgress(super.currentAnimation), false,
+						spotAnimationModel);
 				int nextFrame = spotAnim.animationSequence.primaryFrames[super.nextGraphicsAnimationFrame];
 				int cycle1 = spotAnim.animationSequence.durations[super.currentAnimation];
 				int cycle2 = super.anInt1522;
 				model_3.translate(0, -super.graphicHeight, 0);
 				model_3.skin();
-				/*model_3.applyAnimationFrame(spotAnim.animationSequence.primaryFrames[super.currentAnimation], nextFrame,
-						cycle1, cycle2);*/
+				/*
+				 * model_3.applyAnimationFrame(spotAnim.animationSequence.
+				 * primaryFrames[super.currentAnimation], nextFrame, cycle1,
+				 * cycle2);
+				 */
 				model_3.applyTransform(spotAnim.animationSequence.primaryFrames[super.currentAnimation]);
 				model_3.faceGroups = null;
 				model_3.vertexGroups = null;
 				if (spotAnim.resizeXY != 128 || spotAnim.resizeZ != 128)
 					model_3.scale(spotAnim.resizeXY, spotAnim.resizeXY, spotAnim.resizeZ);
 				model_3.light(64 + spotAnim.modelBrightness, 850 + spotAnim.modelShadow, -30, -50, -30, true);
-				Model models [] = { animatedModel, model_3 };				
-				animatedModel = new Model(models );
+				Model models[] = { animatedModel, model_3 };
+				animatedModel = new Model(models);
 			}
 		}
-		
-		if (playerModel != null) {			
+
+		if (playerModel != null) {
 			if (Client.tick >= objectModelStop)
 				playerModel = null;
 			if (Client.tick >= objectModelStart && Client.tick < objectModelStop) {
@@ -113,7 +118,7 @@ public final class Player extends Mob {
 					model_1.rotate90Degrees();
 				} else if (super.nextStepOrientation == 1536)
 					model_1.rotate90Degrees();
-				Model models[] = { animatedModel, model_1 };				
+				Model models[] = { animatedModel, model_1 };
 				animatedModel = new Model(models);
 				if (super.nextStepOrientation == 512)
 					model_1.rotate90Degrees();
@@ -132,9 +137,9 @@ public final class Player extends Mob {
 		return animatedModel;
 	}
 
-	public void updateAppearance(Buffer buffer) {		
+	public void updateAppearance(Buffer buffer) {
 		buffer.currentPosition = 0;
-		
+
 		gender = buffer.readUnsignedByte();
 		headIcon = buffer.readUnsignedByte();
 		skullIcon = buffer.readUnsignedByte();
@@ -153,7 +158,7 @@ public final class Player extends Mob {
 
 			int id = buffer.readUnsignedByte();
 
-			equipment[bodyPart] = (reset << 8) + id;			
+			equipment[bodyPart] = (reset << 8) + id;
 
 			if (bodyPart == 0 && equipment[0] == 65535) {
 				npcDefinition = NpcDefinition.lookup(buffer.readUShort());
@@ -218,34 +223,34 @@ public final class Player extends Mob {
 		combatLevel = buffer.readUnsignedByte();
 		rights = buffer.readUnsignedByte();
 
-		//skill = buffer.readUShort();
+		// skill = buffer.readUShort();
 		visible = true;
-		appearanceOffset  = 0L;
+		appearanceOffset = 0L;
 
-		for (int index = 0; index < 12; index++) {			
-			appearanceOffset  <<= 4;
+		for (int index = 0; index < 12; index++) {
+			appearanceOffset <<= 4;
 
 			if (equipment[index] >= 256) {
-				appearanceOffset  += equipment[index] - 256;
+				appearanceOffset += equipment[index] - 256;
 			}
 
 		}
 
 		if (equipment[0] >= 256) {
-			appearanceOffset  += equipment[0] - 256 >> 4;
+			appearanceOffset += equipment[0] - 256 >> 4;
 		}
 
 		if (equipment[1] >= 256) {
-			appearanceOffset  += equipment[1] - 256 >> 8;
+			appearanceOffset += equipment[1] - 256 >> 8;
 		}
 
-		for (int index = 0; index < 5; index++) {			
-			appearanceOffset  <<= 3;
-			appearanceOffset  += appearanceColors[index];			
+		for (int index = 0; index < 5; index++) {
+			appearanceOffset <<= 3;
+			appearanceOffset += appearanceColors[index];
 		}
 
-		appearanceOffset  <<= 1;
-		appearanceOffset  += gender;
+		appearanceOffset <<= 1;
+		appearanceOffset += gender;
 	}
 
 	public Model getAnimatedModel() {
@@ -261,7 +266,7 @@ public final class Player extends Mob {
 				if (Configuration.enableTweening && super.nextAnimationFrame != -1) {
 					nextFrame = animation.primaryFrames[super.nextAnimationFrame];
 					cycle1 = animation.durations[super.displayedEmoteFrames];
-					cycle2 = super.emoteTimeRemaining;	
+					cycle2 = super.emoteTimeRemaining;
 				}
 			} else if (super.movementAnimation >= 0) {
 				Animation animation = Animation.animations[super.movementAnimation];
@@ -276,8 +281,7 @@ public final class Player extends Mob {
 			return model;
 		}
 
-
-		long l = appearanceOffset ;
+		long l = appearanceOffset;
 		int currentFrame = -1;
 		int nextFrame = -1;
 		int cycle1 = 0;
@@ -308,11 +312,13 @@ public final class Player extends Mob {
 			currentFrame = animation.primaryFrames[super.displayedMovementFrames];
 
 			/** DISABLED BECAUSE IT CAUSES FLICKERING WITH SOME GFXS **/
-			/*if (Configuration.enableTweening && super.nextIdleAnimationFrame != -1) {
-				nextFrame = animation.primaryFrames[super.nextIdleAnimationFrame];
-				cycle1 = animation.durations[super.displayedMovementFrames];
-				cycle2 = super.anInt1519;
-			}*/
+			/*
+			 * if (Configuration.enableTweening && super.nextIdleAnimationFrame
+			 * != -1) { nextFrame =
+			 * animation.primaryFrames[super.nextIdleAnimationFrame]; cycle1 =
+			 * animation.durations[super.displayedMovementFrames]; cycle2 =
+			 * super.anInt1519; }
+			 */
 		}
 		Model model_1 = (Model) models.get(l);
 		if (model_1 == null) {
@@ -330,8 +336,8 @@ public final class Player extends Mob {
 			}
 
 			if (flag) {
-				if (cachedModel  != -1L)
-					model_1 = (Model) models.get(cachedModel );
+				if (cachedModel != -1L)
+					model_1 = (Model) models.get(cachedModel);
 				if (model_1 == null)
 					return null;
 			}
@@ -369,28 +375,29 @@ public final class Player extends Mob {
 			model_1.scale(132, 132, 132);
 			model_1.light(72, 1300, -30, -50, -30, true);
 			models.put(model_1, l);
-			cachedModel  = l;
+			cachedModel = l;
 		}
 
 		if (aBoolean1699) {
 			return model_1;
 		}
 
-		Model emptyModel = Model.EMPTY_MODEL;		
+		Model emptyModel = Model.EMPTY_MODEL;
 
 		emptyModel.method464(model_1, Frame.noAnimationInProgress(currentFrame) & Frame.noAnimationInProgress(i1));
 		if (currentFrame != -1 && i1 != -1) {
-			emptyModel.applyAnimationFrames(Animation.animations[super.emoteAnimation].interleaveOrder, i1, currentFrame);
-		} else if(currentFrame != -1) {
-			//emptyModel.apply(currentFrame);
+			emptyModel.applyAnimationFrames(Animation.animations[super.emoteAnimation].interleaveOrder, i1,
+					currentFrame);
+		} else if (currentFrame != -1) {
+			// emptyModel.apply(currentFrame);
 			emptyModel.applyAnimationFrame(currentFrame, nextFrame, cycle1, cycle2);
 		}
 
-		/*else if (currentFrame != -1 && nextFrame != -1) {
-			emptyModel.applyAnimationFrame(currentFrame, nextFrame, cycle1, cycle2);
-		} else {
-			emptyModel.apply(currentFrame);
-		}*/
+		/*
+		 * else if (currentFrame != -1 && nextFrame != -1) {
+		 * emptyModel.applyAnimationFrame(currentFrame, nextFrame, cycle1,
+		 * cycle2); } else { emptyModel.apply(currentFrame); }
+		 */
 		emptyModel.calculateDistances();
 		emptyModel.faceGroups = null;
 		emptyModel.vertexGroups = null;
@@ -408,7 +415,7 @@ public final class Player extends Mob {
 
 		boolean cached = false;
 
-		for (int index = 0; index < 12; index++) {			
+		for (int index = 0; index < 12; index++) {
 			int appearanceId = equipment[index];
 
 			if (appearanceId >= 256 && appearanceId < 512 && !IdentityKit.kits[appearanceId - 256].headLoaded()) {
@@ -426,38 +433,38 @@ public final class Player extends Mob {
 
 		Model headModels[] = new Model[12];
 
-		int headModelsOffset  = 0;
+		int headModelsOffset = 0;
 
-		for (int modelIndex  = 0; modelIndex  < 12; modelIndex ++) {			
-			int appearanceId  = equipment[modelIndex ];
+		for (int modelIndex = 0; modelIndex < 12; modelIndex++) {
+			int appearanceId = equipment[modelIndex];
 
-			if (appearanceId  >= 256 && appearanceId  < 512) {
+			if (appearanceId >= 256 && appearanceId < 512) {
 
-				Model subModel  = IdentityKit.kits[appearanceId  - 256].headModel();
+				Model subModel = IdentityKit.kits[appearanceId - 256].headModel();
 
-				if (subModel  != null) {
-					headModels[headModelsOffset ++] = subModel;
+				if (subModel != null) {
+					headModels[headModelsOffset++] = subModel;
 				}
 
 			}
-			if (appearanceId  >= 512) {
-				Model subModel  = ItemDefinition.lookup(appearanceId  - 512).getChatEquipModel(gender);
+			if (appearanceId >= 512) {
+				Model subModel = ItemDefinition.lookup(appearanceId - 512).getChatEquipModel(gender);
 
-				if (subModel  != null) {
-					headModels[headModelsOffset ++] = subModel;
+				if (subModel != null) {
+					headModels[headModelsOffset++] = subModel;
 				}
 
 			}
 		}
 
-		Model headModel = new Model(headModelsOffset , headModels);
+		Model headModel = new Model(headModelsOffset, headModels);
 
-		for (int index  = 0; index  < 5; index ++) {			
-			if (appearanceColors[index ] != 0) {
-				headModel.recolor(Client.PLAYER_BODY_RECOLOURS[index ][0],
-						Client.PLAYER_BODY_RECOLOURS[index ][appearanceColors[index ]]);
-				if (index  == 1) {
-					headModel.recolor(Client.anIntArray1204[0], Client.anIntArray1204[appearanceColors[index ]]);
+		for (int index = 0; index < 5; index++) {
+			if (appearanceColors[index] != 0) {
+				headModel.recolor(Client.PLAYER_BODY_RECOLOURS[index][0],
+						Client.PLAYER_BODY_RECOLOURS[index][appearanceColors[index]]);
+				if (index == 1) {
+					headModel.recolor(Client.anIntArray1204[0], Client.anIntArray1204[appearanceColors[index]]);
 				}
 			}
 		}
@@ -465,6 +472,7 @@ public final class Player extends Mob {
 		return headModel;
 	}
 
+	@Override
 	public boolean isVisible() {
 		return visible;
 	}

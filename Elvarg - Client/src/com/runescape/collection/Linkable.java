@@ -1,7 +1,7 @@
 package com.runescape.collection;
 
 public class Linkable {
-	
+
 	public long key;
 	public Linkable previous;
 	public Linkable next;

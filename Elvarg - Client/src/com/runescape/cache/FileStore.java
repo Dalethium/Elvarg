@@ -1,6 +1,7 @@
 package com.runescape.cache;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public final class FileStore {
 
@@ -27,7 +28,7 @@ public final class FileStore {
 		}
 
 	}
-	
+
 	private static final byte[] buffer = new byte[520];
 	private final RandomAccessFile dataFile;
 	private final RandomAccessFile indexFile;
@@ -54,7 +55,7 @@ public final class FileStore {
 			int size = ((buffer[0] & 0xff) << 16) + ((buffer[1] & 0xff) << 8) + (buffer[2] & 0xff);
 			int sector = ((buffer[3] & 0xff) << 16) + ((buffer[4] & 0xff) << 8) + (buffer[5] & 0xff);
 
-			if (sector <= 0 || (long) sector > dataFile.length() / 520L) {
+			if (sector <= 0 || sector > dataFile.length() / 520L) {
 				return null;
 			}
 
@@ -92,7 +93,7 @@ public final class FileStore {
 					return null;
 				}
 
-				if (nextSector < 0 || (long) nextSector > dataFile.length() / 520L) {
+				if (nextSector < 0 || nextSector > dataFile.length() / 520L) {
 					return null;
 				}
 
@@ -130,7 +131,7 @@ public final class FileStore {
 				}
 				sector = ((buffer[3] & 0xff) << 16) + ((buffer[4] & 0xff) << 8) + (buffer[5] & 0xff);
 
-				if (sector <= 0 || (long) sector > dataFile.length() / 520L) {
+				if (sector <= 0 || sector > dataFile.length() / 520L) {
 					return false;
 				}
 
@@ -177,7 +178,7 @@ public final class FileStore {
 							return false;
 						}
 
-						if (nextSector < 0 || (long) nextSector > dataFile.length() / 520L) {
+						if (nextSector < 0 || nextSector > dataFile.length() / 520L) {
 							return false;
 						}
 					}
@@ -228,9 +229,9 @@ public final class FileStore {
 		}
 	}
 
-	private synchronized void seek(RandomAccessFile file, int position) throws IOException {		
+	private synchronized void seek(RandomAccessFile file, int position) throws IOException {
 		try {
-			file.seek(position);			
+			file.seek(position);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -238,6 +239,7 @@ public final class FileStore {
 
 	/**
 	 * Returns the number of files in the cache index.
+	 * 
 	 * @return
 	 */
 	public long getFileCount() {

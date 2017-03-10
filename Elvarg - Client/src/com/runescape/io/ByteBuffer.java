@@ -45,7 +45,9 @@ public final class ByteBuffer {
 		/* Reset the position */
 		position = reserve_packet_slots ? pkt_content_start : pkt_opcode_slot;
 
-		/* An empty byte array with a capacity of {@code #currentPosition} bytes */
+		/*
+		 * An empty byte array with a capacity of {@code #currentPosition} bytes
+		 */
 		byte[] decodeBuffer = new byte[currentPosition];
 
 		/*
@@ -143,12 +145,14 @@ public final class ByteBuffer {
 
 	public int getInt() {
 		position += 4;
-		return ((buffer[position - 4] & 0xFF) << 24) + ((buffer[position - 3] & 0xFF) << 16) + ((buffer[position - 2] & 0xFF) << 8) + (buffer[position - 1] & 0xFF);
+		return ((buffer[position - 4] & 0xFF) << 24) + ((buffer[position - 3] & 0xFF) << 16)
+				+ ((buffer[position - 2] & 0xFF) << 8) + (buffer[position - 1] & 0xFF);
 	}
 
 	public int getIntLittleEndian() {
 		position += 4;
-		return ((buffer[position - 4] & 0xFF) << 24) + ((buffer[position - 3] & 0xFF) << 16) + ((buffer[position - 2] & 0xFF) << 8) + (buffer[position - 1] & 0xFF);
+		return ((buffer[position - 4] & 0xFF) << 24) + ((buffer[position - 3] & 0xFF) << 16)
+				+ ((buffer[position - 2] & 0xFF) << 8) + (buffer[position - 1] & 0xFF);
 	}
 
 	public long getLong() {
@@ -228,7 +232,8 @@ public final class ByteBuffer {
 
 	public int getTribyte() {
 		position += 3;
-		return ((buffer[position - 3] & 0xFF) << 16) + ((buffer[position - 2] & 0xFF) << 8) + (buffer[position - 1] & 0xFF);
+		return ((buffer[position - 3] & 0xFF) << 16) + ((buffer[position - 2] & 0xFF) << 8)
+				+ (buffer[position - 1] & 0xFF);
 	}
 
 	public final int getTribyte(int value) {
@@ -306,8 +311,7 @@ public final class ByteBuffer {
 
 	public int getByteA() {
 		position += 2;
-		return ((buffer[position - 2] & 0xff) << 8)
-				+ (buffer[position - 1] - 128 & 0xff);
+		return ((buffer[position - 2] & 0xff) << 8) + (buffer[position - 1] - 128 & 0xff);
 	}
 
 	public int method428() {
@@ -362,12 +366,14 @@ public final class ByteBuffer {
 
 	public int method439() {
 		position += 4;
-		return ((buffer[position - 2] & 0xFF) << 24) + ((buffer[position - 1] & 0xFF) << 16) + ((buffer[position - 4] & 0xFF) << 8) + (buffer[position - 3] & 0xFF);
+		return ((buffer[position - 2] & 0xFF) << 24) + ((buffer[position - 1] & 0xFF) << 16)
+				+ ((buffer[position - 4] & 0xFF) << 8) + (buffer[position - 3] & 0xFF);
 	}
 
 	public int method440() {
 		position += 4;
-		return ((buffer[position - 3] & 0xFF) << 24) + ((buffer[position - 4] & 0xFF) << 16) + ((buffer[position - 1] & 0xFF) << 8) + (buffer[position - 2] & 0xFF);
+		return ((buffer[position - 3] & 0xFF) << 24) + ((buffer[position - 4] & 0xFF) << 16)
+				+ ((buffer[position - 1] & 0xFF) << 8) + (buffer[position - 2] & 0xFF);
 	}
 
 	public void method441(int i, byte abyte0[], int j) {
@@ -458,7 +464,7 @@ public final class ByteBuffer {
 
 	public int bufferLength() {
 		int size = position;
-		if(reserve_packet_slots) {
+		if (reserve_packet_slots) {
 			/* Update the pkt_size slot and encrypt it */
 			buffer[pkt_size_slot] = (byte) (size + cipher.getNextKey());
 		}
@@ -477,13 +483,12 @@ public final class ByteBuffer {
 		this.buffer = buffer;
 	}
 
-	private static final int[] BIT_CONSTANTS = { 0, 1, 3, 7, 15, 31, 63, 127,
-			255, 511, 1023, 2047, 4095, 8191, 16383, 32767, 65535, 0x1ffff,
-			0x3ffff, 0x7ffff, 0xFFfff, 0x1fffff, 0x3fffff, 0x7fffff, 0xFFffff,
-			0x1ffffff, 0x3ffffff, 0x7ffffff, 0xFFfffff, 0x1fffffff, 0x3fffffff,
-			0x7fffffff, -1 };
+	private static final int[] BIT_CONSTANTS = { 0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191, 16383,
+			32767, 65535, 0x1ffff, 0x3ffff, 0x7ffff, 0xFFfff, 0x1fffff, 0x3fffff, 0x7fffff, 0xFFffff, 0x1ffffff,
+			0x3ffffff, 0x7ffffff, 0xFFfffff, 0x1fffffff, 0x3fffffff, 0x7fffffff, -1 };
 
-	public static final BigInteger RSA_MODULUS = new BigInteger("104491769878744214552327916539299463496996457081116392641740420337580247359457531212713234798435269852381858199895582444770363103378419890508986198319599243102737368616946490728678876018327788000439596635223141886089230154991381365099178986572201859664528128354742213167942196819984139030533812106754541601427");
+	public static final BigInteger RSA_MODULUS = new BigInteger(
+			"104491769878744214552327916539299463496996457081116392641740420337580247359457531212713234798435269852381858199895582444770363103378419890508986198319599243102737368616946490728678876018327788000439596635223141886089230154991381365099178986572201859664528128354742213167942196819984139030533812106754541601427");
 	public static final BigInteger RSA_EXPONENT = new BigInteger("65537");
 
 }

@@ -8,12 +8,13 @@ public class ObjectOption3 implements OutgoingPacket {
 	int id;
 	int val1;
 	int val2;
+
 	public ObjectOption3(int val1, int val2, int id) {
 		this.id = id;
 		this.val1 = val1;
 		this.val2 = val2;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(70);

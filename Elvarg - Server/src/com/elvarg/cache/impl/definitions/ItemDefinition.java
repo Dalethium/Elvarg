@@ -15,7 +15,6 @@ import com.elvarg.world.model.container.impl.Equipment;
  * 
  * @author relex lawl
  */
-
 public class ItemDefinition {
 
 	/**

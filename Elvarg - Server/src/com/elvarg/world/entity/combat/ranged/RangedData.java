@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.elvarg.cache.impl.definitions.WeaponInterfaces;
-import com.elvarg.cache.impl.definitions.WeaponInterfaces.WeaponInterface;
 import com.elvarg.engine.task.impl.CombatPoisonEffect.PoisonType;
 import com.elvarg.util.Misc;
 import com.elvarg.world.entity.combat.CombatFactory;
@@ -255,36 +254,22 @@ public class RangedData {
 																new AmmunitionData[] { AmmunitionData.RUNE_KNIFE },
 																RangedWeaponType.THROW),
 
-		BRONZE_THROWNAXE(new int[] { 800 }, new AmmunitionData[] { AmmunitionData.BRONZE_THROWNAXE },
-				RangedWeaponType.THROW), IRON_THROWNAXE(new int[] { 801 },
-						new AmmunitionData[] { AmmunitionData.IRON_THROWNAXE },
-						RangedWeaponType.THROW), STEEL_THROWNAXE(new int[] { 802 },
-								new AmmunitionData[] { AmmunitionData.STEEL_THROWNAXE },
-								RangedWeaponType.THROW), MITHRIL_THROWNAXE(new int[] { 803 },
-										new AmmunitionData[] { AmmunitionData.MITHRIL_THROWNAXE },
-										RangedWeaponType.THROW), ADAMANT_THROWNAXE(new int[] { 804 },
-												new AmmunitionData[] { AmmunitionData.ADAMANT_THROWNAXE },
-												RangedWeaponType.THROW), RUNE_THROWNAXE(new int[] { 805 },
-														new AmmunitionData[] { AmmunitionData.RUNE_THROWNAXE },
-														RangedWeaponType.THROW),
+		/*
+		 * BRONZE_THROWNAXE(new int[] {800}, new AmmunitionData[]
+		 * {AmmunitionData.BRONZE_THROWNAXE}, RangedWeaponType.THROW),
+		 * IRON_THROWNAXE(new int[] {801}, new AmmunitionData[]
+		 * {AmmunitionData.IRON_THROWNAXE}, RangedWeaponType.THROW),
+		 * STEEL_THROWNAXE(new int[] {802}, new AmmunitionData[]
+		 * {AmmunitionData.STEEL_THROWNAXE}, RangedWeaponType.THROW),
+		 * MITHRIL_THROWNAXE(new int[] {803}, new AmmunitionData[]
+		 * {AmmunitionData.MITHRIL_THROWNAXE}, RangedWeaponType.THROW),
+		 * ADAMANT_THROWNAXE(new int[] {804}, new AmmunitionData[]
+		 * {AmmunitionData.ADAMANT_THROWNAXE}, RangedWeaponType.THROW),
+		 * RUNE_THROWNAXE(new int[] {805}, new AmmunitionData[]
+		 * {AmmunitionData.RUNE_THROWNAXE}, RangedWeaponType.THROW),
+		 */
 
 		TOKTZ_XIL_UL(new int[] { 6522 }, new AmmunitionData[] { AmmunitionData.TOKTZ_XIL_UL }, RangedWeaponType.THROW),
-
-		BRONZE_JAVELIN(new int[] { 825 }, new AmmunitionData[] { AmmunitionData.BRONZE_JAVELIN },
-				RangedWeaponType.THROW), IRON_JAVELIN(new int[] { 826 },
-						new AmmunitionData[] { AmmunitionData.IRON_JAVELIN }, RangedWeaponType.THROW), STEEL_JAVELIN(
-								new int[] { 827 }, new AmmunitionData[] { AmmunitionData.STEEL_JAVELIN },
-								RangedWeaponType.THROW), MITHRIL_JAVELIN(new int[] { 828 },
-										new AmmunitionData[] { AmmunitionData.MITHRIL_JAVELIN },
-										RangedWeaponType.THROW), ADAMANT_JAVELIN(new int[] { 829 },
-												new AmmunitionData[] { AmmunitionData.ADAMANT_JAVELIN },
-												RangedWeaponType.THROW), RUNE_JAVELIN(new int[] { 830 },
-														new AmmunitionData[] { AmmunitionData.RUNE_JAVELIN },
-														RangedWeaponType.THROW),
-
-		CHINCHOMPA(new int[] { 10033 }, new AmmunitionData[] { AmmunitionData.CHINCHOMPA },
-				RangedWeaponType.THROW), RED_CHINCHOMPA(new int[] { 10034 },
-						new AmmunitionData[] { AmmunitionData.RED_CHINCHOMPA }, RangedWeaponType.THROW),
 
 		KARILS_CROSSBOW(new int[] { 4734 }, new AmmunitionData[] { AmmunitionData.BOLT_RACK },
 				RangedWeaponType.CROSSBOW),
@@ -292,7 +277,7 @@ public class RangedData {
 		BALLISTA(new int[] { 19478, 19481 },
 				new AmmunitionData[] { AmmunitionData.BRONZE_JAVELIN, AmmunitionData.IRON_JAVELIN,
 						AmmunitionData.STEEL_JAVELIN, AmmunitionData.MITHRIL_JAVELIN, AmmunitionData.ADAMANT_JAVELIN,
-						AmmunitionData.RUNE_JAVELIN },
+						AmmunitionData.RUNE_JAVELIN, AmmunitionData.DRAGON_JAVELIN },
 				RangedWeaponType.BALLISTA), TOXIC_BLOWPIPE(new int[] { 12926 },
 						new AmmunitionData[] { AmmunitionData.ZULRAH_SCALES }, RangedWeaponType.BLOWPIPE);
 
@@ -334,209 +319,211 @@ public class RangedData {
 
 	public enum AmmunitionData {
 
-		BRONZE_ARROW(882, 19, 10, 3, 44, 7, 43, 31), IRON_ARROW(884, 18, 9, 3, 44, 10, 43, 31), STEEL_ARROW(886, 20, 11,
-				3, 44, 16, 43, 31), MITHRIL_ARROW(888, 21, 12, 3, 44, 22, 43, 31), ADAMANT_ARROW(890, 22, 13, 3, 44, 31,
-						43, 31), RUNE_ARROW(892, 24, 15, 3, 44, 50, 43, 31), ICE_ARROW(78, 25, 16, 3, 44, 58, 34,
-								31), BROAD_ARROW(4160, 20, 11, 3, 44, 58, 43,
-										31), DRAGON_ARROW(11212, 1111, 1120, 3, 44, 65, 43, 31),
+		BRONZE_ARROW(882, new Graphic(19, GraphicHeight.HIGH), 10, 7), IRON_ARROW(884,
+				new Graphic(18, GraphicHeight.HIGH), 9, 10), STEEL_ARROW(886, new Graphic(20, GraphicHeight.HIGH), 11,
+						16), MITHRIL_ARROW(888, new Graphic(21, GraphicHeight.HIGH), 12, 22), ADAMANT_ARROW(890,
+								new Graphic(22, GraphicHeight.HIGH), 13,
+								31), RUNE_ARROW(892, new Graphic(24, GraphicHeight.HIGH), 15, 50), ICE_ARROW(78,
+										new Graphic(25, GraphicHeight.HIGH), 16, 58), BROAD_ARROW(4160,
+												new Graphic(20, GraphicHeight.HIGH), 11, 58), DRAGON_ARROW(11212,
+														new Graphic(1111, GraphicHeight.HIGH), 1120, 65),
 
-		BRONZE_BOLT(877, -1, 27, 3, 44, 13, 43, 31), OPAL_BOLT(879, -1, 27, 3, 44, 20, 43, 31), ENCHANTED_OPAL_BOLT(
-				9236, -1, 27, 3, 44, 20, 43, 31), IRON_BOLT(9140, -1, 27, 3, 44, 28, 43, 31), JADE_BOLT(9335, -1, 27, 3,
-						44, 31, 43, 31), ENCHANTED_JADE_BOLT(9237, -1, 27, 3, 44, 31, 43, 31), STEEL_BOLT(9141, -1, 27,
-								3, 44, 35, 43, 31), PEARL_BOLT(880, -1, 27, 3, 44, 38, 43, 31), ENCHANTED_PEARL_BOLT(
-										9238, -1, 27, 3, 44, 38, 43, 31), MITHRIL_BOLT(9142, -1, 27, 3, 44, 40, 43,
-												31), TOPAZ_BOLT(9336, -1, 27, 3, 44, 50, 43, 31), ENCHANTED_TOPAZ_BOLT(
-														9239, -1, 27, 3, 44, 50, 43, 31), ADAMANT_BOLT(9143, -1, 27, 3,
-																44, 60, 43, 31), SAPPHIRE_BOLT(9337, -1, 27, 3, 44, 65,
-																		43, 31), ENCHANTED_SAPPHIRE_BOLT(9240, -1, 27,
-																				3, 44, 65, 43, 31), EMERALD_BOLT(9338,
-																						-1, 27, 3, 44, 70, 43,
-																						31), ENCHANTED_EMERALD_BOLT(
-																								9241, -1, 27, 3, 44, 70,
-																								43, 31), RUBY_BOLT(9339,
-																										-1, 27, 3, 44,
-																										75, 43,
-																										31), ENCHANTED_RUBY_BOLT(
-																												9242,
-																												-1, 27,
-																												3, 44,
-																												75, 43,
-																												31), RUNITE_BOLT(
-																														9144,
-																														-1,
+		BRONZE_BOLT(877, new Graphic(955, GraphicHeight.HIGH), 27, 13), OPAL_BOLT(879,
+				new Graphic(955, GraphicHeight.HIGH), 27,
+				20), ENCHANTED_OPAL_BOLT(9236, new Graphic(955, GraphicHeight.HIGH), 27, 20), IRON_BOLT(9140,
+						new Graphic(955, GraphicHeight.HIGH), 27,
+						28), JADE_BOLT(9335, new Graphic(955, GraphicHeight.HIGH), 27, 31), ENCHANTED_JADE_BOLT(9237,
+								new Graphic(955, GraphicHeight.HIGH), 27,
+								31), STEEL_BOLT(9141, new Graphic(955, GraphicHeight.HIGH), 27, 35), PEARL_BOLT(880,
+										new Graphic(955, GraphicHeight.HIGH), 27, 38), ENCHANTED_PEARL_BOLT(9238,
+												new Graphic(955, GraphicHeight.HIGH), 27, 38), MITHRIL_BOLT(9142,
+														new Graphic(955, GraphicHeight.HIGH), 27, 40), TOPAZ_BOLT(9336,
+																new Graphic(955, GraphicHeight.HIGH), 27,
+																50), ENCHANTED_TOPAZ_BOLT(9239,
+																		new Graphic(955, GraphicHeight.HIGH), 27,
+																		50), ADAMANT_BOLT(9143,
+																				new Graphic(955, GraphicHeight.HIGH),
+																				27, 60), SAPPHIRE_BOLT(9337,
+																						new Graphic(955,
+																								GraphicHeight.HIGH),
+																						27,
+																						65), ENCHANTED_SAPPHIRE_BOLT(
+																								9240,
+																								new Graphic(955,
+																										GraphicHeight.HIGH),
+																								27,
+																								65), EMERALD_BOLT(9338,
+																										new Graphic(955,
+																												GraphicHeight.HIGH),
+																										27,
+																										70), ENCHANTED_EMERALD_BOLT(
+																												9241,
+																												new Graphic(
+																														955,
+																														GraphicHeight.HIGH),
+																												27,
+																												70), RUBY_BOLT(
+																														9339,
+																														new Graphic(
+																																955,
+																																GraphicHeight.HIGH),
 																														27,
-																														3,
-																														44,
-																														84,
-																														43,
-																														31), BROAD_BOLT(
-																																13280,
-																																-1,
+																														75), ENCHANTED_RUBY_BOLT(
+																																9242,
+																																new Graphic(
+																																		955,
+																																		GraphicHeight.HIGH),
 																																27,
-																																3,
-																																44,
-																																88,
-																																43,
-																																31), DIAMOND_BOLT(
-																																		9340,
-																																		-1,
+																																75), BROAD_BOLT(
+																																		13280,
+																																		new Graphic(
+																																				955,
+																																				GraphicHeight.HIGH),
 																																		27,
-																																		3,
-																																		44,
-																																		88,
-																																		43,
-																																		31), ENCHANTED_DIAMOND_BOLT(
-																																				9243,
-																																				-1,
+																																		100), RUNITE_BOLT(
+																																				9144,
+																																				new Graphic(
+																																						955,
+																																						GraphicHeight.HIGH),
 																																				27,
-																																				3,
-																																				44,
-																																				88,
-																																				43,
-																																				31), ONYX_BOLT(
-																																						9342,
-																																						-1,
+																																				115), DIAMOND_BOLT(
+																																						9340,
+																																						new Graphic(
+																																								955,
+																																								GraphicHeight.HIGH),
 																																						27,
-																																						3,
-																																						44,
-																																						90,
-																																						43,
-																																						31), ENCHANTED_ONYX_BOLT(
-																																								9245,
-																																								-1,
+																																						105), ENCHANTED_DIAMOND_BOLT(
+																																								9243,
+																																								new Graphic(
+																																										955,
+																																										GraphicHeight.HIGH),
 																																								27,
-																																								3,
-																																								44,
-																																								90,
-																																								43,
-																																								31), DRAGON_BOLT(
+																																								105), DRAGON_BOLT(
 																																										9341,
-																																										-1,
+																																										new Graphic(
+																																												955,
+																																												GraphicHeight.HIGH),
 																																										27,
-																																										3,
-																																										44,
-																																										90,
-																																										43,
-																																										31), ENCHANTED_DRAGON_BOLT(
+																																										117), ENCHANTED_DRAGON_BOLT(
 																																												9244,
-																																												-1,
+																																												new Graphic(
+																																														955,
+																																														GraphicHeight.HIGH),
 																																												27,
-																																												3,
-																																												44,
-																																												90,
-																																												43,
-																																												31),
+																																												117), ONYX_BOLT(
+																																														9342,
+																																														new Graphic(
+																																																955,
+																																																GraphicHeight.HIGH),
+																																														27,
+																																														120), ENCHANTED_ONYX_BOLT(
+																																																9245,
+																																																new Graphic(
+																																																		955,
+																																																		GraphicHeight.HIGH),
+																																																27,
+																																																120),
 
-		BRONZE_DART(806, 1234, 226, 4, 33, 2, 45, 37), IRON_DART(807, 1235, 227, 4, 33, 5, 45, 37), STEEL_DART(808,
-				1236, 228, 4, 33, 8, 45, 37), MITHRIL_DART(809, 1238, 229, 4, 33, 10, 45, 37), ADAMANT_DART(810, 1239,
-						230, 4, 33, 15, 45, 37), RUNE_DART(811, 1240, 231, 4, 33, 20, 45,
-								37), DRAGON_DART(11230, 1123, 226, 4, 33, 25, 49, 37),
+		BRONZE_DART(806, new Graphic(232, GraphicHeight.HIGH), 226, 2), IRON_DART(807,
+				new Graphic(233, GraphicHeight.HIGH), 227, 5), STEEL_DART(808, new Graphic(234, GraphicHeight.HIGH),
+						228, 8), MITHRIL_DART(809, new Graphic(235, GraphicHeight.HIGH), 229, 10), ADAMANT_DART(810,
+								new Graphic(236, GraphicHeight.HIGH), 230, 15), RUNE_DART(811,
+										new Graphic(237, GraphicHeight.HIGH), 231,
+										20), DRAGON_DART(11230, new Graphic(1123, GraphicHeight.HIGH), 226, 25),
 
-		BRONZE_KNIFE(864, 219, 212, 4, 33, 8, 45, 37), BRONZE_KNIFE_P1(870, 219, 212, 4, 33, 8, 45,
-				37), BRONZE_KNIFE_P2(5654, 219, 212, 4, 33, 8, 45,
-						37), BRONZE_KNIFE_P3(5661, 219, 212, 4, 33, 8, 45, 37),
+		BRONZE_KNIFE(864, new Graphic(219, GraphicHeight.HIGH), 212, 8), BRONZE_KNIFE_P1(870,
+				new Graphic(219, GraphicHeight.HIGH), 212, 8), BRONZE_KNIFE_P2(5654,
+						new Graphic(219, GraphicHeight.HIGH), 212,
+						8), BRONZE_KNIFE_P3(5661, new Graphic(219, GraphicHeight.HIGH), 212, 8),
 
-		IRON_KNIFE(863, 220, 213, 4, 33, 12, 45, 37), IRON_KNIFE_P1(871, 220, 213, 4, 33, 12, 45,
-				37), IRON_KNIFE_P2(5655, 220, 213, 4, 33, 12, 45, 37), IRON_KNIFE_P3(5662, 220, 213, 4, 33, 12, 45, 37),
+		IRON_KNIFE(863, new Graphic(220, GraphicHeight.HIGH), 213, 12), IRON_KNIFE_P1(871,
+				new Graphic(220, GraphicHeight.HIGH), 213, 12), IRON_KNIFE_P2(5655,
+						new Graphic(220, GraphicHeight.HIGH), 213,
+						12), IRON_KNIFE_P3(5662, new Graphic(220, GraphicHeight.HIGH), 213, 12),
 
-		STEEL_KNIFE(865, 221, 214, 4, 33, 15, 45, 37), STEEL_KNIFE_P1(872, 221, 214, 4, 33, 15, 45, 37), STEEL_KNIFE_P2(
-				5656, 221, 214, 4, 33, 15, 45, 37), STEEL_KNIFE_P3(5663, 221, 214, 4, 33, 15, 45, 37),
+		STEEL_KNIFE(865, new Graphic(221, GraphicHeight.HIGH), 214, 15), STEEL_KNIFE_P1(872,
+				new Graphic(221, GraphicHeight.HIGH), 214, 15), STEEL_KNIFE_P2(5656,
+						new Graphic(221, GraphicHeight.HIGH), 214,
+						15), STEEL_KNIFE_P3(5663, new Graphic(221, GraphicHeight.HIGH), 214, 15),
 
-		BLACK_KNIFE(869, 222, 215, 4, 33, 17, 45, 37), BLACK_KNIFE_P1(874, 222, 215, 4, 33, 17, 45, 37), BLACK_KNIFE_P2(
-				5658, 222, 215, 4, 33, 17, 45, 37), BLACK_KNIFE_P3(5665, 222, 215, 4, 33, 17, 45, 37),
+		BLACK_KNIFE(869, new Graphic(222, GraphicHeight.HIGH), 215, 17), BLACK_KNIFE_P1(874,
+				new Graphic(222, GraphicHeight.HIGH), 215, 17), BLACK_KNIFE_P2(5658,
+						new Graphic(222, GraphicHeight.HIGH), 215,
+						17), BLACK_KNIFE_P3(5665, new Graphic(222, GraphicHeight.HIGH), 215, 17),
 
-		MITHRIL_KNIFE(866, 223, 215, 4, 33, 19, 45, 37), MITHRIL_KNIFE_P1(873, 223, 215, 4, 33, 19, 45,
-				37), MITHRIL_KNIFE_P2(5657, 223, 215, 4, 33, 19, 45,
-						37), MITHRIL_KNIFE_P3(5664, 223, 215, 4, 33, 19, 45, 37),
+		MITHRIL_KNIFE(866, new Graphic(223, GraphicHeight.HIGH), 215, 19), MITHRIL_KNIFE_P1(873,
+				new Graphic(223, GraphicHeight.HIGH), 215, 19), MITHRIL_KNIFE_P2(5657,
+						new Graphic(223, GraphicHeight.HIGH), 215,
+						19), MITHRIL_KNIFE_P3(5664, new Graphic(223, GraphicHeight.HIGH), 215, 19),
 
-		ADAMANT_KNIFE(867, 224, 217, 4, 33, 24, 45, 37), ADAMANT_KNIFE_P1(875, 224, 217, 4, 33, 24, 45,
-				37), ADAMANT_KNIFE_P2(5659, 224, 217, 4, 33, 24, 45,
-						37), ADAMANT_KNIFE_P3(5666, 224, 217, 4, 33, 24, 45, 37),
+		ADAMANT_KNIFE(867, new Graphic(224, GraphicHeight.HIGH), 217, 24), ADAMANT_KNIFE_P1(875,
+				new Graphic(224, GraphicHeight.HIGH), 217, 24), ADAMANT_KNIFE_P2(5659,
+						new Graphic(224, GraphicHeight.HIGH), 217,
+						24), ADAMANT_KNIFE_P3(5666, new Graphic(224, GraphicHeight.HIGH), 217, 24),
 
-		RUNE_KNIFE(868, 225, 218, 4, 33, 30, 48, 37), RUNE_KNIFE_P1(876, 225, 218, 4, 33, 30, 48,
-				37), RUNE_KNIFE_P2(5660, 225, 218, 4, 33, 30, 48, 37), RUNE_KNIFE_P3(5667, 225, 218, 4, 33, 30, 48, 37),
+		RUNE_KNIFE(868, new Graphic(225, GraphicHeight.HIGH), 218, 30), RUNE_KNIFE_P1(876,
+				new Graphic(225, GraphicHeight.HIGH), 218,
+				30), RUNE_KNIFE_P2(5660, new Graphic(225, GraphicHeight.HIGH), 218,
+						30), RUNE_KNIFE_P3(5667, new Graphic(225, GraphicHeight.HIGH), 218, 30),
 
-		BRONZE_THROWNAXE(800, 43, 36, 3, 44, 7, 43, 31), IRON_THROWNAXE(801, 42, 35, 3, 44, 9, 43, 31), STEEL_THROWNAXE(
-				802, 44, 37, 3, 44, 11, 43, 31), MITHRIL_THROWNAXE(803, 45, 38, 3, 44, 13, 43, 31), ADAMANT_THROWNAXE(
-						804, 46, 39, 3, 44, 15, 43, 31), RUNE_THROWNAXE(805, 48, 41, 3, 44, 17, 43, 31),
+		/*
+		 * BRONZE_THROWNAXE(800, 43, 36, 3, 44, 7), IRON_THROWNAXE(801, 42, 35,
+		 * 3, 44, 9), STEEL_THROWNAXE(802, 44, 37, 3, 44, 11),
+		 * MITHRIL_THROWNAXE(803, 45, 38, 3, 44, 13), ADAMANT_THROWNAXE(804, 46,
+		 * 39, 3, 44, 15), RUNE_THROWNAXE(805, 48, 41, 3, 44, 17),
+		 */
 
-		BRONZE_JAVELIN(825, 206, 200, 2, 40, 7, 45, 37), IRON_JAVELIN(826, 207, 201, 2, 40, 9, 45, 37), STEEL_JAVELIN(
-				827, 208, 202, 2, 40, 11, 45, 37), MITHRIL_JAVELIN(828, 209, 203, 2, 40, 13, 45, 37), ADAMANT_JAVELIN(
-						829, 210, 204, 2, 40, 15, 45, 37), RUNE_JAVELIN(830, 211, 205, 2, 40, 17, 45, 37),
+		BRONZE_JAVELIN(825, null, 200, 25), IRON_JAVELIN(826, null, 201, 42), STEEL_JAVELIN(827, null, 202,
+				64), MITHRIL_JAVELIN(828, null, 203, 85), ADAMANT_JAVELIN(829, null, 204,
+						107), RUNE_JAVELIN(830, null, 205, 124), DRAGON_JAVELIN(19484, null, 1301, 150),
 
-		TOKTZ_XIL_UL(6522, -1, 442, 2, 40, 58, 51, 37),
+		TOKTZ_XIL_UL(6522, null, 442, 58),
 
-		CHINCHOMPA(10033, -1, -1, 17, 8, 50, 45, 37), RED_CHINCHOMPA(10034, -1, -1, 17, 8, 80, 45, 37),
+		BOLT_RACK(4740, null, 27, 55),
 
-		BOLT_RACK(4740, -1, 27, 3, 33, 70, 43, 31),
-
-		ZULRAH_SCALES(12934, -1, 27, 3, 33, 115, 43, 31);
+		ZULRAH_SCALES(12934, null, 27, 115);
 
 		;
 
-		AmmunitionData(int itemId, int startGfxId, int projectileId, int projectileSpeed, int projectileDelay,
-				int strength, int startHeight, int endHeight) {
+		AmmunitionData(int itemId, Graphic startGfx, int projectileId, int strength) {
 			this.itemId = itemId;
-			this.startGfxId = startGfxId;
+			this.startGfx = startGfx;
 			this.projectileId = projectileId;
-			this.projectileSpeed = projectileSpeed;
-			this.projectileDelay = projectileDelay;
 			this.strength = strength;
-			this.startHeight = startHeight;
-			this.endHeight = endHeight;
 		}
 
 		private int itemId;
-		private int startGfxId;
+		private final Graphic startGfx;
 		private int projectileId;
-		private int projectileSpeed;
-		private int projectileDelay;
 		private int strength;
-		private int startHeight;
-		private int endHeight;
 
 		public int getItemId() {
 			return itemId;
 		}
 
-		public int getStartGfxId() {
-			return startGfxId;
+		public Graphic getStartGraphic() {
+			return startGfx;
 		}
 
 		public int getProjectileId() {
 			return projectileId;
 		}
 
-		public int getProjectileSpeed() {
-			return projectileSpeed;
-		}
-
-		public int getProjectileDelay() {
-			return projectileDelay;
-		}
-
 		public int getStrength() {
 			return strength;
 		}
 
-		public int getStartHeight() {
-			return startHeight;
-		}
-
-		public int getEndHeight() {
-			return endHeight;
-		}
-
 		public static AmmunitionData getFor(Player p) {
-			AmmunitionData arrows = range_ammo_data.get(p.getEquipment().getItems()[Equipment.AMMUNITION_SLOT].getId());
-			if (arrows == null) {
+			// First try to get a throw weapon as ammo
+			AmmunitionData throwWeapon = range_ammo_data
+					.get(p.getEquipment().getItems()[Equipment.WEAPON_SLOT].getId());
 
-				// Player has no arrows.
-				// Maybe they have a throw weapon though? Knife/dart/javelin
-				return range_ammo_data.get(p.getEquipment().getItems()[Equipment.WEAPON_SLOT].getId());
-
+			// Didnt find one. Try arrows
+			if (throwWeapon == null) {
+				return range_ammo_data.get(p.getEquipment().getItems()[Equipment.AMMUNITION_SLOT].getId());
 			}
-			return arrows;
+
+			return throwWeapon;
 		}
 
 		static {
@@ -548,22 +535,18 @@ public class RangedData {
 
 	public enum RangedWeaponType {
 
-		LONGBOW(5, 5), SHORTBOW(5, 4), CROSSBOW(5, 5), THROW(4, 3), DARK_BOW(5, 5), BALLISTA(5, 6), BLOWPIPE(5, 3);
+		THROW(4),
 
-		RangedWeaponType(int distanceRequired, int attackDelay) {
+		LONGBOW(5), SHORTBOW(5), CROSSBOW(5), DARK_BOW(5), BALLISTA(5), BLOWPIPE(5);
+
+		RangedWeaponType(int distanceRequired) {
 			this.distanceRequired = distanceRequired;
-			this.attackDelay = attackDelay;
 		}
 
 		private int distanceRequired;
-		private int attackDelay;
 
 		public int getDistanceRequired() {
 			return distanceRequired;
-		}
-
-		public int getAttackDelay() {
-			return attackDelay;
 		}
 	}
 
@@ -598,7 +581,7 @@ public class RangedData {
 		// Get the ranged ammo data
 		final AmmunitionData ammoData = player.getCombat().getAmmunition();
 		if (ammoData == null) {
-			player.getPacketSender().sendMessage("You don't have any arrows to fire.");
+			player.getPacketSender().sendMessage("You don't have any ammunition to fire.");
 			player.getCombat().reset();
 			return false;
 		}
@@ -656,15 +639,17 @@ public class RangedData {
 	public static void decrementAmmo(Player player, Position pos) {
 
 		// Determine which slot we are decrementing ammo from.
-		int slot = player.getCombat().getWeapon() == WeaponInterface.SHORTBOW
-				|| player.getCombat().getWeapon() == WeaponInterface.LONGBOW
-				|| player.getCombat().getWeapon() == WeaponInterface.CROSSBOW ? Equipment.AMMUNITION_SLOT
-						: Equipment.WEAPON_SLOT;
+		int slot = Equipment.AMMUNITION_SLOT;
+
+		// Is the weapon using a throw weapon?
+		// The ammo should be dropped from the weapon slot.
+		if (player.getCombat().getRangedWeaponData().getType() == RangedWeaponType.THROW) {
+			slot = Equipment.WEAPON_SLOT;
+		}
 
 		boolean accumalator = player.getEquipment().get(Equipment.CAPE_SLOT).getId() == 10499;
-
 		if (accumalator) {
-			if (Misc.getRandom(11) <= 9) {
+			if (Misc.getRandom(12) <= 9) {
 				return;
 			}
 		}
@@ -682,10 +667,10 @@ public class RangedData {
 			player.getEquipment().set(slot, new Item(-1));
 
 			if (slot == Equipment.WEAPON_SLOT) {
+				RangedData.updateDataFor(player);
 				WeaponInterfaces.assign(player);
 				player.getUpdateFlag().flag(Flag.APPEARANCE);
 			}
-
 		}
 
 		// Refresh the equipment interface.

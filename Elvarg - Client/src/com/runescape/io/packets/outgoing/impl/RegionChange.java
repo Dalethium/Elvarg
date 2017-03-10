@@ -10,5 +10,5 @@ public class RegionChange implements OutgoingPacket {
 		buf.putOpcode(210);
 		buf.putInt(0x3f008edd);
 	}
-	
+
 }

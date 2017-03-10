@@ -1,11 +1,10 @@
 package com.runescape.scene.object;
+
 import com.runescape.entity.Renderable;
 
-public final class GroundDecoration
-{
+public final class GroundDecoration {
 
-	public GroundDecoration()
-	{
+	public GroundDecoration() {
 	}
 
 	public int zPos;

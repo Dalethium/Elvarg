@@ -1,4 +1,5 @@
 package com.runescape.cache.anim;
+
 import com.runescape.cache.FileArchive;
 import com.runescape.collection.ReferenceCache;
 import com.runescape.entity.model.Model;
@@ -10,15 +11,15 @@ public final class Graphic {
 		Buffer stream = new Buffer(streamLoader.readFile("spotanim.dat"));
 		int length = stream.readUShort();
 		if (cache == null)
-			cache = new Graphic[length + 1];		
+			cache = new Graphic[length + 1];
 		for (int index = 0; index < length; index++) {
 			if (cache[index] == null)
 				cache[index] = new Graphic();
 			cache[index].anInt404 = index;
 			cache[index].readValues(stream);
 		}
-		
-		System.out.println("Loaded: "+length+" Graphics");
+
+		System.out.println("Loaded: " + length + " Graphics");
 	}
 
 	public void readValues(Buffer stream) {
@@ -49,8 +50,7 @@ public final class Graphic {
 					modifiedModelColours[k] = stream.readUShort();
 				}
 			} else
-				System.out.println("Error unrecognised spotanim config code: "
-						+ opcode);
+				System.out.println("Error unrecognised spotanim config code: " + opcode);
 		} while (true);
 	}
 

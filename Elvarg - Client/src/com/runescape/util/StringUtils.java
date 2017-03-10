@@ -1,9 +1,12 @@
 package com.runescape.util;
+
 import com.runescape.sign.SignLink;
 
 public final class StringUtils {
 
-	private static final char[] BASE_37_CHARACTERS = { '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	private static final char[] BASE_37_CHARACTERS = { '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+			'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6',
+			'7', '8', '9' };
 
 	public static long encodeBase37(String string) {
 		long encoded = 0L;
@@ -47,7 +50,7 @@ public final class StringUtils {
 		name = name.toUpperCase();
 		long hash = 0L;
 		for (int index = 0; index < name.length(); index++) {
-			hash = (hash * 61L + (long) name.charAt(index)) - 32L;
+			hash = (hash * 61L + name.charAt(index)) - 32L;
 			hash = hash + (hash >> 56) & 0xffffffffffffffL;
 		}
 		return hash;

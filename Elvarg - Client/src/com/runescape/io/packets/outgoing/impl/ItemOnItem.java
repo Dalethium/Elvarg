@@ -12,7 +12,6 @@ public class ItemOnItem implements OutgoingPacket {
 	int anInt1283;
 	int anInt1284;
 
-	
 	public ItemOnItem(int slot, int anInt1283, int nodeId, int anInt1284, int anInt1285, int interfaceId) {
 		this.nodeId = nodeId;
 		this.slot = slot;
@@ -21,7 +20,7 @@ public class ItemOnItem implements OutgoingPacket {
 		this.anInt1284 = anInt1284;
 		this.anInt1285 = anInt1285;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(53);

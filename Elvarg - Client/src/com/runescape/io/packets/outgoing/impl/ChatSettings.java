@@ -4,17 +4,17 @@ import com.runescape.io.ByteBuffer;
 import com.runescape.io.packets.outgoing.OutgoingPacket;
 
 public class ChatSettings implements OutgoingPacket {
-	
-	int publicMode; 
+
+	int publicMode;
 	int privateMode;
 	int tradeMode;
-	
+
 	public ChatSettings(int publicMode, int privateMode, int tradeMode) {
 		this.publicMode = publicMode;
 		this.privateMode = privateMode;
 		this.tradeMode = tradeMode;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(95);
@@ -22,6 +22,5 @@ public class ChatSettings implements OutgoingPacket {
 		buf.putByte(privateMode);
 		buf.putByte(tradeMode);
 	}
-
 
 }

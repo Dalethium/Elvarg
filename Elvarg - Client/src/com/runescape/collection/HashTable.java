@@ -31,7 +31,7 @@ final class HashTable {
 	 *         an associated for the specified key.
 	 */
 	public Linkable get(long key) {
-		Linkable linkable = buckets[(int) (key & (long) (bucketCount - 1))];
+		Linkable linkable = buckets[(int) (key & bucketCount - 1)];
 		for (Linkable next = linkable.previous; next != linkable; next = next.previous)
 			if (next.key == key)
 				return next;
@@ -51,7 +51,7 @@ final class HashTable {
 		try {
 			if (linkable.next != null)
 				linkable.unlink();
-			Linkable current = buckets[(int) (key & (long) (bucketCount - 1))];
+			Linkable current = buckets[(int) (key & bucketCount - 1)];
 			linkable.next = current.next;
 			linkable.previous = current;
 			linkable.next.previous = linkable;
@@ -59,8 +59,8 @@ final class HashTable {
 			linkable.key = key;
 			return;
 		} catch (RuntimeException runtimeexception) {
-			SignLink.reporterror("91499, " + linkable + ", " + key + ", "
-					+ (byte) 7 + ", " + runtimeexception.toString());
+			SignLink.reporterror(
+					"91499, " + linkable + ", " + key + ", " + (byte) 7 + ", " + runtimeexception.toString());
 		}
 		throw new RuntimeException();
 	}

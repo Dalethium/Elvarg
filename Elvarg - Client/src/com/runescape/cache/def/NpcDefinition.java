@@ -50,14 +50,15 @@ public final class NpcDefinition {
 	public static ReferenceCache modelCache = new ReferenceCache(30);
 
 	public int id;
-	
+
 	/**
 	 * Lookup an NpcDefinition by its id
+	 * 
 	 * @param id
 	 */
 	public static NpcDefinition lookup(int id) {
 		for (int index = 0; index < 20; index++)
-			if (cache[index].interfaceType == (long) id)
+			if (cache[index].interfaceType == id)
 				return cache[index];
 
 		anInt56 = (anInt56 + 1) % 20;
@@ -66,13 +67,13 @@ public final class NpcDefinition {
 		definition.interfaceType = id;
 		definition.id = id;
 		definition.readValues(dataBuf);
-		switch(id) {
+		switch (id) {
 		case 1274:
 			definition.combatLevel = 35;
 			break;
 		case 2660:
 			definition.combatLevel = 0;
-			definition.actions = new String[] {"Trade", null, null, null, null, null, null};
+			definition.actions = new String[] { "Trade", null, null, null, null, null, null };
 			definition.name = "Pker";
 			break;
 		case 6477:
@@ -88,30 +89,29 @@ public final class NpcDefinition {
 			definition.drawMinimapDot = true;
 			break;
 		case 1306:
-			definition.actions = new String[] {"Make-over", null, null, null, null, null, null};
+			definition.actions = new String[] { "Make-over", null, null, null, null, null, null };
 			break;
 		case 3309:
 			definition.name = "Mage";
-			definition.actions = new String[] {"Trade", null, "Equipment", "Runes", null, null, null};
+			definition.actions = new String[] { "Trade", null, "Equipment", "Runes", null, null, null };
 			break;
 		case 1158:
-			definition.actions = new String[] {"Trade", null, "Equipment", "Weapons", null, null, null};
+			definition.actions = new String[] { "Trade", null, "Equipment", "Weapons", null, null, null };
 			break;
 		case 1576:
-			definition.actions = new String[] {"Trade", null, "Equipment", "Ammunition", null, null, null};
+			definition.actions = new String[] { "Trade", null, "Equipment", "Ammunition", null, null, null };
 			break;
 		case 3343:
-			definition.actions = new String[] {"Trade", null, "Heal", null, null, null, null};
+			definition.actions = new String[] { "Trade", null, "Heal", null, null, null, null };
 			break;
 		case 506:
 		case 526:
-			definition.actions = new String[] {"Trade", null, null, null, null, null, null};
+			definition.actions = new String[] { "Trade", null, null, null, null, null, null };
 			break;
 		case 315:
-			definition.actions = new String[] {"Talk-to", null, "Trade", "Sell Emblems", "Request Skull", null, null};
+			definition.actions = new String[] { "Talk-to", null, "Trade", "Sell Emblems", "Request Skull", null, null };
 			break;
-			
-			
+
 		}
 		return definition;
 	}
@@ -161,34 +161,33 @@ public final class NpcDefinition {
 			child = clientInstance.settings[variable] >> low & mask;
 		} else if (settingId != -1)
 			child = clientInstance.settings[settingId];
-		if (child < 0 || child >= childrenIDs.length
-				|| childrenIDs[child] == -1)
+		if (child < 0 || child >= childrenIDs.length || childrenIDs[child] == -1)
 			return null;
 		else
 			return lookup(childrenIDs[child]);
 	}
 
-	public static void init(FileArchive archive) {		
-		dataBuf = new Buffer(archive.readFile("npc.dat"));		
-		Buffer idxBuf = new Buffer(archive.readFile("npc.idx"));		
-		
-		int size = idxBuf.readUShort();		
-		
-		offsets = new int[size];		
-		
+	public static void init(FileArchive archive) {
+		dataBuf = new Buffer(archive.readFile("npc.dat"));
+		Buffer idxBuf = new Buffer(archive.readFile("npc.idx"));
+
+		int size = idxBuf.readUShort();
+
+		offsets = new int[size];
+
 		int offset = 2;
-		
+
 		for (int count = 0; count < size; count++) {
 			offsets[count] = offset;
 			offset += idxBuf.readUShort();
 		}
 
 		cache = new NpcDefinition[20];
-		
+
 		for (int count = 0; count < 20; count++) {
 			cache[count] = new NpcDefinition();
-		}		
-		
+		}
+
 		System.out.println("Loaded: " + size + " Npcs");
 	}
 
@@ -199,8 +198,7 @@ public final class NpcDefinition {
 		dataBuf = null;
 	}
 
-	public Model method164(int j, int somethingCurrentAnimsFrameNumber, int ai[], int nextFrame, int idk,
-			int idk2) {
+	public Model method164(int j, int somethingCurrentAnimsFrameNumber, int ai[], int nextFrame, int idk, int idk2) {
 		if (childrenIDs != null) {
 			NpcDefinition entityDef = morph();
 			if (entityDef == null)
@@ -232,14 +230,12 @@ public final class NpcDefinition {
 			}
 			model.skin();
 			model.scale(132, 132, 132);
-			model.light(84 + lightModifier, 1000 + shadowModifier, -90, -580,
-					-90, true);
+			model.light(84 + lightModifier, 1000 + shadowModifier, -90, -580, -90, true);
 			modelCache.put(model, interfaceType);
 		}
 		Model empty = Model.EMPTY_MODEL;
-		empty.method464(model,
-				Frame.noAnimationInProgress(somethingCurrentAnimsFrameNumber) & Frame.noAnimationInProgress(j)
-						& Frame.noAnimationInProgress(nextFrame));
+		empty.method464(model, Frame.noAnimationInProgress(somethingCurrentAnimsFrameNumber)
+				& Frame.noAnimationInProgress(j) & Frame.noAnimationInProgress(nextFrame));
 		if (somethingCurrentAnimsFrameNumber != -1 && j != -1)
 			empty.applyAnimationFrames(ai, j, somethingCurrentAnimsFrameNumber);
 		else if (somethingCurrentAnimsFrameNumber != -1 && nextFrame != -1)
@@ -256,15 +252,13 @@ public final class NpcDefinition {
 		return empty;
 	}
 
-	public Model getAnimatedModel(int primaryFrame, int secondaryFrame,
-			int interleaveOrder[]) {
+	public Model getAnimatedModel(int primaryFrame, int secondaryFrame, int interleaveOrder[]) {
 		if (childrenIDs != null) {
 			NpcDefinition definition = morph();
 			if (definition == null)
 				return null;
 			else
-				return definition.getAnimatedModel(primaryFrame,
-						secondaryFrame, interleaveOrder);
+				return definition.getAnimatedModel(primaryFrame, secondaryFrame, interleaveOrder);
 		}
 		Model model = (Model) modelCache.get(interfaceType);
 		if (model == null) {
@@ -285,18 +279,16 @@ public final class NpcDefinition {
 				model = new Model(models.length, models);
 			if (recolourOriginal != null) {
 				for (int index = 0; index < recolourOriginal.length; index++)
-					model.recolor(recolourOriginal[index],
-							recolourTarget[index]);
+					model.recolor(recolourOriginal[index], recolourTarget[index]);
 
 			}
 			model.skin();
-			model.light(64 + lightModifier, 850 + shadowModifier, -30, -50,
-					-30, true);
+			model.light(64 + lightModifier, 850 + shadowModifier, -30, -50, -30, true);
 			modelCache.put(model, interfaceType);
 		}
 		Model model_1 = Model.EMPTY_MODEL;
-		model_1.method464(model, Frame.noAnimationInProgress(secondaryFrame)
-				& Frame.noAnimationInProgress(primaryFrame));
+		model_1.method464(model,
+				Frame.noAnimationInProgress(secondaryFrame) & Frame.noAnimationInProgress(primaryFrame));
 		if (secondaryFrame != -1 && primaryFrame != -1)
 			model_1.applyAnimationFrames(interleaveOrder, primaryFrame, secondaryFrame);
 		else if (secondaryFrame != -1)
@@ -327,7 +319,7 @@ public final class NpcDefinition {
 			else if (opCode == 3)
 				description = stream.readBytes();
 			else if (opCode == 12)
-			      size = stream.readSignedByte();
+				size = stream.readSignedByte();
 			else if (opCode == 13)
 				standAnim = stream.readUShort();
 			else if (opCode == 14)

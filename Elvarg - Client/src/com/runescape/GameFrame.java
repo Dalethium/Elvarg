@@ -1,5 +1,11 @@
 package com.runescape;
-import java.awt.*;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.Toolkit;
 
 public final class GameFrame extends Frame {
 
@@ -16,7 +22,7 @@ public final class GameFrame extends Frame {
 		setTitle(Configuration.CLIENT_NAME);
 		setResizable(resizable);
 		setUndecorated(fullscreen);
-		setVisible(true); 
+		setVisible(true);
 		insets = getInsets();
 		if (resizable) {
 			setMinimumSize(new Dimension(766 + insets.left + insets.right, 536 + insets.top + insets.bottom));
@@ -28,6 +34,7 @@ public final class GameFrame extends Frame {
 		toFront();
 	}
 
+	@Override
 	public Graphics getGraphics() {
 		final Graphics graphics = super.getGraphics();
 		Insets insets = this.getInsets();
@@ -46,10 +53,12 @@ public final class GameFrame extends Frame {
 		return getHeight() - (insets.top + insets.bottom);
 	}
 
+	@Override
 	public void update(Graphics graphics) {
 		applet.update(graphics);
 	}
 
+	@Override
 	public void paint(Graphics graphics) {
 		applet.paint(graphics);
 	}

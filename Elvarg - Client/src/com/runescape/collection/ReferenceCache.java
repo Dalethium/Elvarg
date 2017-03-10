@@ -1,11 +1,13 @@
 package com.runescape.collection;
+
 import com.runescape.sign.SignLink;
 
 /**
- * A least-recently used cache of references, backed by a {@link HashTable} and a {@link Queue}.
+ * A least-recently used cache of references, backed by a {@link HashTable} and
+ * a {@link Queue}.
  */
 public final class ReferenceCache {
-	
+
 	/**
 	 * The empty cacheable.
 	 */
@@ -30,7 +32,8 @@ public final class ReferenceCache {
 	/**
 	 * Creates the ReferenceCache.
 	 *
-	 * @param capacity The capacity of this cache.
+	 * @param capacity
+	 *            The capacity of this cache.
 	 */
 	public ReferenceCache(int i) {
 		empty = new Cacheable();
@@ -43,7 +46,8 @@ public final class ReferenceCache {
 	/**
 	 * Gets the {@link Cacheable} with the specified key.
 	 * 
-	 * @param key The key.
+	 * @param key
+	 *            The key.
 	 * @return The Cacheable.
 	 */
 	public Cacheable get(long key) {
@@ -76,7 +80,7 @@ public final class ReferenceCache {
 		}
 		throw new RuntimeException();
 	}
-	
+
 	/**
 	 * Clears the contents of this ReferenceCache.
 	 */

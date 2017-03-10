@@ -5,10 +5,10 @@ import com.runescape.io.packets.outgoing.OutgoingPacket;
 
 public class ChangeAppearance implements OutgoingPacket {
 
-	boolean isMale; 
+	boolean isMale;
 	int[] myAppearance;
 	int[] characterDesignColours;
-	
+
 	public ChangeAppearance(boolean isMale, int[] myAppearance, int[] characterDesignColours) {
 		this.isMale = isMale;
 		this.myAppearance = myAppearance;

@@ -1,23 +1,24 @@
 package com.runescape.scene.object.tile;
 
 public final class SimpleTile {
-	
-	private final int northEastColor;	
-	private final int northColor;	
-	private final int centerColor;		
-	private final int eastColor;		
-	private final int texture;	
+
+	private final int northEastColor;
+	private final int northColor;
+	private final int centerColor;
+	private final int eastColor;
+	private final int texture;
 	private final boolean flat;
 	private final int colorRGB;
 
-	public SimpleTile(int northEastColor, int northColor, int centerColor, int eastColor, int texture, int colorRGB, boolean flat) {
-		this.northEastColor = northEastColor;		
-		this.northColor = northColor;		
-		this.centerColor = centerColor;			
-		this.eastColor = eastColor;		
-		this.texture = texture;		
-		this.colorRGB = colorRGB;		
-		this.flat = flat;		
+	public SimpleTile(int northEastColor, int northColor, int centerColor, int eastColor, int texture, int colorRGB,
+			boolean flat) {
+		this.northEastColor = northEastColor;
+		this.northColor = northColor;
+		this.centerColor = centerColor;
+		this.eastColor = eastColor;
+		this.texture = texture;
+		this.colorRGB = colorRGB;
+		this.flat = flat;
 	}
 
 	public int getNorthEastColor() {
@@ -32,11 +33,11 @@ public final class SimpleTile {
 		return centerColor;
 	}
 
-	public int getEastColor() {		
+	public int getEastColor() {
 		return eastColor;
 	}
 
-	public int getTexture() {		
+	public int getTexture() {
 		return texture;
 	}
 
@@ -47,5 +48,5 @@ public final class SimpleTile {
 	public int getColourRGB() {
 		return colorRGB;
 	}
-	
+
 }

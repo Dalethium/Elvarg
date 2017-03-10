@@ -20,7 +20,6 @@ import com.elvarg.world.model.PlayerRights;
 import com.elvarg.world.model.Position;
 import com.elvarg.world.model.Skill;
 import com.elvarg.world.model.container.impl.Inventory;
-import com.elvarg.world.regions.AreaHandler;
 
 public class ObjectActionPacketListener implements PacketListener {
 
@@ -75,9 +74,9 @@ public class ObjectActionPacketListener implements PacketListener {
 	}
 
 	private void firstClick(final Player player, Packet packet) {
-		final int x = packet.readLEShortA();
-		final int id = packet.readUnsignedShort();
-		final int y = packet.readUnsignedShortA();
+		int x = packet.readLEShortA();
+		int id = packet.readUnsignedShort();
+		int y = packet.readUnsignedShortA();
 		final Position position = new Position(x, y, player.getPosition().getZ());
 		final GameObject gameObject = new GameObject(id, position);
 		if (id > 0 && id != 6 && !RegionClipping.objectExists(gameObject)) {
@@ -99,14 +98,10 @@ public class ObjectActionPacketListener implements PacketListener {
 			size = 1;
 		}
 		gameObject.setSize(size);
-		if (player.getRights() == PlayerRights.DEVELOPER) {
-			player.getPacketSender()
-					.sendMessage("First click object id; [id, position] : [" + id + ", " + position.toString() + "]");
-		}
 		player.setWalkToTask(new WalkToTask(player, position, gameObject.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
-				AreaHandler.firstClickObject(player, id);
+				//player.setPositionToFace(gameObject.getPosition());
 				switch (id) {
 				case WILDERNESS_DITCH:
 					player.getMovementQueue().reset();
@@ -153,9 +148,9 @@ public class ObjectActionPacketListener implements PacketListener {
 	}
 
 	private void secondClick(final Player player, Packet packet) {
-		final int id = packet.readLEShortA();
-		final int y = packet.readLEShort();
-		final int x = packet.readUnsignedShortA();
+		int id = packet.readLEShortA();
+		int y = packet.readLEShort();
+		int x = packet.readUnsignedShortA();
 		final Position position = new Position(x, y, player.getPosition().getZ());
 		final GameObject gameObject = new GameObject(id, position);
 		if (id > 0 && id != 6 && !RegionClipping.objectExists(gameObject)) {

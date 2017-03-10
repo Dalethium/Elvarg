@@ -4,8 +4,7 @@ import com.runescape.io.Buffer;
 
 /**
  * A simple envelope generator to control a variety of parameters (such as
- * attack and release).
- * Refactored using Major's 317 refactored client
+ * attack and release). Refactored using Major's 317 refactored client
  * http://www.rune-server.org/runescape-development/rs2-client/downloads/575183-almost-fully-refactored-317-client.html
  */
 final class Envelope {
@@ -69,10 +68,9 @@ final class Envelope {
 			amplitude = peaks[segmentIndex++] << 15;
 			if (segmentIndex >= segments)
 				segmentIndex = segments - 1;
-			threshold = (int) (((double) durations[segmentIndex] / 65536D) * (double) period);
+			threshold = (int) ((durations[segmentIndex] / 65536D) * period);
 			if (threshold > ticks)
-				step = ((peaks[segmentIndex] << 15) - amplitude)
-						/ (threshold - ticks);
+				step = ((peaks[segmentIndex] << 15) - amplitude) / (threshold - ticks);
 		}
 		amplitude += step;
 		ticks++;

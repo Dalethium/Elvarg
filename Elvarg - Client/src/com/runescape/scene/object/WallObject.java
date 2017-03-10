@@ -3,7 +3,7 @@ package com.runescape.scene.object;
 import com.runescape.entity.Renderable;
 
 public final class WallObject {
-	
+
 	public int zPos;
 	public int xPos;
 	public int yPos;
@@ -13,5 +13,5 @@ public final class WallObject {
 	public Renderable renderable2;
 	public int uid;
 	public byte mask;
-	
+
 }

@@ -8,9 +8,9 @@ public class UpdatePlane implements OutgoingPacket {
 	int plane;
 
 	public UpdatePlane(int plane) {
-		this.plane = plane;	
+		this.plane = plane;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(229);

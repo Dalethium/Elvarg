@@ -2,7 +2,6 @@ package com.runescape.cache.def;
 
 import org.seven.util.FileUtils;
 
-import com.runescape.Configuration;
 import com.runescape.cache.graphics.Sprite;
 import com.runescape.collection.ReferenceCache;
 import com.runescape.draw.Rasterizer2D;
@@ -39,14 +38,14 @@ public final class ItemDefinition {
 	}
 
 	public static void init(byte[] idx, byte[] dat) {
-		//item_data = new Buffer(archive.readFile("obj.dat"));
-		//Buffer stream = new Buffer(archive.readFile("obj.idx"));
-		
+		// item_data = new Buffer(archive.readFile("obj.dat"));
+		// Buffer stream = new Buffer(archive.readFile("obj.idx"));
+
 		Buffer stream = null;
-		
+
 		item_data = new Buffer(FileUtils.readFile(SignLink.findcachedir() + "obj.dat"));
 		stream = new Buffer(FileUtils.readFile(SignLink.findcachedir() + "obj.idx"));
-		
+
 		item_count = stream.readUShort() + 21;
 		streamIndices = new int[item_count + 50000];
 		int offset = 2;
@@ -55,14 +54,14 @@ public final class ItemDefinition {
 			streamIndices[_ctr] = offset;
 			offset += stream.readUShort();
 		}
-		
+
 		cache = new ItemDefinition[10];
-		
+
 		for (int _ctr = 0; _ctr < 10; _ctr++) {
 			cache[_ctr] = new ItemDefinition();
 		}
-	
-		System.out.println("Loaded: "+item_count+" Items");
+
+		System.out.println("Loaded: " + item_count + " Items");
 	}
 
 	public Model getChatEquipModel(int gender) {
@@ -113,13 +112,13 @@ public final class ItemDefinition {
 		int primaryModel = equipped_model_male_1;
 		int secondaryModel = equipped_model_male_2;
 		int emblem = equipped_model_male_3;
-		
+
 		if (gender == 1) {
 			primaryModel = equipped_model_female_1;
 			secondaryModel = equipped_model_female_2;
 			emblem = equipped_model_female_3;
 		}
-		
+
 		if (primaryModel == -1)
 			return null;
 		Model primaryModel_ = Model.getModel(primaryModel);
@@ -138,7 +137,7 @@ public final class ItemDefinition {
 			primaryModel_.translate(0, equipped_model_male_translation_y, 0);
 		if (gender == 1 && equipped_model_female_translation_y != 0)
 			primaryModel_.translate(0, equipped_model_female_translation_y, 0);
-		
+
 		if (modified_model_colors != null) {
 			for (int i1 = 0; i1 < modified_model_colors.length; i1++)
 				primaryModel_.recolor(modified_model_colors[i1], original_model_colors[i1]);
@@ -187,8 +186,7 @@ public final class ItemDefinition {
 		light_mag = 0;
 		team = 0;
 	}
-	
-	
+
 	public static ItemDefinition lookup(int itemId) {
 		for (int count = 0; count < 10; count++)
 			if (cache[count].id == itemId)
@@ -200,10 +198,10 @@ public final class ItemDefinition {
 		itemDef.id = itemId;
 		itemDef.setDefaults();
 		itemDef.readValues(item_data);
-		
+
 		if (itemDef.noted_item_id != -1)
 			itemDef.toNote();
-		
+
 		/**
 		 * Place customs here
 		 */
@@ -294,9 +292,9 @@ public final class ItemDefinition {
 		Rasterizer3D.useViewport();
 		int k3 = itemDef.model_zoom;
 		if (outlineColor == -1)
-			k3 = (int) ((double) k3 * 1.5D);
+			k3 = (int) (k3 * 1.5D);
 		if (outlineColor > 0)
-			k3 = (int) ((double) k3 * 1.04D);
+			k3 = (int) (k3 * 1.04D);
 		int l3 = Rasterizer3D.anIntArray1470[itemDef.rotation_y] * k3 >> 16;
 		int i4 = Rasterizer3D.COSINE[itemDef.rotation_y] * k3 >> 16;
 		model.method482(itemDef.rotation_x, itemDef.rotation_z, itemDef.rotation_y, itemDef.translate_x,
@@ -495,21 +493,21 @@ public final class ItemDefinition {
 			else if (opCode == 98)
 				noted_item_id = buffer.readUShort();
 			else if (opCode >= 100 && opCode < 110) {
-				
+
 				if (stack_variant_id == null) {
 					stack_variant_id = new int[10];
 					stack_variant_size = new int[10];
 				}
 				stack_variant_id[opCode - 100] = buffer.readUShort();
 				stack_variant_size[opCode - 100] = buffer.readUShort();
-				
-				/*int length = buffer.readUnsignedByte();
-				stack_variant_id = new int [length];
-				stack_variant_size = new int[length];
-				for (int i2 = 0; i2< length; i2++) {
-					stack_variant_id[i2] = buffer.readUShort();
-					stack_variant_size[i2] = buffer.readUShort();
-				}*/
+
+				/*
+				 * int length = buffer.readUnsignedByte(); stack_variant_id =
+				 * new int [length]; stack_variant_size = new int[length]; for
+				 * (int i2 = 0; i2< length; i2++) { stack_variant_id[i2] =
+				 * buffer.readUShort(); stack_variant_size[i2] =
+				 * buffer.readUShort(); }
+				 */
 			} else if (opCode == 110)
 				model_scale_x = buffer.readUShort();
 			else if (opCode == 111)

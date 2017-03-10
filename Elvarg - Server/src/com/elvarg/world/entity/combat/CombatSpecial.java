@@ -164,10 +164,9 @@ public enum CombatSpecial {
 					--specialBar);
 			specialCheck--;
 		}
-		player.getPacketSender().updateSpecialAttackOrb().sendString(player.getCombat().getWeapon().getSpecialMeter(),
+		player.getPacketSender().sendString(player.getCombat().getWeapon().getSpecialMeter(),
 				player.isSpecialActivated() ? ("@yel@ Special Attack (" + player.getSpecialPercentage() + "%)")
 						: ("@bla@ Special Attack (" + player.getSpecialPercentage() + "%"));
-
 	}
 
 	/**

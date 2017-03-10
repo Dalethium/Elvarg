@@ -6,12 +6,10 @@ public final class ChatMessageCodec {
 
 	private static char[] message = new char[100];
 	private static Buffer stream = new Buffer(new byte[100]);
-	private static final char[] VALID_CHARACTERS = { ' ', 'e', 't', 'a', 'o', 'i',
-			'h', 'n', 's', 'r', 'd', 'l', 'u', 'm', 'w', 'c', 'y', 'f', 'g',
-			'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z', '0', '1', '2', '3', '4',
-			'5', '6', '7', '8', '9', ' ', '!', '?', '.', ',', ':', ';', '(',
-			')', '-', '&', '*', '\\', '\'', '@', '#', '+', '=', '\243', '$',
-			'%', '"', '[', ']' };
+	private static final char[] VALID_CHARACTERS = { ' ', 'e', 't', 'a', 'o', 'i', 'h', 'n', 's', 'r', 'd', 'l', 'u',
+			'm', 'w', 'c', 'y', 'f', 'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z', '0', '1', '2', '3', '4', '5', '6',
+			'7', '8', '9', ' ', '!', '?', '.', ',', ':', ';', '(', ')', '-', '&', '*', '\\', '\'', '@', '#', '+', '=',
+			'\243', '$', '%', '"', '[', ']' };
 
 	public static String decode(int length, Buffer buffer) {
 		int index = 0;
@@ -67,7 +65,7 @@ public final class ChatMessageCodec {
 				charIndex = count;
 				break;
 			}
-			
+
 			if (charIndex > 12) {
 				charIndex += 195;
 			}
@@ -94,7 +92,7 @@ public final class ChatMessageCodec {
 		encode(string, stream);
 		int length = stream.currentPosition;
 		stream.currentPosition = 0;
-		
+
 		return decode(length, stream);
 	}
 }

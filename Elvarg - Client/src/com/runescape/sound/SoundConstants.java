@@ -1,10 +1,12 @@
 package com.runescape.sound;
+
 /**
  * Class containing sound-related constants.
+ * 
  * @author 7Winds
  */
 public class SoundConstants {
-	
+
 	/**
 	 * Music player
 	 */

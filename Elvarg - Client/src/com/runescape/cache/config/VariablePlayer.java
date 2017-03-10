@@ -4,16 +4,17 @@ import com.runescape.cache.FileArchive;
 import com.runescape.io.Buffer;
 
 /**
- * Varps are used for inteface configuration ids and their functions, out of the current 725 config ids, only 9 or so of them are used.
+ * Varps are used for inteface configuration ids and their functions, out of the
+ * current 725 config ids, only 9 or so of them are used.
  *
  */
 public final class VariablePlayer {
 
-	public static VariablePlayer[] variables;	
+	public static VariablePlayer[] variables;
 
 	private static int currentIndex;
-	private static int[] configIds;	
-	public int actionId;	
+	private static int[] configIds;
+	public int actionId;
 	public boolean aBoolean713;
 
 	private VariablePlayer() {
@@ -28,9 +29,8 @@ public final class VariablePlayer {
 		final int actualSize = buffer.readUShort();
 
 		/**
-		 * Cache size is 725. 
-		 * But instead of setting array sizes to 725, we set it to 1200.
-		 * This leaves space for custom configs.
+		 * Cache size is 725. But instead of setting array sizes to 725, we set
+		 * it to 1200. This leaves space for custom configs.
 		 */
 		int customSize = 1200;
 
@@ -47,7 +47,7 @@ public final class VariablePlayer {
 				variables[index] = new VariablePlayer();
 			}
 
-			if(index < actualSize) {
+			if (index < actualSize) {
 				variables[index].decode(buffer, index);
 			}
 		}
@@ -58,7 +58,7 @@ public final class VariablePlayer {
 
 	}
 
-	private void decode(Buffer buffer, int index) {			
+	private void decode(Buffer buffer, int index) {
 		do {
 			int opcode = buffer.readUnsignedByte();
 
@@ -71,7 +71,7 @@ public final class VariablePlayer {
 			} else if (opcode == 2) {
 				buffer.readUnsignedByte();
 			} else if (opcode == 3) {
-				configIds[currentIndex++] = index;					
+				configIds[currentIndex++] = index;
 			} else if (opcode == 4) {
 			} else if (opcode == 5) {
 				actionId = buffer.readUShort();
@@ -111,6 +111,6 @@ public final class VariablePlayer {
 
 	public boolean isaBoolean713() {
 		return aBoolean713;
-	}	
+	}
 
 }

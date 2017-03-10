@@ -8,14 +8,15 @@ public class EffectTimer {
 		this.timer = timer;
 		this.sprite = sprite;
 	}
-	
+
 	private int sprite;
 	private int timer;
 	private Stopwatch decrement_timer = new Stopwatch().reset();
-	
+
 	public int getSprite() {
 		return sprite;
 	}
+
 	public void setSprite(int sprite) {
 		this.sprite = sprite;
 	}
@@ -23,19 +24,19 @@ public class EffectTimer {
 	public int getTimer() {
 		return timer;
 	}
-	
+
 	public void setTimer(int timer) {
 		this.timer = timer;
 	}
-	
+
 	public int decrementAndGetTimer() {
-		
-		//Decrement each second
-		if(decrement_timer.elapsed(1000)) {
+
+		// Decrement each second
+		if (decrement_timer.elapsed(1000)) {
 			decrement_timer.reset();
 			return this.timer--;
 		}
-		
+
 		return timer;
 	}
 }

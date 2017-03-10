@@ -603,12 +603,6 @@ public final class RegionClipping {
 	}
 
 	public static boolean canProjectileAttack(Character a, Character b) {
-		if (!a.isPlayer()) {
-			if (b.isPlayer()) {
-				return canProjectileMove(b.getPosition().getX(), b.getPosition().getY(), a.getPosition().getX(),
-						a.getPosition().getY(), a.getPosition().getZ(), 1, 1);
-			}
-		}
 		return canProjectileMove(a.getPosition().getX(), a.getPosition().getY(), b.getPosition().getX(),
 				b.getPosition().getY(), a.getPosition().getZ(), 1, 1);
 	}

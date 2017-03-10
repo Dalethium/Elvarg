@@ -1,14 +1,15 @@
 package com.runescape.net;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 import com.runescape.GameApplet;
 
 public final class BufferedConnection implements Runnable {
 
-	public BufferedConnection(GameApplet RSApplet_, Socket socket1)
-			throws IOException {
+	public BufferedConnection(GameApplet RSApplet_, Socket socket1) throws IOException {
 		closed = false;
 		isWriter = false;
 		hasIOError = false;
@@ -30,7 +31,7 @@ public final class BufferedConnection implements Runnable {
 			if (socket != null)
 				socket.close();
 		} catch (IOException _ex) {
-			//System.out.println("Error closing stream");
+			// System.out.println("Error closing stream");
 		}
 		isWriter = false;
 		synchronized (this) {
@@ -72,7 +73,7 @@ public final class BufferedConnection implements Runnable {
 			return;
 		if (hasIOError) {
 			hasIOError = false;
-			//throw new IOException("Error in writer thread");
+			// throw new IOException("Error in writer thread");
 		}
 		if (buffer == null)
 			buffer = new byte[5000];
@@ -92,6 +93,7 @@ public final class BufferedConnection implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 		while (isWriter) {
 			int i;

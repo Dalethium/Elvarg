@@ -9,14 +9,14 @@ public class ItemOnNpc implements OutgoingPacket {
 	int nodeId;
 	int anInt1283;
 	int anInt1284;
-	
+
 	public ItemOnNpc(int anInt1285, int nodeId, int anInt1283, int anInt1284) {
 		this.anInt1285 = anInt1285;
 		this.nodeId = nodeId;
 		this.anInt1283 = anInt1283;
 		this.anInt1284 = anInt1284;
 	}
-	
+
 	@Override
 	public void buildPacket(ByteBuffer buf) {
 		buf.putOpcode(57);

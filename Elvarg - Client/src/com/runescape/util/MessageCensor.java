@@ -11,24 +11,22 @@ public final class MessageCensor {
 	private static char[][] domains;
 	private static char[][] tldList;
 	private static int[] tlds;
-	private static final String[] exceptions = { "cook", "cook's", "cooks",
-			"seeks", "sheet", "woop", "woops", "faq", "noob", "noobs" };
+	private static final String[] exceptions = { "cook", "cook's", "cooks", "seeks", "sheet", "woop", "woops", "faq",
+			"noob", "noobs" };
 
 	public static void load(FileArchive archive) {
-		Buffer fragments = new Buffer(
-				archive.readFile("fragmentsenc.txt"));
+		Buffer fragments = new Buffer(archive.readFile("fragmentsenc.txt"));
 		Buffer bad = new Buffer(archive.readFile("badenc.txt"));
 		Buffer domain = new Buffer(archive.readFile("domainenc.txt"));
 		Buffer tldlist = new Buffer(archive.readFile("tldlist.txt"));
-		decode(fragments, bad, domain, tldlist);		
+		decode(fragments, bad, domain, tldlist);
 	}
 
-	private static void decode(Buffer fragments, Buffer badenc,
-			Buffer domainenc, Buffer tldlist) {
-		decodeBadEnc(badenc);		
+	private static void decode(Buffer fragments, Buffer badenc, Buffer domainenc, Buffer tldlist) {
+		decodeBadEnc(badenc);
 		decodeDomainEnc(domainenc);
-		decodeFragmentsEnc(fragments);		
-		decodeTldList(tldlist);		
+		decodeFragmentsEnc(fragments);
+		decodeTldList(tldlist);
 	}
 
 	private static void decodeTldList(Buffer stream) {
@@ -53,7 +51,7 @@ public final class MessageCensor {
 		initBad(stream, badWords, badEncoding);
 	}
 
-	private static void decodeDomainEnc(Buffer stream) {		
+	private static void decodeDomainEnc(Buffer stream) {
 		int i = stream.readInt();
 		domains = new char[i][];
 		initDomains(domains, stream);
@@ -65,8 +63,7 @@ public final class MessageCensor {
 			fragments[i] = stream.readUShort();
 	}
 
-	private static void initBad(Buffer stream, char[][] words,
-			byte[][][] complexBadEnc) {
+	private static void initBad(Buffer stream, char[][] words, byte[][][] complexBadEnc) {
 		for (int index = 0; index < words.length; index++) {
 			char[] word = new char[stream.readUnsignedByte()];
 			for (int character = 0; character < word.length; character++)
@@ -112,8 +109,7 @@ public final class MessageCensor {
 	}
 
 	private static boolean legalCharacter(char c) {
-		return c >= ' ' && c <= '\177' || c == ' ' || c == '\n' || c == '\t'
-				|| c == '\243' || c == '\u20AC';
+		return c >= ' ' && c <= '\177' || c == ' ' || c == '\n' || c == '\t' || c == '\243' || c == '\u20AC';
 	}
 
 	public static String apply(String message) {
@@ -128,8 +124,7 @@ public final class MessageCensor {
 		censorDomains(chars);
 		method514(chars);
 		for (int index = 0; index < exceptions.length; index++) {
-			for (int k = -1; (k = trimmedLowerCase.indexOf(exceptions[index],
-					k + 1)) != -1;) {
+			for (int k = -1; (k = trimmedLowerCase.indexOf(exceptions[index], k + 1)) != -1;) {
 				char ac1[] = exceptions[index].toCharArray();
 				System.arraycopy(ac1, 0, chars, k, ac1.length);
 
@@ -282,12 +277,10 @@ public final class MessageCensor {
 		char[] slash = { 's', 'l', 'a', 's', 'h' };
 		method509(null, clone2, slash);
 		for (int index = 0; index < tldList.length; index++)
-			method506(clone2, tldList[index], tlds[index], clone,
-					chars);
+			method506(clone2, tldList[index], tlds[index], clone, chars);
 	}
 
-	private static void method506(char ac[], char ac1[], int i, char ac2[],
-			char ac3[]) {
+	private static void method506(char ac[], char ac1[], int i, char ac2[], char ac3[]) {
 		if (ac1.length > ac3.length)
 			return;
 		int j;
@@ -497,11 +490,9 @@ public final class MessageCensor {
 				} else {
 					boolean flag5 = false;
 					boolean flag6 = false;
-					if (k - 1 < 0 || isNotAlphanumeric(ac[k - 1])
-							&& ac[k - 1] != '\'')
+					if (k - 1 < 0 || isNotAlphanumeric(ac[k - 1]) && ac[k - 1] != '\'')
 						flag5 = true;
-					if (l >= ac.length || isNotAlphanumeric(ac[l])
-							&& ac[l] != '\'')
+					if (l >= ac.length || isNotAlphanumeric(ac[l]) && ac[l] != '\'')
 						flag6 = true;
 					if (!flag5 || !flag6) {
 						boolean flag7 = false;
@@ -509,14 +500,11 @@ public final class MessageCensor {
 						if (flag5)
 							k2 = k;
 						for (; !flag7 && k2 < l; k2++)
-							if (k2 >= 0
-									&& (!isNotAlphanumeric(ac[k2]) || ac[k2] == '\'')) {
+							if (k2 >= 0 && (!isNotAlphanumeric(ac[k2]) || ac[k2] == '\'')) {
 								char ac2[] = new char[3];
 								int j3;
 								for (j3 = 0; j3 < 3; j3++) {
-									if (k2 + j3 >= ac.length
-											|| isNotAlphanumeric(ac[k2 + j3])
-											&& ac[k2 + j3] != '\'')
+									if (k2 + j3 >= ac.length || isNotAlphanumeric(ac[k2 + j3]) && ac[k2 + j3] != '\'')
 										break;
 									ac2[j3] = ac[k2 + j3];
 								}
@@ -524,9 +512,7 @@ public final class MessageCensor {
 								boolean flag8 = true;
 								if (j3 == 0)
 									flag8 = false;
-								if (j3 < 3
-										&& k2 - 1 >= 0
-										&& (!isNotAlphanumeric(ac[k2 - 1]) || ac[k2 - 1] == '\''))
+								if (j3 < 3 && k2 - 1 >= 0 && (!isNotAlphanumeric(ac[k2 - 1]) || ac[k2 - 1] == '\''))
 									flag8 = false;
 								if (flag8 && !containsFragment(ac2))
 									flag7 = true;
@@ -574,8 +560,7 @@ public final class MessageCensor {
 			int k = (i + j) / 2;
 			if (abyte0[k][0] == byte0 && abyte0[k][1] == byte2)
 				return true;
-			if (byte0 < abyte0[k][0] || byte0 == abyte0[k][0]
-					&& byte2 < abyte0[k][1])
+			if (byte0 < abyte0[k][0] || byte0 == abyte0[k][0] && byte2 < abyte0[k][1])
 				j = k;
 			else
 				i = k;
@@ -611,14 +596,12 @@ public final class MessageCensor {
 			if (c2 == 'b') {
 				if (c1 == '6' || c1 == '8')
 					return 1;
-				return (c1 != '1' || c != '3') && (c1 != 'i' || c != '3') ? 0
-						: 2;
+				return (c1 != '1' || c != '3') && (c1 != 'i' || c != '3') ? 0 : 2;
 			}
 			if (c2 == 'c')
 				return c1 != '(' && c1 != '<' && c1 != '{' && c1 != '[' ? 0 : 1;
 			if (c2 == 'd')
-				return (c1 != '[' || c != ')') && (c1 != 'i' || c != ')') ? 0
-						: 2;
+				return (c1 != '[' || c != ')') && (c1 != 'i' || c != ')') ? 0 : 2;
 			if (c2 == 'e')
 				return c1 != '3' && c1 != '\u20AC' ? 0 : 1;
 			if (c2 == 'f') {
@@ -631,9 +614,8 @@ public final class MessageCensor {
 			if (c2 == 'h')
 				return c1 != '#' ? 0 : 1;
 			if (c2 == 'i')
-				return c1 != 'y' && c1 != 'l' && c1 != 'j' && c1 != '1'
-						&& c1 != '!' && c1 != ':' && c1 != ';' && c1 != '|' ? 0
-						: 1;
+				return c1 != 'y' && c1 != 'l' && c1 != 'j' && c1 != '1' && c1 != '!' && c1 != ':' && c1 != ';'
+						&& c1 != '|' ? 0 : 1;
 			if (c2 == 'j')
 				return 0;
 			if (c2 == 'k')
@@ -649,9 +631,8 @@ public final class MessageCensor {
 			if (c2 == 'o') {
 				if (c1 == '0' || c1 == '*')
 					return 1;
-				return (c1 != '(' || c != ')') && (c1 != '[' || c != ']')
-						&& (c1 != '{' || c != '}') && (c1 != '<' || c != '>') ? 0
-						: 2;
+				return (c1 != '(' || c != ')') && (c1 != '[' || c != ']') && (c1 != '{' || c != '}')
+						&& (c1 != '<' || c != '>') ? 0 : 2;
 			}
 			if (c2 == 'p')
 				return 0;
@@ -666,18 +647,15 @@ public final class MessageCensor {
 			if (c2 == 'u') {
 				if (c1 == 'v')
 					return 1;
-				return (c1 != '\\' || c != '/') && (c1 != '\\' || c != '|')
-						&& (c1 != '|' || c != '/') ? 0 : 2;
+				return (c1 != '\\' || c != '/') && (c1 != '\\' || c != '|') && (c1 != '|' || c != '/') ? 0 : 2;
 			}
 			if (c2 == 'v')
-				return (c1 != '\\' || c != '/') && (c1 != '\\' || c != '|')
-						&& (c1 != '|' || c != '/') ? 0 : 2;
+				return (c1 != '\\' || c != '/') && (c1 != '\\' || c != '|') && (c1 != '|' || c != '/') ? 0 : 2;
 			if (c2 == 'w')
 				return c1 != 'v' || c != 'v' ? 0 : 2;
 			if (c2 == 'x')
-				return (c1 != ')' || c != '(') && (c1 != '}' || c != '{')
-						&& (c1 != ']' || c != '[') && (c1 != '>' || c != '<') ? 0
-						: 2;
+				return (c1 != ')' || c != '(') && (c1 != '}' || c != '{') && (c1 != ']' || c != '[')
+						&& (c1 != '>' || c != '<') ? 0 : 2;
 			if (c2 == 'y')
 				return 0;
 			if (c2 == 'z')
@@ -687,8 +665,7 @@ public final class MessageCensor {
 			if (c2 == '0') {
 				if (c1 == 'o' || c1 == 'O')
 					return 1;
-				return (c1 != '(' || c != ')') && (c1 != '{' || c != '}')
-						&& (c1 != '[' || c != ']') ? 0 : 2;
+				return (c1 != '(' || c != ')') && (c1 != '{' || c != '}') && (c1 != '[' || c != ']') ? 0 : 2;
 			}
 			if (c2 == '1')
 				return c1 != 'l' ? 0 : 1;
@@ -813,8 +790,7 @@ public final class MessageCensor {
 	}
 
 	private static boolean method518(char c) {
-		return c < 'a' || c > 'z' || c == 'v' || c == 'x' || c == 'j'
-				|| c == 'q' || c == 'z';
+		return c < 'a' || c > 'z' || c == 'v' || c == 'x' || c == 'j' || c == 'q' || c == 'z';
 	}
 
 	private static boolean isLetter(char c) {
