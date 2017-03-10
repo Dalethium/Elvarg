@@ -60,7 +60,8 @@ public class ItemActionPacketListener implements PacketListener {
 		int itemId = packet.readShort();
 		int slot = packet.readShort();
 		final Item interacted = player.getInventory().forSlot(slot);
-		if (interacted == null || interacted.getId() != itemId || interacted.getSlot() != slot) {
+		if (interacted == null || itemId != interacted.getId() || slot != interacted.getSlot()
+				|| !player.getInventory().contains(interacted.getId())) {
 			return;
 		}
 		if (Consumables.isFood(player, interacted)) {
@@ -90,7 +91,8 @@ public class ItemActionPacketListener implements PacketListener {
 		int slot = packet.readLEShort();
 		int itemId = packet.readShortA();
 		final Item interacted = player.getInventory().forSlot(slot);
-		if (interacted == null || interacted.getId() != itemId || interacted.getSlot() != slot) {
+		if (interacted == null || itemId != interacted.getId() || slot != interacted.getSlot()
+				|| !player.getInventory().contains(interacted.getId())) {
 			return;
 		}
 		switch (interacted.getId()) {
@@ -103,7 +105,8 @@ public class ItemActionPacketListener implements PacketListener {
 		int slot = packet.readLEShortA();
 		int interfaceId = packet.readLEShortA();
 		final Item interacted = player.getInventory().forSlot(slot);
-		if (interacted == null || interacted.getId() != itemId || interacted.getSlot() != slot) {
+		if (interacted == null || itemId != interacted.getId() || slot != interacted.getSlot()
+				|| !player.getInventory().contains(interacted.getId())) {
 			return;
 		}
 		switch (interacted.getId()) {

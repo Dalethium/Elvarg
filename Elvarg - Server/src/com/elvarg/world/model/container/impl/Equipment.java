@@ -147,17 +147,21 @@ public class Equipment extends ItemContainer {
 	public static int getItemCount(Player p, String s, boolean inventory) {
 		int count = 0;
 		for (Item t : p.getEquipment().getItems()) {
-			if (t == null || t.getId() < 1 || t.getAmount() < 1)
+			if (t == null || t.getId() < 1 || t.getAmount() < 1) {
 				continue;
-			if (t.getDefinition().getName().toLowerCase().contains(s.toLowerCase()))
+			}
+			if (t.getDefinition().getName().toLowerCase().contains(s.toLowerCase())) {
 				count++;
+			}
 		}
 		if (inventory) {
 			for (Item t : p.getInventory().getItems()) {
-				if (t == null || t.getId() < 1 || t.getAmount() < 1)
+				if (t == null || t.getId() < 1 || t.getAmount() < 1) {
 					continue;
-				if (t.getDefinition().getName().toLowerCase().contains(s.toLowerCase()))
+				}
+				if (t.getDefinition().getName().toLowerCase().contains(s.toLowerCase())) {
 					count++;
+				}
 			}
 		}
 		return count;

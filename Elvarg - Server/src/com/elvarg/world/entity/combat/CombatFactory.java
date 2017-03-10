@@ -599,25 +599,19 @@ public class CombatFactory {
 	}
 
 	public static void checkSkull(Player attacker, Player target) {
-
 		if (attacker.isSkulled()) {
 			return;
 		}
-
 		// We've probably already been skulled by this player.
 		if (target.getCombat().damageMapContains(attacker) || attacker.getCombat().damageMapContains(target)) {
 			return;
 		}
-
 		if (target.getCombat().getAttacker() != null && target.getCombat().getAttacker() == attacker) {
 			return;
 		}
-
 		if (attacker.getCombat().getAttacker() != null && attacker.getCombat().getAttacker() == target) {
 			return;
 		}
-
-		attacker.getPacketSender().sendMessage("@red@You have been skulled!");
 		attacker.setSkullTimer(600); // 6 minutes exactly.
 		attacker.getUpdateFlag().flag(Flag.APPEARANCE);
 
@@ -625,27 +619,21 @@ public class CombatFactory {
 
 	public static void checkAutoretaliate(Character attacker, Character target) {
 		if (!CombatFactory.isAttacking(target)) {
-
 			boolean auto_ret;
-
 			if (target.isPlayer()) {
 				auto_ret = target.getCombat().autoRetaliate() && target.getMovementQueue().isMovementDone();
 			} else {
 				auto_ret = target.getAsNpc().getMovementCoordinator().getCoordinateState() == CoordinateState.HOME;
 			}
-
 			if (!auto_ret) {
 				return;
 			}
-
 			// Start a task, don't autoretaliate immediately
 			TaskManager.submit(new Task(1, attacker, false) {
 				@Override
 				protected void execute() {
-
 					// Double check reqs again
 					target.getCombat().attack(attacker);
-
 					stop();
 				}
 			});
@@ -657,23 +645,18 @@ public class CombatFactory {
 		if (!character.getCombat().getFreezeTimer().finished()) {
 			return;
 		}
-
 		// Add check for npc: Only small npcs should be freeze-able
 		if (character.isNpc()) {
 			// if(size > 1) {
 			// return;
 			// }
 		}
-
 		character.getCombat().getFreezeTimer().start(seconds);
 		character.getMovementQueue().reset();
-
 		if (character.isPlayer()) {
-
 			// Send message and effect timer to client
 			character.getAsPlayer().getPacketSender().sendMessage("You have been frozen!").sendEffectTimer(seconds,
 					EffectTimer.FREEZE);
-
 			// Actually reset combat too
 			// I think it's that way on osrs
 			character.getCombat().reset();
@@ -681,7 +664,6 @@ public class CombatFactory {
 	}
 
 	public static void checkPrayerEffects(Character attacker, Player victim, int damage, CombatType type) {
-
 		// Handle redemption here
 		if (PrayerHandler.isActivated(victim, PrayerHandler.REDEMPTION)
 				&& victim.getHitpoints() <= (victim.getSkillManager().getMaxLevel(Skill.HITPOINTS) / 10)) {
@@ -695,11 +677,8 @@ public class CombatFactory {
 			PrayerHandler.deactivatePrayers(victim);
 			return;
 		}
-
 		if (attacker.isPlayer()) {
-
 			Player p = (Player) attacker;
-
 			// The retribution prayer effect.
 			if (PrayerHandler.isActivated(victim, PrayerHandler.RETRIBUTION) && victim.getHitpoints() < 1) {
 				victim.performGraphic(new Graphic(437));
@@ -708,7 +687,6 @@ public class CombatFactory {
 							new HitDamage(Misc.getRandom(CombatConstants.MAXIMUM_RETRIBUTION_DAMAGE), HitMask.RED));
 				}
 			}
-
 			// Handle smite effect here
 			if (PrayerHandler.isActivated((Player) attacker, PrayerHandler.SMITE)) {
 				victim.getSkillManager().setCurrentLevel(Skill.PRAYER,

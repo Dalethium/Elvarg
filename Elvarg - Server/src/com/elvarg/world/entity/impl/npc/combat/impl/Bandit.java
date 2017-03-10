@@ -4,7 +4,7 @@ import com.elvarg.world.entity.impl.npc.NPC;
 import com.elvarg.world.entity.impl.npc.combat.MobCombatHandler;
 import com.elvarg.world.entity.impl.npc.combat.SpecialMob;
 
-public class Goblin implements SpecialMob {
+public class Bandit implements SpecialMob {
 
 	@Override
 	public int getAttackAnimation() {
@@ -27,7 +27,7 @@ public class Goblin implements SpecialMob {
 	@Override
 	public int getMaxHit() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 13;
 	}
 
 	@Override

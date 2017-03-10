@@ -12,7 +12,6 @@ import com.elvarg.world.entity.combat.pvp.BountyHunter;
 import com.elvarg.world.entity.impl.npc.NPC;
 import com.elvarg.world.entity.impl.player.Player;
 import com.elvarg.world.model.Flag;
-import com.elvarg.world.model.PlayerRights;
 import com.elvarg.world.model.Skill;
 import com.elvarg.world.model.container.impl.Shop;
 import com.elvarg.world.model.dialogue.DialogueManager;
@@ -22,14 +21,14 @@ public class NPCOptionPacketListener implements PacketListener {
 
 	private static void firstClick(Player player, Packet packet) {
 		int index = packet.readLEShort();
-		if (index < 0 || index > World.getNpcs().capacity())
+		if (index < 0 || index > World.getNpcs().capacity()) {
 			return;
+		}
 		final NPC npc = World.getNpcs().get(index);
-		if (npc == null)
+		if (npc == null) {
 			return;
+		}
 		player.setEntityInteraction(npc);
-		if (player.getRights() == PlayerRights.ADMINISTRATOR)
-			player.getPacketSender().sendMessage("First click npc id: " + npc.getId());
 		player.setWalkToTask(new WalkToTask(player, npc.getPosition(), npc.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
@@ -142,7 +141,7 @@ public class NPCOptionPacketListener implements PacketListener {
 								DialogueManager.start(player, 3);
 							} else {
 								DialogueManager.start(player, 2);
-								player.getPacketSender().sendMessage("@red@You have been skulled!");
+								player.getPacketSender().sendMessage("You have been skulled.");
 								player.setSkullTimer(600); // 6 minutes exactly.
 								player.getUpdateFlag().flag(Flag.APPEARANCE);
 							}
@@ -168,15 +167,14 @@ public class NPCOptionPacketListener implements PacketListener {
 
 	public void handleSecondClick(Player player, Packet packet) {
 		int index = packet.readLEShortA();
-		if (index < 0 || index > World.getNpcs().capacity())
+		if (index < 0 || index > World.getNpcs().capacity()) {
 			return;
+		}
 		final NPC npc = World.getNpcs().get(index);
-		if (npc == null)
+		if (npc == null) {
 			return;
+		}
 		player.setEntityInteraction(npc);
-		final int npcId = npc.getId();
-		if (player.getRights() == PlayerRights.DEVELOPER)
-			player.getPacketSender().sendMessage("Second click npc id: " + npcId);
 		player.setWalkToTask(new WalkToTask(player, npc.getPosition(), npc.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
@@ -214,15 +212,14 @@ public class NPCOptionPacketListener implements PacketListener {
 
 	public void handleThirdClick(Player player, Packet packet) {
 		int index = packet.readShort();
-		if (index < 0 || index > World.getNpcs().capacity())
+		if (index < 0 || index > World.getNpcs().capacity()) {
 			return;
+		}
 		final NPC npc = World.getNpcs().get(index);
-		if (npc == null)
+		if (npc == null) {
 			return;
+		}
 		player.setEntityInteraction(npc).setPositionToFace(npc.getPosition().copy());
-		npc.setPositionToFace(player.getPosition());
-		if (player.getRights() == PlayerRights.DEVELOPER)
-			player.getPacketSender().sendMessage("Third click npc id: " + npc.getId());
 		player.setWalkToTask(new WalkToTask(player, npc.getPosition(), npc.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
@@ -257,14 +254,14 @@ public class NPCOptionPacketListener implements PacketListener {
 
 	public void handleFourthClick(Player player, Packet packet) {
 		int index = packet.readLEShort();
-		if (index < 0 || index > World.getNpcs().capacity())
+		if (index < 0 || index > World.getNpcs().capacity()) {
 			return;
+		}
 		final NPC npc = World.getNpcs().get(index);
-		if (npc == null)
+		if (npc == null) {
 			return;
+		}
 		player.setEntityInteraction(npc);
-		if (player.getRights() == PlayerRights.DEVELOPER)
-			player.getPacketSender().sendMessage("Fourth click npc id: " + npc.getId());
 		player.setWalkToTask(new WalkToTask(player, npc.getPosition(), npc.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
@@ -274,7 +271,7 @@ public class NPCOptionPacketListener implements PacketListener {
 						DialogueManager.start(player, 3);
 					} else {
 						DialogueManager.start(player, 2);
-						player.getPacketSender().sendMessage("@red@You have been skulled!");
+						player.getPacketSender().sendMessage("You have been skulled.");
 						player.setSkullTimer(600); // 6 minutes exactly.
 						player.getUpdateFlag().flag(Flag.APPEARANCE);
 					}
@@ -288,59 +285,47 @@ public class NPCOptionPacketListener implements PacketListener {
 
 	private static void attackNPC(Player player, Packet packet) {
 		int index = packet.readShortA();
-		if (index < 0 || index > World.getNpcs().capacity())
+		if (index < 0 || index > World.getNpcs().capacity()) {
 			return;
+		}
 		final NPC interact = World.getNpcs().get(index);
-
 		if (interact == null || interact.getDefinition() == null) {
 			return;
 		}
-
 		if (!interact.getDefinition().isAttackable()) {
 			return;
 		}
-
 		if (interact == null || interact.getHitpoints() <= 0) {
 			player.getMovementQueue().reset();
 			return;
 		}
-
 		player.getCombat().attack(interact);
 	}
 
 	private static void mageNpc(Player player, Packet packet) {
 		int npcIndex = packet.readLEShortA();
 		int spellId = packet.readShortA();
-
 		if (npcIndex < 0 || spellId < 0 || npcIndex > World.getNpcs().capacity()) {
 			return;
 		}
-
 		final NPC interact = World.getNpcs().get(npcIndex);
-
 		if (interact == null || interact.getDefinition() == null) {
 			return;
 		}
-
 		if (!interact.getDefinition().isAttackable()) {
 			return;
 		}
-
 		if (interact == null || interact.getHitpoints() <= 0) {
 			player.getMovementQueue().reset();
 			return;
 		}
-
 		CombatSpell spell = CombatSpells.getCombatSpell(spellId);
-
 		if (spell == null) {
 			player.getMovementQueue().reset();
 			return;
 		}
-
 		player.setPositionToFace(interact.getPosition());
 		player.getCombat().setCastSpell(spell);
-
 		player.getCombat().attack(interact);
 	}
 

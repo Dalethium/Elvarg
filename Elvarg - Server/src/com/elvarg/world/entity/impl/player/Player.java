@@ -39,6 +39,7 @@ import com.elvarg.world.model.ChatMessage;
 import com.elvarg.world.model.EffectTimer;
 import com.elvarg.world.model.Flag;
 import com.elvarg.world.model.ForceMovement;
+import com.elvarg.world.model.Item;
 import com.elvarg.world.model.Locations;
 import com.elvarg.world.model.MagicSpellbook;
 import com.elvarg.world.model.PlayerInteractingOption;
@@ -86,9 +87,10 @@ public class Player extends Character {
 
 	@Override
 	public int getBlockAnim() {
-		ItemDefinition def = getEquipment().getItems()[Equipment.WEAPON_SLOT].getDefinition();
-		int anim = def.getBlockAnim();
-		return anim;
+		final Item shield = getEquipment().getItems()[Equipment.SHIELD_SLOT];
+		final Item weapon = getEquipment().getItems()[Equipment.WEAPON_SLOT];
+		ItemDefinition definition = shield.getId() > 0 ? shield.getDefinition() : weapon.getDefinition();
+		return definition.getBlockAnim();
 	}
 
 	@Override
@@ -419,10 +421,6 @@ public class Player extends Character {
 		return interfaceId > 0 || isDying || getHitpoints() <= 0 || isNeedsPlacement()
 				|| getStatus() != PlayerStatus.NONE;
 	}
-
-	/*
-	 * Fields
-	 */
 
 	private DialogueOptions dialogueOptions;
 	private String username;

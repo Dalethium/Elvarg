@@ -16,7 +16,6 @@ import com.elvarg.world.model.Animation;
 import com.elvarg.world.model.ForceMovement;
 import com.elvarg.world.model.Item;
 import com.elvarg.world.model.MagicSpellbook;
-import com.elvarg.world.model.PlayerRights;
 import com.elvarg.world.model.Position;
 import com.elvarg.world.model.Skill;
 import com.elvarg.world.model.container.impl.Inventory;
@@ -35,7 +34,7 @@ public class ObjectActionPacketListener implements PacketListener {
 			return;
 		}
 		final Item interacted = player.getInventory().forSlot(slot);
-		if (interacted == null || itemId != interacted.getId() || interacted.getSlot() != slot
+		if (interacted == null || itemId != interacted.getId() || slot != interacted.getSlot()
 				|| !player.getInventory().contains(interacted.getId())) {
 			return;
 		}
@@ -80,8 +79,6 @@ public class ObjectActionPacketListener implements PacketListener {
 		final Position position = new Position(x, y, player.getPosition().getZ());
 		final GameObject gameObject = new GameObject(id, position);
 		if (id > 0 && id != 6 && !RegionClipping.objectExists(gameObject)) {
-			player.getPacketSender().sendMessage("An error occured. Error code: " + id)
-					.sendMessage("Please report the error to a staff member.");
 			return;
 		}
 		int distanceX = (player.getPosition().getX() - position.getX());
@@ -101,7 +98,6 @@ public class ObjectActionPacketListener implements PacketListener {
 		player.setWalkToTask(new WalkToTask(player, position, gameObject.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
-				player.setPositionToFace(gameObject.getPosition());
 				switch (id) {
 				case WILDERNESS_DITCH:
 					player.getMovementQueue().reset();
@@ -143,6 +139,7 @@ public class ObjectActionPacketListener implements PacketListener {
 					break;
 
 				}
+				player.setPositionToFace(gameObject.getPosition());
 			}
 		}));
 	}
@@ -159,15 +156,14 @@ public class ObjectActionPacketListener implements PacketListener {
 		player.setPositionToFace(gameObject.getPosition());
 		int distanceX = (player.getPosition().getX() - position.getX());
 		int distanceY = (player.getPosition().getY() - position.getY());
-		if (distanceX < 0)
+		if (distanceX < 0) {
 			distanceX = -(distanceX);
-		if (distanceY < 0)
+		}
+		if (distanceY < 0) {
 			distanceY = -(distanceY);
+		}
 		int size = distanceX > distanceY ? distanceX : distanceY;
 		gameObject.setSize(size);
-		if (player.getRights() == PlayerRights.DEVELOPER)
-			player.getPacketSender()
-					.sendMessage("First click object id; [id, position] : [" + id + ", " + position.toString() + "]");
 		player.setWalkToTask(new WalkToTask(player, position, gameObject.getSize(), new FinalizedMovementTask() {
 			@Override
 			public void execute() {
@@ -176,6 +172,7 @@ public class ObjectActionPacketListener implements PacketListener {
 					player.getBank(player.getCurrentBankTab()).open();
 					break;
 				}
+				player.setPositionToFace(gameObject.getPosition());
 			}
 		}));
 	}

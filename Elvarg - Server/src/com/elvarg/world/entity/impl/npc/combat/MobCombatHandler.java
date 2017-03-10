@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.elvarg.world.entity.impl.npc.NPC;
-import com.elvarg.world.entity.impl.npc.combat.impl.Goblin;
+import com.elvarg.world.entity.impl.npc.combat.impl.Bandit;
 import com.elvarg.world.entity.impl.player.Player;
 
 public class MobCombatHandler {
@@ -14,7 +14,7 @@ public class MobCombatHandler {
 	private static final List<SpecialMob> mob_list = new ArrayList<>();
 
 	static {
-		mob_list.add(new Goblin());
+		mob_list.add(new Bandit());
 	}
 
 	public int getAttackAnimation(int id) {
