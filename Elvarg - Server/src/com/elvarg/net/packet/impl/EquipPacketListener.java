@@ -60,7 +60,7 @@ public class EquipPacketListener implements PacketListener {
 							}
 							player.getPacketSender().sendMessage("You need " + vowel.toString()
 									+ Misc.formatText(skill.getName()) + " level of at least "
-									+ item.getDefinition().getRequirement()[skill.ordinal()] + " to wear this.");
+									+ item.getDefinition().getRequirement()[skill.ordinal()] + " to equip this.");
 							return;
 						}
 					}
@@ -146,7 +146,7 @@ public class EquipPacketListener implements PacketListener {
 					}
 					if (equipmentSlot == Equipment.WEAPON_SLOT) {
 						resetWeapon(player);
-					} 
+					}
 					// Check if ranged update is needed!
 					if (equipmentSlot == Equipment.AMMUNITION_SLOT || equipmentSlot == Equipment.WEAPON_SLOT) {
 						RangedData.updateDataFor(player);

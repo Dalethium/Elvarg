@@ -151,9 +151,9 @@ public class Appearance {
 		if (isMale()) {
 			look[HEAD] = 3;
 			look[CHEST] = 18;
-			look[ARMS] = 26;
-			look[HANDS] = 34;
-			look[LEGS] = 38;
+			look[ARMS] = 30;
+			look[HANDS] = 33;
+			look[LEGS] = 39;
 			look[FEET] = 42;
 			look[BEARD] = 14;
 		} else {
@@ -165,9 +165,9 @@ public class Appearance {
 			look[FEET] = 80;
 			look[BEARD] = 57;
 		}
-		look[HAIR_COLOUR] = 2;
-		look[TORSO_COLOUR] = 14;
-		look[LEG_COLOUR] = 5;
+		look[HAIR_COLOUR] = 7;
+		look[TORSO_COLOUR] = 1;
+		look[LEG_COLOUR] = 8;
 		look[FEET_COLOUR] = 4;
 		look[SKIN_COLOUR] = 0;
 		player.getUpdateFlag().flag(Flag.APPEARANCE);

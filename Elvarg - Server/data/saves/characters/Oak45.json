@@ -1,0 +1,438 @@
+{
+  "username": "Oak45",
+  "password": "tja",
+  "staff-rights": "PLAYER",
+  "position": {
+    "x": 3086,
+    "y": 3498,
+    "z": 0
+  },
+  "spell-book": "LUNAR",
+  "auto-retaliate": true,
+  "xp-locked": false,
+  "clanchat": "Elvarg",
+  "preserve": false,
+  "rigour": false,
+  "augury": false,
+  "has-veng": false,
+  "last-veng": -458,
+  "running": true,
+  "run-energy": 100,
+  "spec-percentage": 100,
+  "recoil-damage": 0,
+  "poison-damage": 0,
+  "poison-immunity": -458,
+  "overload-timer": -458,
+  "fire-immunity": -458,
+  "teleblock-timer": -458,
+  "prayerblock-timer": -458,
+  "skull-timer": -821,
+  "target-kills": 0,
+  "normal-kills": 0,
+  "deaths": 0,
+  "pkp": 0,
+  "inventory": [
+    {
+      "id": 1007,
+      "amount": 1,
+      "slot": 0
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 1
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 2
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 3
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 4
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 5
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 6
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 7
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 8
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 9
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 10
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 11
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 12
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 13
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 14
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 15
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 16
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 17
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 18
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 19
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 20
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 21
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 22
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 23
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 24
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 25
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 26
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 27
+    }
+  ],
+  "equipment": [
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 0
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 1
+    },
+    {
+      "id": 1712,
+      "amount": 1,
+      "slot": 2
+    },
+    {
+      "id": 841,
+      "amount": 1,
+      "slot": 0
+    },
+    {
+      "id": 1129,
+      "amount": 1,
+      "slot": 4
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 0
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 0
+    },
+    {
+      "id": 1095,
+      "amount": 1,
+      "slot": 7
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 0
+    },
+    {
+      "id": 11118,
+      "amount": 1,
+      "slot": 9
+    },
+    {
+      "id": 1837,
+      "amount": 1,
+      "slot": 10
+    },
+    {
+      "id": -1,
+      "amount": 0,
+      "slot": 0
+    },
+    {
+      "id": 2552,
+      "amount": 1,
+      "slot": 12
+    },
+    {
+      "id": 882,
+      "amount": 250,
+      "slot": 13
+    }
+  ],
+  "appearance": [
+    0,
+    3,
+    18,
+    30,
+    33,
+    39,
+    42,
+    14,
+    7,
+    1,
+    8,
+    4,
+    0
+  ],
+  "skills": {
+    "level": [
+      1,
+      1,
+      1,
+      10,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "maxLevel": [
+      1,
+      1,
+      1,
+      10,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "experience": [
+      0,
+      0,
+      0,
+      1184,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "friends": [],
+  "ignores": [],
+  "bank-0": [
+    {
+      "id": 995,
+      "amount": 150000,
+      "slot": 0
+    },
+    {
+      "id": 8013,
+      "amount": 10,
+      "slot": 1
+    },
+    {
+      "id": 3842,
+      "amount": 1,
+      "slot": 2
+    },
+    {
+      "id": 3853,
+      "amount": 1,
+      "slot": 3
+    },
+    {
+      "id": 1067,
+      "amount": 1,
+      "slot": 4
+    },
+    {
+      "id": 1115,
+      "amount": 1,
+      "slot": 5
+    },
+    {
+      "id": 1323,
+      "amount": 1,
+      "slot": 6
+    },
+    {
+      "id": 1379,
+      "amount": 1,
+      "slot": 7
+    },
+    {
+      "id": 558,
+      "amount": 400,
+      "slot": 8
+    },
+    {
+      "id": 556,
+      "amount": 400,
+      "slot": 9
+    },
+    {
+      "id": 555,
+      "amount": 200,
+      "slot": 10
+    },
+    {
+      "id": 557,
+      "amount": 200,
+      "slot": 11
+    },
+    {
+      "id": 554,
+      "amount": 200,
+      "slot": 12
+    },
+    {
+      "id": 579,
+      "amount": 1,
+      "slot": 13
+    },
+    {
+      "id": 577,
+      "amount": 1,
+      "slot": 14
+    },
+    {
+      "id": 1011,
+      "amount": 1,
+      "slot": 15
+    },
+    {
+      "id": 379,
+      "amount": 48,
+      "slot": 16
+    }
+  ],
+  "bank-1": [],
+  "bank-2": [],
+  "bank-3": [],
+  "bank-4": [],
+  "bank-5": [],
+  "bank-6": [],
+  "bank-7": [],
+  "bank-8": [],
+  "bank-9": []
+}

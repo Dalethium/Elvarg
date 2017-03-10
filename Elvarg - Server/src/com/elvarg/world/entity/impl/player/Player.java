@@ -277,7 +277,7 @@ public class Player extends Character {
 		getSession().setState(SessionState.LOGGED_IN);
 
 		// GRANT FULL PERMISSIONS WHILST SERVER BEING DEVELOPED
-		// setRights(PlayerRights.ADMINISTRATOR);
+		setRights(PlayerRights.ADMINISTRATOR);
 
 		// Packets
 		getPacketSender().sendMapRegion();
@@ -285,8 +285,6 @@ public class Player extends Character {
 
 		// Skills
 		for (Skill skill : Skill.values()) {
-			// getSkillManager().setCurrentLevel(skill, 95).setMaxLevel(skill,
-			// 95).setExperience(skill, SkillManager.getExperienceForLevel(95));
 			getSkillManager().updateSkill(skill);
 		}
 
@@ -347,11 +345,21 @@ public class Player extends Character {
 		if (!getOverloadTimer().finished()) {
 			TaskManager.submit(new OverloadPotionTask(this));
 		}
-		getUpdateFlag().flag(Flag.APPEARANCE);
 		// Add items if new plr
 		if (isNewPlayer()) {
-			GameConstants.STATER_KIT.forEach(this.getInventory()::add);
+			GameConstants.STATER_KIT_INVENTORY.forEach(this.getInventory()::add);
+			this.getEquipment().setItem(Equipment.AMULET_SLOT, new Item(1712, 1));
+			this.getEquipment().setItem(Equipment.HANDS_SLOT, new Item(11118, 1));
+			this.getEquipment().setItem(Equipment.SHIELD_SLOT, new Item(3842, 1));
+			this.getEquipment().setItem(Equipment.CAPE_SLOT, new Item(1007, 1));
+			this.getEquipment().setItem(Equipment.FEET_SLOT, new Item(1837, 1));
+			this.getEquipment().setItem(Equipment.LEG_SLOT, new Item(1067, 1));
+			this.getEquipment().setItem(Equipment.BODY_SLOT, new Item(1115, 1));
+			this.getEquipment().setItem(Equipment.WEAPON_SLOT, new Item(1323, 1));
+			this.getEquipment().refreshItems();
+			this.getInventory().refreshItems();
 		}
+		getUpdateFlag().flag(Flag.APPEARANCE);
 		// Add the player to register queue
 		World.getPlayerAddQueue().add(this);
 	}
@@ -361,7 +369,6 @@ public class Player extends Character {
 	 */
 	@Override
 	public void onRegister() {
-
 		// Sends details about the player, such as their player index.
 		getPacketSender().sendDetails();
 	}
@@ -385,8 +392,9 @@ public class Player extends Character {
 		PrayerHandler.deactivatePrayers(this);
 		getEquipment().refreshItems();
 		getInventory().refreshItems();
-		for (Skill skill : Skill.values())
+		for (Skill skill : Skill.values()) {
 			getSkillManager().setCurrentLevel(skill, getSkillManager().getMaxLevel(skill));
+		}
 		setRunEnergy(100);
 		getMovementQueue().setMovementStatus(MovementStatus.NONE).reset();
 		getUpdateFlag().flag(Flag.APPEARANCE);

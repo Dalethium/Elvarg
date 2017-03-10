@@ -264,16 +264,13 @@ public final class Widget {
 				widget.spellName = buffer.readString();
 				widget.spellUsableOn = buffer.readUShort();
 			}
-
 			if (widget.type == 8) {
 				widget.defaultText = buffer.readString();
 			}
-
 			if (widget.atActionType == OPTION_OK || widget.atActionType == OPTION_TOGGLE_SETTING
 					|| widget.atActionType == OPTION_RESET_SETTING || widget.atActionType == OPTION_CONTINUE) {
 				widget.tooltip = buffer.readString();
 				if (widget.tooltip.length() == 0) {
-					// TODO
 					if (widget.atActionType == OPTION_OK)
 						widget.tooltip = "Ok";
 					if (widget.atActionType == OPTION_TOGGLE_SETTING)
@@ -293,13 +290,11 @@ public final class Widget {
 		equipmentTab(textDrawingAreas);
 		itemsKeptOnDeath(textDrawingAreas);
 		bounty(textDrawingAreas);
-		repositionModernSpells();
 		shop();
 		prayerBook();
 		priceChecker(textDrawingAreas);
 		bankInterface(textDrawingAreas);
 		bankSettings(textDrawingAreas);
-		killFeed(textDrawingAreas);
 		settingsTab();
 		spriteCache = null;
 	}
@@ -436,26 +431,10 @@ public final class Widget {
 		p.hoverXOffset = hoverXOffset;
 		p.hoverYOffset = hoverYOffset;
 		p.regularHoverBox = true;
-
 	}
 
-	public static void killFeed(GameFont[] t) {
-		Widget tab = addInterface(38000);
-		tab.totalChildren(13);
-		int y = 45;
-		for (int i = 38001, index = 0; i < 38014; i++, index++) {
-			addText(i, "", t, 0, 0xff9040, false, true);
-			setBounds(i, 10, y, index, tab);
-			y += 20;
-		}
-	}
-
-	public static final int BEGIN_READING_PRAYER_INTERFACE = 6;// Amount of
-																// total custom
-																// prayers we've
-																// added
-	public static final int CUSTOM_PRAYER_HOVERS = 3; // Amount of custom prayer
-														// hovers we've added
+	public static final int BEGIN_READING_PRAYER_INTERFACE = 6;
+	public static final int CUSTOM_PRAYER_HOVERS = 3;
 
 	public static final int PRAYER_INTERFACE_CHILDREN = 80 + BEGIN_READING_PRAYER_INTERFACE + CUSTOM_PRAYER_HOVERS;
 
@@ -1008,63 +987,6 @@ public final class Widget {
 		for (int i = 0; i < widget.children.length; i++) {
 			System.out.println("childX: " + widget.childX[i] + " childY: " + widget.childY[i] + " index: " + i
 					+ " spellId: " + widget.children[i]);
-		}
-	}
-
-	public static void repositionModernSpells() {
-
-		Widget widget = Widget.interfaceCache[12424];
-		for (int index = 0; index < widget.children.length; index++) {
-
-			switch (widget.children[index]) {
-
-			case 1185:
-				widget.childX[33] = 148;
-				widget.childY[33] = 150;
-				break;
-
-			case 1183: // wind wave
-				widget.childX[31] = 76;
-				widget.childY[31] = 149;
-				break;
-
-			case 1188: // earth wave
-				widget.childX[36] = 71;
-				widget.childY[36] = 172;
-				break;
-
-			case 1543:
-				widget.childX[46] = 96;
-				widget.childY[46] = 173;
-				break;
-
-			case 1193: // charge
-				widget.childX[41] = 49;
-				widget.childY[41] = 198;
-				break;
-
-			case 12435: // tele other falador
-				widget.childX[54] = 74;
-				widget.childY[54] = 198;
-				break;
-
-			case 12445: // teleblock
-				widget.childX[55] = 99;
-				widget.childY[55] = 198;
-				break;
-
-			case 6003: // lvl 6 enchant
-				widget.childX[57] = 122;
-				widget.childY[57] = 198;
-				break;
-
-			// 150 x is end of the line
-
-			case 12455: // tele other camelot
-				widget.childX[56] = 147;
-				widget.childY[56] = 198;
-				break;
-			}
 		}
 	}
 
@@ -2181,16 +2103,8 @@ public final class Widget {
 		rsi.contentType = 0;
 		rsi.disabledSprite = Client.cacheSprite[spriteId];
 		rsi.enabledSprite = Client.cacheSprite[spriteId];
-
-		// rsi.sprite1.spriteLoader = rsi.sprite2.spriteLoader = true;
-		// rsi.hoverSprite1 = Client.cacheSprite[hoverSpriteId];
-		// rsi.hoverSprite2 = Client.cacheSprite[hoverSpriteId];
-		// rsi.hoverSprite1.spriteLoader = rsi.hoverSprite2.spriteLoader = true;
-		// rsi.sprite1 = rsi.sprite2 = spriteId;
-		// rsi.hoverSprite1Id = rsi.hoverSprite2Id = hoverSpriteId;
 		rsi.width = rsi.disabledSprite.myWidth;
 		rsi.height = rsi.enabledSprite.myHeight - 2;
-		// rsi.isFalseTooltip = true;
 	}
 
 	public static void addSprite(int childId, Sprite sprite1, Sprite sprite2) {
@@ -2904,101 +2818,100 @@ public final class Widget {
 		setBounds(ID + 7, 142, 92, 8, hover);
 	}
 
-	public static void configureLunar(GameFont[] tda) {
+	public static void configureLunar(GameFont[] TDA) {
 		constructLunar();
-		addLunarRune(30003, 0, "Fire");
-		addLunarRune(30004, 1, "Water");
-		addLunarRune(30005, 2, "Air");
-		addLunarRune(30006, 3, "Earth");
-		addLunarRune(30007, 4, "Mind");
-		addLunarRune(30008, 5, "Body");
-		addLunarRune(30009, 6, "Death");
-		addLunarRune(30010, 7, "Nature");
-		addLunarRune(30011, 8, "Chaos");
-		addLunarRune(30012, 9, "Law");
-		addLunarRune(30013, 10, "Cosmic");
-		addLunarRune(30014, 11, "Blood");
-		addLunarRune(30015, 12, "Soul");
-		addLunarRune(30016, 13, "Astral");
-
+		addLunarRune(30003, 1, "Fire");
+		addLunarRune(30004, 2, "Water");
+		addLunarRune(30005, 3, "Air");
+		addLunarRune(30006, 4, "Earth");
+		addLunarRune(30007, 5, "Mind");
+		addLunarRune(30008, 6, "Body");
+		addLunarRune(30009, 7, "Death");
+		addLunarRune(30010, 8, "Nature");
+		addLunarRune(30011, 9, "Chaos");
+		addLunarRune(30012, 10, "Law");
+		addLunarRune(30013, 11, "Cosmic");
+		addLunarRune(30014, 12, "Blood");
+		addLunarRune(30015, 13, "Soul");
+		addLunarRune(30016, 14, "Astral");
 		addLunar3RunesSmallBox(30017, 9075, 554, 555, 0, 4, 3, 30003, 30004, 64, "Bake Pie",
-				"Bake pies without a stove", tda, 0, 16, 2);
-		addLunar2RunesSmallBox(30025, 9075, 557, 0, 7, 30006, 65, "Cure Plant", "Cure disease on farming patch", tda, 1,
+				"Bake pies without a stove", TDA, 0, 16, 2);
+		addLunar2RunesSmallBox(30025, 9075, 557, 0, 7, 30006, 65, "Cure Plant", "Cure disease on farming patch", TDA, 1,
 				4, 2);
 		addLunar3RunesBigBox(30032, 9075, 564, 558, 0, 0, 0, 30013, 30007, 65, "Monster Examine",
-				"Detect the combat statistics of a\\nmonster", tda, 2, 2, 2);
+				"Detect the combat statistics of a\\nmonster", TDA, 2, 2, 2);
 		addLunar3RunesSmallBox(30040, 9075, 564, 556, 0, 0, 1, 30013, 30005, 66, "NPC Contact",
-				"Speak with varied NPCs", tda, 3, 0, 2);
+				"Speak with varied NPCs", TDA, 3, 0, 2);
 		addLunar3RunesSmallBox(30048, 9075, 563, 557, 0, 0, 9, 30012, 30006, 67, "Cure Other", "Cure poisoned players",
-				tda, 4, 8, 2);
+				TDA, 4, 8, 2);
 		addLunar3RunesSmallBox(30056, 9075, 555, 554, 0, 2, 0, 30004, 30003, 67, "Humidify",
-				"Fills certain vessels with water", tda, 5, 0, 5);
+				"Fills certain vessels with water", TDA, 5, 0, 5);
 		addLunar3RunesSmallBox(30064, 9075, 563, 557, 1, 0, 1, 30012, 30006, 68, "Moonclan Teleport",
-				"Teleports you to moonclan island", tda, 6, 0, 5);
+				"Teleports you to moonclan island", TDA, 6, 0, 5);
 		addLunar3RunesBigBox(30075, 9075, 563, 557, 1, 0, 3, 30012, 30006, 69, "Tele Group Moonclan",
-				"Teleports players to Moonclan\\nisland", tda, 7, 0, 5);
+				"Teleports players to Moonclan\\nisland", TDA, 7, 0, 5);
 		addLunar3RunesSmallBox(30083, 9075, 563, 557, 1, 0, 5, 30012, 30006, 70, "Ourania Teleport",
-				"Teleports you to ourania rune altar", tda, 8, 0, 5);
-		addLunar3RunesSmallBox(30091, 9075, 564, 563, 1, 1, 0, 30013, 30012, 70, "Cure Me", "Cures Poison", tda, 9, 0,
+				"Teleports you to ourania rune altar", TDA, 8, 0, 5);
+		addLunar3RunesSmallBox(30091, 9075, 564, 563, 1, 1, 0, 30013, 30012, 70, "Cure Me", "Cures Poison", TDA, 9, 0,
 				5);
-		addLunar2RunesSmallBox(30099, 9075, 557, 1, 1, 30006, 70, "Hunter Kit", "Get a kit of hunting gear", tda, 10, 0,
+		addLunar2RunesSmallBox(30099, 9075, 557, 1, 1, 30006, 70, "Hunter Kit", "Get a kit of hunting gear", TDA, 10, 0,
 				5);
 		addLunar3RunesSmallBox(30106, 9075, 563, 555, 1, 0, 0, 30012, 30004, 71, "Waterbirth Teleport",
-				"Teleports you to Waterbirth island", tda, 11, 0, 5);
+				"Teleports you to Waterbirth island", TDA, 11, 0, 5);
 		addLunar3RunesBigBox(30114, 9075, 563, 555, 1, 0, 4, 30012, 30004, 72, "Tele Group Waterbirth",
-				"Teleports players to Waterbirth\\nisland", tda, 12, 0, 5);
+				"Teleports players to Waterbirth\\nisland", TDA, 12, 0, 5);
 		addLunar3RunesSmallBox(30122, 9075, 564, 563, 1, 1, 1, 30013, 30012, 73, "Cure Group",
-				"Cures Poison on players", tda, 13, 0, 5);
+				"Cures Poison on players", TDA, 13, 0, 5);
 		addLunar3RunesBigBox(30130, 9075, 564, 559, 1, 1, 4, 30013, 30008, 74, "Stat Spy",
-				"Cast on another player to see their\\nskill levels", tda, 14, 8, 2);
+				"Cast on another player to see their\\nskill levels", TDA, 14, 8, 2);
 		addLunar3RunesBigBox(30138, 9075, 563, 554, 1, 1, 2, 30012, 30003, 74, "Barbarian Teleport",
-				"Teleports you to the Barbarian\\noutpost", tda, 15, 0, 5);
+				"Teleports you to the Barbarian\\noutpost", TDA, 15, 0, 5);
 		addLunar3RunesBigBox(30146, 9075, 563, 554, 1, 1, 5, 30012, 30003, 75, "Tele Group Barbarian",
-				"Teleports players to the Barbarian\\noutpost", tda, 16, 0, 5);
+				"Teleports players to the Barbarian\\noutpost", TDA, 16, 0, 5);
 		addLunar3RunesSmallBox(30154, 9075, 554, 556, 1, 5, 9, 30003, 30005, 76, "Superglass Make",
-				"Make glass without a furnace", tda, 17, 16, 2);
+				"Make glass without a furnace", TDA, 17, 16, 2);
 		addLunar3RunesSmallBox(30162, 9075, 563, 555, 1, 1, 3, 30012, 30004, 77, "Khazard Teleport",
-				"Teleports you to Port khazard", tda, 18, 0, 5);
+				"Teleports you to Port khazard", TDA, 18, 0, 5);
 		addLunar3RunesSmallBox(30170, 9075, 563, 555, 1, 1, 7, 30012, 30004, 78, "Tele Group Khazard",
-				"Teleports players to Port khazard", tda, 19, 0, 5);
+				"Teleports players to Port khazard", TDA, 19, 0, 5);
 		addLunar3RunesBigBox(30178, 9075, 564, 559, 1, 0, 4, 30013, 30008, 78, "Dream",
-				"Take a rest and restore hitpoints 3\\n times faster", tda, 20, 0, 5);
+				"Take a rest and restore hitpoints 3\\n times faster", TDA, 20, 0, 5);
 		addLunar3RunesSmallBox(30186, 9075, 557, 555, 1, 9, 4, 30006, 30004, 79, "String Jewellery",
-				"String amulets without wool", tda, 21, 0, 5);
+				"String amulets without wool", TDA, 21, 0, 5);
 		addLunar3RunesLargeBox(30194, 9075, 557, 555, 1, 9, 9, 30006, 30004, 80, "Stat Restore Pot\\nShare",
-				"Share a potion with up to 4 nearby\\nplayers", tda, 22, 0, 5);
+				"Share a potion with up to 4 nearby\\nplayers", TDA, 22, 0, 5);
 		addLunar3RunesSmallBox(30202, 9075, 554, 555, 1, 6, 6, 30003, 30004, 81, "Magic Imbue",
-				"Combine runes without a talisman", tda, 23, 0, 5);
+				"Combine runes without a talisman", TDA, 23, 0, 5);
 		addLunar3RunesBigBox(30210, 9075, 561, 557, 2, 1, 14, 30010, 30006, 82, "Fertile Soil",
-				"Fertilise a farming patch with super\\ncompost", tda, 24, 4, 2);
+				"Fertilise a farming patch with super\\ncompost", TDA, 24, 4, 2);
 		addLunar3RunesBigBox(30218, 9075, 557, 555, 2, 11, 9, 30006, 30004, 83, "Boost Potion Share",
-				"Shares a potion with up to 4 nearby\\nplayers", tda, 25, 0, 5);
+				"Shares a potion with up to 4 nearby\\nplayers", TDA, 25, 0, 5);
 		addLunar3RunesSmallBox(30226, 9075, 563, 555, 2, 2, 9, 30012, 30004, 84, "Fishing Guild Teleport",
-				"Teleports you to the fishing guild", tda, 26, 0, 5);
+				"Teleports you to the fishing guild", TDA, 26, 0, 5);
 		addLunar3RunesLargeBox(30234, 9075, 563, 555, 1, 2, 13, 30012, 30004, 85, "Tele Group Fishing Guild",
-				"Teleports players to the Fishing\\nGuild", tda, 27, 0, 5);
+				"Teleports players to the Fishing\\nGuild", TDA, 27, 0, 5);
 		addLunar3RunesSmallBox(30242, 9075, 557, 561, 2, 14, 0, 30006, 30010, 85, "Plank Make", "Turn Logs into planks",
-				tda, 28, 16, 5);
+				TDA, 28, 16, 5);
 		addLunar3RunesSmallBox(30250, 9075, 563, 555, 2, 2, 9, 30012, 30004, 86, "Catherby Teleport",
-				"Teleports you to Catherby", tda, 29, 0, 5);
+				"Teleports you to Catherby", TDA, 29, 0, 5);
 		addLunar3RunesSmallBox(30258, 9075, 563, 555, 2, 2, 14, 30012, 30004, 87, "Tele Group Catherby",
-				"Teleports players to Catherby", tda, 30, 0, 5);
+				"Teleports players to Catherby", TDA, 30, 0, 5);
 		addLunar3RunesSmallBox(30266, 9075, 563, 555, 2, 2, 7, 30012, 30004, 88, "Ice Plateau Teleport",
-				"Teleports you to Ice Plateau", tda, 31, 0, 5);
+				"Teleports you to Ice Plateau", TDA, 31, 0, 5);
 		addLunar3RunesLargeBox(30274, 9075, 563, 555, 2, 2, 15, 30012, 30004, 89, "Tele Group Ice Plateau",
-				"Teleports players to Ice Plateau", tda, 32, 0, 5);
+				"Teleports players to Ice Plateau", TDA, 32, 0, 5);
 		addLunar3RunesBigBox(30282, 9075, 563, 561, 2, 1, 0, 30012, 30010, 90, "Energy Transfer",
-				"Spend HP and SA energy to\\n give another SA and run energy", tda, 33, 8, 2);
+				"Spend HP and SA energy to\\n give another SA and run energy", TDA, 33, 8, 2);
 		addLunar3RunesBigBox(30290, 9075, 563, 565, 2, 2, 0, 30012, 30014, 91, "Heal Other",
-				"Transfer up to 75% of hitpoints\\n to another player", tda, 34, 8, 2);
+				"Transfer up to 75% of hitpoints\\n to another player", TDA, 34, 8, 2);
 		addLunar3RunesBigBox(30298, 9075, 560, 557, 2, 1, 9, 30009, 30006, 92, "Vengeance Other",
-				"Allows another player to rebound\\ndamage to an opponent", tda, 35, 8, 2);
+				"Allows another player to rebound\\ndamage to an opponent", TDA, 35, 8, 2);
 		addLunar3RunesSmallBox(30306, 9075, 560, 557, 3, 1, 9, 30009, 30006, 93, "Vengeance",
-				"Rebound damage to an opponent", tda, 36, 0, 5);
+				"Rebound damage to an opponent", TDA, 36, 0, 5);
 		addLunar3RunesBigBox(30314, 9075, 565, 563, 3, 2, 5, 30014, 30012, 94, "Heal Group",
-				"Transfer up to 75% of hitpoints\\n to a group", tda, 37, 0, 5);
+				"Transfer up to 75% of hitpoints\\n to a group", TDA, 37, 0, 5);
 		addLunar3RunesBigBox(30322, 9075, 564, 563, 2, 1, 0, 30013, 30012, 95, "Spellbook Swap",
-				"Change to another spellbook for 1\\nspell cast", tda, 38, 0, 5);
+				"Change to another spellbook for 1\\nspell cast", TDA, 38, 0, 5);
 	}
 
 	public static void constructLunar() {

@@ -91,15 +91,6 @@ public class ItemContainerActionPacketListener implements PacketListener {
 			if (item == null || item.getId() != id) {
 				return;
 			}
-			/*
-			 * if(player.getLocation() == Location.DUEL_ARENA) {
-			 * if(player.getDueling().selectedDuelRules[DuelRule.LOCK_WEAPON.
-			 * ordinal()]) { if(item.getDefinition().getEquipmentSlot() ==
-			 * Equipment.WEAPON_SLOT || item.getDefinition().isTwoHanded()) {
-			 * player.getPacketSender().
-			 * sendMessage("Weapons have been locked during this duel!");
-			 * return; } } }
-			 */
 			boolean stackItem = item.getDefinition().isStackable() && player.getInventory().getAmount(item.getId()) > 0;
 			int inventorySlot = player.getInventory().getEmptySlot();
 			if (inventorySlot != -1) {

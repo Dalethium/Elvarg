@@ -88,9 +88,45 @@ public class GameConstants {
 
 	};
 
-	public static final ImmutableSet<Item> STATER_KIT = ImmutableSet.of(
+	public static final ImmutableSet<Item> STATER_KIT_INVENTORY = ImmutableSet.of(
 
-			new Item(995, 500000000),
+			new Item(995, 150000),
 
-			new Item(995, 500000000));
+			new Item(8013, 10),
+
+			new Item(2552, 1),
+
+			new Item(3853, 1),
+
+			new Item(1095, 1),
+
+			new Item(1129, 1),
+
+			new Item(882, 250),
+
+			new Item(841, 1),
+
+			new Item(1379, 1),
+
+			new Item(558, 400),
+
+			new Item(556, 400),
+
+			new Item(555, 200),
+
+			new Item(557, 200),
+
+			new Item(554, 200),
+
+			new Item(579, 1),
+
+			new Item(577, 1),
+
+			new Item(1011, 1),
+
+			new Item(380, 44),
+
+			new Item(379, 6)
+
+	);
 }

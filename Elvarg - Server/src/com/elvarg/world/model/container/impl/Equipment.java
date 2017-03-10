@@ -110,16 +110,6 @@ public class Equipment extends ItemContainer {
 	 */
 	public static final int AMMUNITION_SLOT = 13;
 
-	public boolean wearingNexAmours() {
-		int head = getPlayer().getEquipment().getItems()[HEAD_SLOT].getId();
-		int body = getPlayer().getEquipment().getItems()[BODY_SLOT].getId();
-		int legs = getPlayer().getEquipment().getItems()[LEG_SLOT].getId();
-		boolean torva = head == 14008 && body == 14009 && legs == 14010;
-		boolean pernix = head == 14011 && body == 14012 && legs == 14013;
-		boolean virtus = head == 14014 && body == 14015 && legs == 14016;
-		return torva || pernix || virtus;
-	}
-
 	public boolean wearingHalberd() {
 		ItemDefinition def = ItemDefinition.forId(getPlayer().getEquipment().getItems()[Equipment.WEAPON_SLOT].getId());
 		return def != null && def.getName().toLowerCase().endsWith("halberd");
