@@ -56,25 +56,25 @@ public final class ChannelEventHandler extends SimpleChannelInboundHandler<Objec
 
 		Player player = session.getPlayer();
 
-		if (player == null) {
+		if(player == null) {
 			return;
 		}
 
-		// Queue the player for logout
-		if (player.getSession().getState() == SessionState.LOGGED_IN
-				|| player.getSession().getState() == SessionState.REQUESTED_LOG_OUT) {
-
-			if (!World.getLogoutQueue().contains(player)) {
-
-				// After 90 seconds of logout attempts, it will force it.
-				player.getLogoutTimer().reset();
-
+		//Queue the player for logout
+		if(player.getSession().getState() == SessionState.LOGGED_IN || player.getSession().getState() == SessionState.REQUESTED_LOG_OUT) {
+			if(!World.getLogoutQueue().contains(player)) {
+				
+				//Close all open interfaces..
+				player.getPacketSender().sendInterfaceRemoval();
+				
+				//After 60 seconds, it will force a logout.
+				player.getLogoutTimer().elapsed(60);
+//				player.getForcedLogoutTimer().start(60);
+				
 				World.getLogoutQueue().add(player);
 			}
-
 		}
 	}
-
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
 		if (evt instanceof IdleStateEvent) {

@@ -107,15 +107,12 @@ public class DialogueManager {
 
 	/**
 	 * Starts a dialogue.
-	 * 
-	 * @param player
-	 *            The player to dialogue with.
-	 * @param dialogue
-	 *            The dialogue to show the player.
+	 * @param player	The player to dialogue with.	
+	 * @param dialogue	The dialogue to show the player.
 	 */
 	public static void start(Player player, Dialogue dialogue) {
 		player.setDialogue(dialogue);
-		if (player.busy())
+		if(player.busy())
 			player.getPacketSender().sendInterfaceRemoval();
 		if (dialogue == null || dialogue.id() < 0) {
 			player.getPacketSender().sendInterfaceRemoval();
@@ -123,18 +120,15 @@ public class DialogueManager {
 			showDialogue(player, dialogue);
 			dialogue.specialAction();
 		}
-
-		if (player.getInterfaceId() != 50) {
+		
+		if(player.getInterfaceId() != 50) {
 			player.setInterfaceId(50);
 		}
 	}
 
 	/**
-	 * Handles the clicking of 'click here to continue', option1, option2 and so
-	 * on.
-	 * 
-	 * @param player
-	 *            The player who will continue the dialogue.
+	 * Handles the clicking of 'click here to continue', option1, option2 and so on.
+	 * @param player	The player who will continue the dialogue.
 	 */
 	public static void next(Player player) {
 		if (player.getDialogue() == null) {
@@ -150,11 +144,7 @@ public class DialogueManager {
 			player.setDialogue(null);
 			return;
 		}
-
-		if (player.getDialogueOptions() != null) {
-			player.getDialogueOptions().incrementStage();
-		}
-
+		
 		start(player, next);
 	}
 
