@@ -371,7 +371,7 @@ public class CombatFactory {
 
 			Player p_ = attacker.getAsPlayer();
 			
-			if (attacker.getAsPlayer().getEquipment().containsAny(3 /*range data*/))
+			if (p_.getEquipment().containsAny(3 /*range data*/))
 			{
 				method.getCombatType().equals(CombatType.MELEE.ordinal());
 			}
