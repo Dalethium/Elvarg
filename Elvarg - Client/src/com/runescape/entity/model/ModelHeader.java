@@ -7,11 +7,11 @@ final class ModelHeader
 	{
 	}
 
-	public byte aByteArray368[];
-	public int anInt369;
-	public int anInt370;
+	public byte bytes[];
+	public int numVertices;
+	public int numTriangles;
 	public int anInt371;
-	public int anInt372;
+	public int vertexStorageTypeIndex;
 	public int anInt373;
 	public int anInt374;
 	public int anInt375;

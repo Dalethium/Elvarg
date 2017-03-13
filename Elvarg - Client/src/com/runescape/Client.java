@@ -3895,7 +3895,7 @@ public class Client extends GameApplet {
 					k = 10;
 					l = 10;
 				}
-				flag &= MapRegion.method189(k, abyte0, l);
+				flag &= MapRegion.allObjectsLoaded(k, abyte0, l);
 			}
 		}
 		if (!flag)

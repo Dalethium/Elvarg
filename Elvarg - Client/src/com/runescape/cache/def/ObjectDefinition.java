@@ -310,7 +310,7 @@ public final class ObjectDefinition {
 		return model;
 	}
 
-	public boolean method579() {
+	public boolean isAllModelsFetched() {
 		if (modelIds == null)
 			return true;
 		boolean flag1 = true;

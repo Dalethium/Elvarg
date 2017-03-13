@@ -12,7 +12,7 @@ import com.runescape.scene.SceneGraph;
 public class Model extends Renderable {
 
 	public static void clear() {	      
-		aClass21Array1661 = null;
+		headers = null;
 		hasAnEdgeToRestrict = null;
 		outOfReach = null;
 		projected_vertex_y = null;
@@ -35,7 +35,7 @@ public class Model extends Renderable {
 
 	
 	public Model(int modelId) {
-		byte[] is = aClass21Array1661[modelId].aByteArray368;
+		byte[] is = headers[modelId].bytes;
 		if (is[is.length - 1] == -1 && is[is.length - 2] == -1)
 			read622Model(is, modelId);
 		else
@@ -78,9 +78,9 @@ public class Model extends Renderable {
 		aBoolean1618 = true;
 		fits_on_single_square = false;
 		anInt1620++;
-		ModelHeader modelHeader = aClass21Array1661[modelId];		
-		numVertices = modelHeader.anInt369;
-		numTriangles = modelHeader.anInt370;
+		ModelHeader modelHeader = headers[modelId];		
+		numVertices = modelHeader.numVertices;
+		numTriangles = modelHeader.numTriangles;
 		numberOfTexturesFaces = modelHeader.anInt371;
 		vertexX = new int[numVertices];
 		vertexY = new int[numVertices];
@@ -106,15 +106,15 @@ public class Model extends Renderable {
 		if (modelHeader.anInt383 >= 0)
 			triangleTSkin = new int[numTriangles];
 		triangleColours = new int[numTriangles];
-		Buffer buffer = new Buffer(modelHeader.aByteArray368);
-		buffer.currentPosition = modelHeader.anInt372;
-		Buffer stream_1 = new Buffer(modelHeader.aByteArray368);
+		Buffer buffer = new Buffer(modelHeader.bytes);
+		buffer.currentPosition = modelHeader.vertexStorageTypeIndex;
+		Buffer stream_1 = new Buffer(modelHeader.bytes);
 		stream_1.currentPosition = modelHeader.anInt373;
-		Buffer stream_2 = new Buffer(modelHeader.aByteArray368);
+		Buffer stream_2 = new Buffer(modelHeader.bytes);
 		stream_2.currentPosition = modelHeader.anInt374;
-		Buffer stream_3 = new Buffer(modelHeader.aByteArray368);
+		Buffer stream_3 = new Buffer(modelHeader.bytes);
 		stream_3.currentPosition = modelHeader.anInt375;
-		Buffer stream_4 = new Buffer(modelHeader.aByteArray368);
+		Buffer stream_4 = new Buffer(modelHeader.bytes);
 		stream_4.currentPosition = modelHeader.anInt376;
 		int k = 0;
 		int l = 0;
@@ -221,19 +221,19 @@ public class Model extends Renderable {
 	public static void method460(byte abyte0[], int j) {
 	try {
 		if (abyte0 == null) {
-			ModelHeader class21 = aClass21Array1661[j] = new ModelHeader();
-			class21.anInt369 = 0;
-			class21.anInt370 = 0;
-			class21.anInt371 = 0;
+			ModelHeader header = headers[j] = new ModelHeader();
+			header.numVertices = 0;
+			header.numTriangles = 0;
+			header.anInt371 = 0;
 			return;
 		}
 		Buffer stream = new Buffer(abyte0);
 		stream.currentPosition = abyte0.length - 18;
-		ModelHeader class21_1 = aClass21Array1661[j] = new ModelHeader();
-		class21_1.aByteArray368 = abyte0;
-		class21_1.anInt369 = stream.readUShort();
-		class21_1.anInt370 = stream.readUShort();
-		class21_1.anInt371 = stream.readUnsignedByte();
+		ModelHeader header = headers[j] = new ModelHeader();
+		header.bytes = abyte0;
+		header.numVertices = stream.readUShort();
+		header.numTriangles = stream.readUShort();
+		header.anInt371 = stream.readUnsignedByte();
 		int k = stream.readUnsignedByte();
 		int l = stream.readUnsignedByte();
 		int i1 = stream.readUnsignedByte();
@@ -244,46 +244,46 @@ public class Model extends Renderable {
 		int j2 = stream.readUShort();
 		int k2 = stream.readUShort();
 		int l2 = 0;
-		class21_1.anInt372 = l2;
-		l2 += class21_1.anInt369;
-		class21_1.anInt378 = l2;
-		l2 += class21_1.anInt370;
-		class21_1.anInt381 = l2;
+		header.vertexStorageTypeIndex = l2;
+		l2 += header.numVertices;
+		header.anInt378 = l2;
+		l2 += header.numTriangles;
+		header.anInt381 = l2;
 		if (l == 255)
-			l2 += class21_1.anInt370;
+			l2 += header.numTriangles;
 		else
-			class21_1.anInt381 = -l - 1;
-		class21_1.anInt383 = l2;
+			header.anInt381 = -l - 1;
+		header.anInt383 = l2;
 		if (j1 == 1)
-			l2 += class21_1.anInt370;
+			l2 += header.numTriangles;
 		else
-			class21_1.anInt383 = -1;
-		class21_1.anInt380 = l2;
+			header.anInt383 = -1;
+		header.anInt380 = l2;
 		if (k == 1)
-			l2 += class21_1.anInt370;
+			l2 += header.numTriangles;
 		else
-			class21_1.anInt380 = -1;
-		class21_1.anInt376 = l2;
+			header.anInt380 = -1;
+		header.anInt376 = l2;
 		if (k1 == 1)
-			l2 += class21_1.anInt369;
+			l2 += header.numVertices;
 		else
-			class21_1.anInt376 = -1;
-		class21_1.anInt382 = l2;
+			header.anInt376 = -1;
+		header.anInt382 = l2;
 		if (i1 == 1)
-			l2 += class21_1.anInt370;
+			l2 += header.numTriangles;
 		else
-			class21_1.anInt382 = -1;
-		class21_1.anInt377 = l2;
+			header.anInt382 = -1;
+		header.anInt377 = l2;
 		l2 += k2;
-		class21_1.anInt379 = l2;
-		l2 += class21_1.anInt370 * 2;
-		class21_1.anInt384 = l2;
-		l2 += class21_1.anInt371 * 6;
-		class21_1.anInt373 = l2;
+		header.anInt379 = l2;
+		l2 += header.numTriangles * 2;
+		header.anInt384 = l2;
+		l2 += header.anInt371 * 6;
+		header.anInt373 = l2;
 		l2 += l1;
-		class21_1.anInt374 = l2;
+		header.anInt374 = l2;
 		l2 += i2;
-		class21_1.anInt375 = l2;
+		header.anInt375 = l2;
 		l2 += j2;
 		} catch (Exception _ex) {
 		}
@@ -301,10 +301,10 @@ public class Model extends Renderable {
 		int numVertices = nc1.readUShort();
 		int numTriangles = nc1.readUShort();
 		int numTexTriangles = nc1.readUnsignedByte();
-		ModelHeader ModelDef_1 = aClass21Array1661[modelID] = new ModelHeader();
-		ModelDef_1.aByteArray368 = abyte0;
-		ModelDef_1.anInt369 = numVertices;
-		ModelDef_1.anInt370 = numTriangles;
+		ModelHeader ModelDef_1 = headers[modelID] = new ModelHeader();
+		ModelDef_1.bytes = abyte0;
+		ModelDef_1.numVertices = numVertices;
+		ModelDef_1.numTriangles = numTriangles;
 		ModelDef_1.anInt371 = numTexTriangles;
 		int l1 = nc1.readUnsignedByte();
 		boolean bool = (0x1 & l1 ^ 0xffffffff) == -2;
@@ -675,10 +675,10 @@ public class Model extends Renderable {
 		int numVertices = nc1.readUShort();
 		int numTriangles = nc1.readUShort();
 		int numTexTriangles = nc1.readUnsignedByte();
-		ModelHeader ModelDef_1 = aClass21Array1661[modelID] = new ModelHeader();
-		ModelDef_1.aByteArray368 = abyte0;
-		ModelDef_1.anInt369 = numVertices;
-		ModelDef_1.anInt370 = numTriangles;
+		ModelHeader ModelDef_1 = headers[modelID] = new ModelHeader();
+		ModelDef_1.bytes = abyte0;
+		ModelDef_1.numVertices = numVertices;
+		ModelDef_1.numTriangles = numTriangles;
 		ModelDef_1.anInt371 = numTexTriangles;
 		int l1 = nc1.readUnsignedByte();
 		boolean bool = (0x1 & l1 ^ 0xffffffff) == -2;
@@ -994,19 +994,19 @@ public class Model extends Renderable {
 
 	public static void method459(int i,
 			Provider onDemandFetcherParent) {
-		aClass21Array1661 = new ModelHeader[80000];
+		headers = new ModelHeader[80000];
 		newmodel = new boolean[100000];
 		resourceProvider = onDemandFetcherParent;
 	}
 
 	public static void method461(int j) {
-		aClass21Array1661[j] = null;
+		headers[j] = null;
 	}
 
 	public static Model getModel(int file) {
-		if (aClass21Array1661 == null)
+		if (headers == null)
 			return null;
-		ModelHeader class21 = aClass21Array1661[file];
+		ModelHeader class21 = headers[file];
 		if (class21 == null) {
 			resourceProvider.provide(file);
 			return null;
@@ -1016,10 +1016,10 @@ public class Model extends Renderable {
 	}
 
 	public static boolean isCached(int file) {
-		if (aClass21Array1661 == null)
+		if (headers == null)
 			return false;
 
-		ModelHeader class21 = aClass21Array1661[file];
+		ModelHeader class21 = headers[file];
 		if (class21 == null) {
 			resourceProvider.provide(file);
 			return false;
@@ -2974,7 +2974,7 @@ public class Model extends Renderable {
 	public int faceGroups[][];
 	public boolean fits_on_single_square;
 	public VertexNormal alsoVertexNormals[];
-	static ModelHeader aClass21Array1661[];
+	static ModelHeader headers[];
 	static Provider resourceProvider;
 	static boolean hasAnEdgeToRestrict[] = new boolean[8000];
 	static boolean outOfReach[] = new boolean[8000];

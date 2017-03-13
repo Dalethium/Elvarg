@@ -1179,10 +1179,7 @@ public final class MapRegion {
 		}
 	}
 
-	public static boolean method189(int i, byte[] is, int i_250_) // xxx bad
-	// method,
-	// decompiled
-	// with JODE
+	public static boolean allObjectsLoaded(int i, byte[] is, int i_250_) // xxx bad method, decompiled with JODE.
 	{
 		boolean bool = true;
 		Buffer stream = new Buffer(is);
@@ -1213,7 +1210,7 @@ public final class MapRegion {
 		if (i_261_ > 0 && i_262_ > 0 && i_261_ < 103 && i_262_ < 103) {
 			ObjectDefinition class46 = ObjectDefinition.lookup(i_252_);
 			if (i_260_ != 22 || !lowMem || class46.isInteractive || class46.obstructsGround) {
-				bool &= class46.method579();
+				bool &= class46.isAllModelsFetched();
 				bool_255_ = true;
 			}
 		}
