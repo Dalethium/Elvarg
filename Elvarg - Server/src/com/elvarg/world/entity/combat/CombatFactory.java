@@ -364,16 +364,17 @@ public class CombatFactory {
 				method.handleAfterHitEffects(qHit);
 			}
 		}
-		if (attacker.getAsPlayer().getEquipment().containsAny(3 /*range data*/))
-		{
-			method.getCombatType().equals(CombatType.MELEE.ordinal());
-		}
+
 		// Check for poisonous weapons..
 		// And do other effects, such as barrows effects..
 		if (attacker.isPlayer()) {
 
 			Player p_ = attacker.getAsPlayer();
-
+			
+			if (attacker.getAsPlayer().getEquipment().containsAny(3 /*range data*/))
+			{
+				method.getCombatType().equals(CombatType.MELEE.ordinal());
+			}
 			// Randomly apply poison if poisonous weapon is equipped.
 			if (Misc.getRandom(100) >= 90) {
 
